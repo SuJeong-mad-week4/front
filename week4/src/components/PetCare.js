@@ -1,49 +1,37 @@
-import React, { useEffect } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader";
+// PetCare.js
+
+import { CloseOutlined, SmileOutlined } from "@ant-design/icons";
+import { Button, Card } from "antd";
+import React, { useState } from "react";
+import "./PetCare.css"; // 스타일 파일을 import
 
 const PetCare = () => {
-  useEffect(() => {
-    // Three.js 초기화 코드
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+  const [isSleeping, setSleeping] = useState(true);
 
-    const loader = new GLTFLoader();
-    let pet;
+  const handleWakeUp = () => {
+    setSleeping(false);
+  };
 
-    loader.load("/components/Flamingo.glb", (gltf) => {
-      pet = gltf.scene;
-      pet.scale.set(0.1, 0.1, 0.1);
-      scene.add(pet);
-      console.log("모델이 로드되었습니다.", pet);
+  const handleSleep = () => {
+    setSleeping(true);
+  };
 
-      animate();
-    });
-
-    camera.position.z = 5;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      if (pet) {
-        renderer.render(scene, camera);
-      }
-    };
-
-    // 컴포넌트가 언마운트될 때 Three.js 리소스 정리
-    return () => {
-      renderer.domElement.remove();
-    };
-  }, []); // 빈 배열을 전달하여 한 번만 실행되도록 함
-
-  return <div className="pet-care-container">{/* 나머지 컴포넌트 JSX */}</div>;
+  return (
+    <div className={`pet-care-container ${isSleeping ? "sleeping" : ""}`}>
+      <Card title="진우의 펫" style={{ width: 300 }}>
+        <div className={`pet-image ${isSleeping ? "sleeping" : ""}`}></div>
+        {isSleeping ? (
+          <Button type="primary" onClick={handleWakeUp}>
+            <SmileOutlined /> 깨우기
+          </Button>
+        ) : (
+          <Button type="danger" onClick={handleSleep}>
+            <CloseOutlined /> 재우기
+          </Button>
+        )}
+      </Card>
+    </div>
+  );
 };
 
 export default PetCare;

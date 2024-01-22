@@ -1,0 +1,20 @@
+.pet-care-container {
+  background: linear-gradient(to bottom, #ff9f9f, #ffedbf 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100% 뷰포트 높이 */
+}
+
+.pet-image {
+  /* 추가적인 스타일이 필요한 경우 여기에 작성 */
+  width: 150px;
+  height: 150px;
+  background-image: url("망곰.png");
+  background-size: cover;
+}
+
+.pet-image.sleeping {
+  /* 추가적인 스타일이 필요한 경우 여기에 작성 */
+  background-image: url("sleepingGom.png");
+}
