@@ -6,8 +6,8 @@ import { UserContext } from "../App";
 
 const items = [
   { key: 0, label: `무드 캘린더`, path: "/calendar" },
-  { key: 1, label: "펫 키우기" },
-  { key: 2, label: "프로필" },
+  { key: 1, label: `펫 키우기`, path: "/petcare" },
+  { key: 2, label: `프로필` },
 ];
 
 const Header = () => {
@@ -83,7 +83,12 @@ const Header = () => {
         <Button
           type="text"
           onClick={handleLogoClick}
-          style={{ color: "black", fontWeight: "bold", fontSize:"18px", textAlign:"center" }}
+          style={{
+            color: "black",
+            fontWeight: "bold",
+            fontSize: "18px",
+            textAlign: "center",
+          }}
         >
           Simley Smiley
         </Button>
