@@ -48,7 +48,7 @@ const CustomCalendar = () => {
         console.log("에엥", user);
         try {
           const response = await axios.get(
-            `http://143.248.196.22:8080/calendar?id=${user.id}`
+            `http://143.248.196.22:8080/calendar?userId=${user.id}`
           );
           setListData(response.data); // 데이터를 상태에 저장
         } catch (error) {
