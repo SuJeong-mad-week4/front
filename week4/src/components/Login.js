@@ -23,6 +23,7 @@ const Login = () => {
       const data = response.data;
 
       if (data) {
+        console.log(data)
         setUser({
           id: data.id,
           loginId: data.loginId,
