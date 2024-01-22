@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import { UserContext } from "../App";
 
 const items = [
-  { key: 0, label: `무드 캘린더` },
+  { key: 0, label: `무드 캘린더`, path: "/calendar" },
   { key: 1, label: "펫 키우기" },
   { key: 2, label: "프로필" },
 ];
@@ -19,6 +19,9 @@ const Header = () => {
     if (key === 2) {
       setShowProfile(!showProfile);
       console.log("프로필 열림", showProfile);
+    } else if (items.some((item) => item.key === key && item.path)) {
+      // path가 있는 경우 해당 path로 navigate
+      navigate(items.find((item) => item.key === key && item.path).path);
     }
   };
 
@@ -27,12 +30,16 @@ const Header = () => {
     console.log("프로필 닫힘");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   const handleLogout = () => {
     // 로그아웃 처리
     setUser(null);
     localStorage.removeItem("user");
     // 로그인 화면으로 이동
-    navigate("/login");
+    navigate("/");
   };
 
   const profileMenu = (
@@ -73,7 +80,13 @@ const Header = () => {
       }}
     >
       <div className="demo-logo" style={{ paddingLeft: "40px" }}>
-        {<span> Simley Smiley </span>}
+        <Button
+          type="text"
+          onClick={handleLogoClick}
+          style={{ color: "black", fontWeight: "bold", fontSize:"18px", textAlign:"center" }}
+        >
+          Simley Smiley
+        </Button>
       </div>
       <Menu
         theme="light"

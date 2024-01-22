@@ -31,7 +31,7 @@ const Home = () => {
         }}
       >
         {/* 위로 이동한 텍스트 */}
-        <div style={{ color: "black", fontSize: "30px", fontWeight:"bold"}}>
+        <div style={{ color: "black", fontSize: "30px", fontWeight: "bold" }}>
           <p>
             {user ? `'${user.nickname}' 님 반가워요 !` : `로그인 해주세요!`}
           </p>
@@ -55,8 +55,9 @@ const Home = () => {
               onClick={() => navigate("/login")}
               style={{
                 width: "150px",
-                color: "white",
-                background: "rgba(255,255,255,0.5)",
+                color: "pink",
+                fontWeight: "bold",
+                background: "rgba(255,255,255,0.8)",
               }}
             >
               로그인
@@ -65,8 +66,9 @@ const Home = () => {
               onClick={() => navigate("/Signup")}
               style={{
                 width: "150px",
-                color: "white",
-                background: "rgba(255,255,255,0.5)",
+                color: "pink",
+                fontWeight: "bold",
+                background: "rgba(255,255,255,0.8)",
               }}
             >
               회원가입

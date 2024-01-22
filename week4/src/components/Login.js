@@ -51,45 +51,62 @@ const Login = () => {
       align="center"
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #fff383, #ff8d7d)`,
+        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
       }}
     >
       <div
         style={{
-          textAlign: "center",
-          width: "80%",
+          background: "rgba(255, 255, 255, 0.8)",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          flexDirection: "column", // 세로 정렬을 위해 추가
+          alignItems: "center", // 가운데 정렬을 위해 추가
+          justifyContent: "center",
+          width: "300px",
+          height: "300px",
         }}
       >
-        <h2>Login 로그인</h2>
+        <h2>Login</h2>
         <Input
           placeholder="Id"
-          style={{ width: "40%", marginBottom: "10px" }}
+          style={{ width: "80%", marginBottom: "10px", marginTop: "20px" }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
           placeholder="Password"
           type="password"
-          style={{ width: "40%", marginBottom: "10px" }}
+          style={{ width: "80%", marginBottom: "20px" }}
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        <Button
-          type="text"
-          onClick={handleLoginButtonClick}
-          style={{ marginBottom: "10px" }}
-        >
-          로그인
-        </Button>
-        <Button
-          type="text"
-          onClick={handleSignupButtonClick}
-          style={{ marginBottom: "10px" }}
-        >
-          회원가입
-        </Button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button
+            onClick={handleLoginButtonClick}
+            style={{
+              flex: 1,
+              background: "rgba(255,255,255,0.8)",
+              fontWeight: "bold",
+              marginTop: "20px",
+              color: "pink",
+            }}
+          >
+            로그인
+          </Button>
+          <Button
+            onClick={handleSignupButtonClick}
+            style={{
+              flex: 1,
+              background: "rgba(255,255,255,0.8)",
+              fontWeight: "bold",
+              marginTop: "20px",
+              marginLeft: "10px",
+              color: "pink",
+            }}
+          >
+            회원가입
+          </Button>
+        </div>
       </div>
     </Flex>
   );

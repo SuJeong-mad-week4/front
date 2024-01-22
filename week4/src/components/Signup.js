@@ -51,39 +51,49 @@ const Signup = () => {
       align="center"
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #fff383, #ff8d7d)`,
+        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
       }}
     >
       <div
         style={{
+          background: "rgba(255, 255, 255, 0.8)",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           textAlign: "center",
           width: "80%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          width: "400px",
+          height: "300px",
         }}
       >
-        <h2>Simley Smiley</h2>
+        <h2>Sign Up</h2>
         <Input
           placeholder="ID"
-          style={{ width: "40%", marginBottom: "10px" }}
+          style={{ width: "60%", marginBottom: "10px", marginTop: "20px" }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
           placeholder="닉네임"
-          style={{ width: "40%", marginBottom: "10px" }}
+          style={{ width: "60%", marginBottom: "10px" }}
           onChange={(e) => setNickname(e.target.value)}
         />
         <Input
           placeholder="비밀번호"
           type="password"
-          style={{ width: "40%", marginBottom: "10px" }}
+          style={{ width: "60%", marginBottom: "10px" }}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
-          type="text"
           onClick={handleSignupButtonClick}
-          style={{ marginBottom: "10px" }}
+          style={{
+            marginTop: "20px",
+            background: "rgba(255,255,255,0.8)",
+            fontWeight: "bold",
+            color: "pink",
+          }}
         >
           회원가입
         </Button>
