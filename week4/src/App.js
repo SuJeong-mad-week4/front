@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import CalendarPage from "./pages/calendarPage";
 
 export const UserContext = createContext();
 
@@ -38,6 +39,7 @@ function App() {
           {/* <Route path="/profile" element={<Profile />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
         </UserContext.Provider>
       </div>
