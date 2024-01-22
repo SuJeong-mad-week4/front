@@ -10,19 +10,27 @@ const Signup = () => {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignupButtonClick = () => {
+  const handleSignupButtonClick = async() => {
     // 클라이언트에서 Axios를 사용하여 서버로 회원가입 정보 전송
-    axios.post('http://143.248.196.22:8080/user/sign-up',
+    await axios.post('http://143.248.196.22:8080/user/sign-up',
     { loginId:id, nickname:nickname, password:password })
       .then((response) => {
+        console.log("res",response)
         const data = response.data;
-        if (data.success) {
-          console.log('Signup successful');
-          navigate('/login'); // 회원가입 성공 시 로그인 페이지로 이동
-        } else {
-          console.log(data.data.error)
-          console.log('Signup failed:', data.message);
-        }
+        console.log(data)
+
+        console.log('Signup successful');
+        alert('회원가입에 성공하였습니다 !');
+        navigate('/login'); // 회원가입 성공 시 로그인 페이지로 이동
+
+        // if (data.success) {
+        //   console.log('Signup successful');
+        //   alert('회원가입에 성공하였습니다 !');
+        //   navigate('/login'); // 회원가입 성공 시 로그인 페이지로 이동
+        // } else {
+        //   console.log(data.data.error)
+        //   console.log('Signup failed:', data.message);
+        //}
       })
       .catch((error) => {
         console.error('Error during signup:', error.response.data.error);

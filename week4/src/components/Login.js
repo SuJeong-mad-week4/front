@@ -1,29 +1,38 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Input } from 'antd';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
 
 const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const {setUser} = useContext(UserContext);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLoginButtonClick = () => {
-    axios.post('http://143.248.196.22:8080/user/login', { loginId: id, password: password })
-        .then((response) => {
-        const data = response.data;
-        console.log(data)
-        alert('로그인에 성공했습니다!');
-        navigate('/Home');
-        })
-        .catch((error) => {
-        console.error('Error during login:', error);
-        alert('로그인 중 오류가 발생했습니다.');
-        });
-    
-    }
+    const handleLoginButtonClick = async () => {
+        try {
+            const response = await axios.post('http://143.248.196.22:8080/user/login',
+            { loginId: id, password: password });
+            const data = response.data;
+            console.log(data)
+
+            if(data){
+                setUser({
+                    userId: data.userId,
+                    nickname: data.nickname,
+                });
+                alert('로그인에 성공했습니다!');
+                navigate('/');
+            } else {
+            }
+        } catch (error) {
+            console.error('Error during signup:', error);
+            alert('로그인 중 오류가 발생했습니다.');
+        }
+    };
 
     const handleSignupButtonClick = () => {
     navigate('/Signup');
@@ -67,5 +76,4 @@ const Login = () => {
     </Flex>
     );
 };
-
 export default Login;
