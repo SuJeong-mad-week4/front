@@ -23,9 +23,12 @@ const Login = () => {
       const data = response.data;
 
       if (data) {
+        console.log(data)
         setUser({
-          userId: data.userId,
+          id: data.id,
+          loginId: data.loginId,
           nickname: data.nickname,
+          profile: data.profile,
         });
         alert("로그인에 성공했습니다!");
         navigate("/");

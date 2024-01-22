@@ -1,26 +1,51 @@
-import { Button, Calendar, Card, Flex } from "antd";
+import { Button, Calendar, Card, Flex, Modal  } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../App";
 
 const CustomCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [listData, setListData] = useState([]);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   useEffect(() => {
     // 비동기 요청을 수행하는 함수
     const fetchData = async () => {
-      try {
+      console.log("뭔",user.id);
+      if(user){
+        console.log("에엥",user)
+        try {
         const response = await axios.get(
-          `http://143.248.196.22:8080/calendar?userId=${0}`
+          `http://143.248.196.22:8080/calendar?id=${user.id}`
         );
         setListData(response.data); // 데이터를 상태에 저장
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+      }
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   const today = new Date(); // 현재 날짜와 시간을 생성합니다.
 
