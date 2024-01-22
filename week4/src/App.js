@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -10,14 +10,27 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+  console.log(user)
+
+  useEffect(()=> {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if(user){
+      console.log("저장해여",user)
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user]);
 
   return (
     <Router>
       <div>
       <UserContext.Provider value={{ user, setUser }}>
-        {/* 헤더 */}
         <Header/>
-        {/* 페이지 내용 */}
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/mood-calendar" element={<MoodCalendar />} /> */}

@@ -14,26 +14,31 @@ const Header = () => {
 
   };
 
+  const getSelectedKey =() => {
+    return user ? ['2']:[];
+  }
+
     return (
     <header style={{  // 헤더 스타일
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between', // 오른쪽 정렬을 위해 추가
+        paddingRight: '40px'
     }}>
 
-    <div className="demo-logo" style={{ paddingLeft: '20px'}}>
-    {<span> Simley Smiley </span>}
+    <div className="demo-logo" style={{ paddingLeft: '40px'}}>
+      {<span> Simley Smiley </span>}
     </div>
         <Menu
         theme="light"
         mode="horizontal"
-        defaultSelectedKeys={['2']}
+        defaultSelectedKeys={getSelectedKey()}
         items={items}
         style={{
             flex: 1,
             minWidth: 0,
             display: 'flex',
-          justifyContent: 'flex-end',  // 오른쪽 정렬을 위해 추가
+            justifyContent: 'flex-end',  // 오른쪽 정렬을 위해 추가
         }}
         >
         {items.map(item => (
