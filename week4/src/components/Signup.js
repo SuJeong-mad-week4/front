@@ -71,12 +71,12 @@ const Signup = () => {
       >
         <h2>Sign Up</h2>
         <Input
-          placeholder="ID"
+          placeholder="아이디"
           style={{ width: "60%", marginBottom: "10px", marginTop: "20px" }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
-          placeholder="닉네임"
+          placeholder="이름"
           style={{ width: "60%", marginBottom: "10px" }}
           onChange={(e) => setNickname(e.target.value)}
         />

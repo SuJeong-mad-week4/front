@@ -6,15 +6,26 @@
   height: 100vh; /* 100% 뷰포트 높이 */
 }
 
-.pet-image {
-  /* 추가적인 스타일이 필요한 경우 여기에 작성 */
-  width: 150px;
-  height: 150px;
-  background-image: url("망곰.png");
-  background-size: cover;
+/* .pet-image.egg {
+  background-image: url("../../public/images/egg.png");
 }
 
-.pet-image.sleeping {
-  /* 추가적인 스타일이 필요한 경우 여기에 작성 */
-  background-image: url("sleepingGom.png");
+.pet-image.baby {
+  background-image: url("../../public/images/baby1.png");
 }
+
+.pet-image.teen {
+  background-image: url("../../public/images/teen1.png");
+}
+
+.pet-image.young-adult {
+  background-image: url("../../public/images/young_adult1.png");
+}
+
+.pet-image.adult {
+  background-image: url("../../public/images/adult1.png");
+}
+
+.pet-image.final {
+  background-image: url("../../public/images/final1.png");
+} */

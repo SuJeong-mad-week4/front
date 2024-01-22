@@ -24,8 +24,11 @@ const Login = () => {
 
       if (data) {
         setUser({
-          userId: data.userId,
+          id: data.id,
+          loginId: data.loginId,
           nickname: data.nickname,
+          profile: data.profile,
+          currentPet: data.currentPet,
         });
         alert("로그인에 성공했습니다!");
         navigate("/");
@@ -70,12 +73,12 @@ const Login = () => {
       >
         <h2>Login</h2>
         <Input
-          placeholder="Id"
+          placeholder="아이디"
           style={{ width: "80%", marginBottom: "10px", marginTop: "20px" }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
-          placeholder="Password"
+          placeholder="비밀번호"
           type="password"
           style={{ width: "80%", marginBottom: "20px" }}
           onChange={(e) => setPassword(e.target.value)}
