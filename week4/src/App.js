@@ -8,6 +8,7 @@ import MoodCalendar from './components/MoodCalendar'; // Import MoodCalendar com
 import PetCare from './components/PetCare'; // Import PetCare component
 import Profile from './components/Profile';
 import Signup from './components/Signup';
+import CalendarPage from "./pages/calendarPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           {/* <Route path="/profile" element={<Profile />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </div>
     </Router>
