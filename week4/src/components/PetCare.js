@@ -17,22 +17,25 @@ const PetCare = () => {
     document.body.appendChild(renderer.domElement);
 
     const loader = new GLTFLoader();
+    let pet;
 
     loader.load("/components/Flamingo.glb", (gltf) => {
-      const pet = gltf.scene;
+      pet = gltf.scene;
       pet.scale.set(0.1, 0.1, 0.1);
       scene.add(pet);
       console.log("모델이 로드되었습니다.", pet);
+
+      animate();
     });
 
     camera.position.z = 5;
 
     const animate = () => {
       requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+      if (pet) {
+        renderer.render(scene, camera);
+      }
     };
-
-    animate();
 
     // 컴포넌트가 언마운트될 때 Three.js 리소스 정리
     return () => {
