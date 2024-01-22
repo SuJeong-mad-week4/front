@@ -7,70 +7,82 @@ import "./PetCare.css";
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
   const [exp, setExp] = useState(0);
+  const [petData, setPetData] = useState({});
+
+  useEffect(() => {
+    // 유저 정보를 서버에서 가져오는 함수
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://143.248.196.22:8080/pet", {
+          params: { petId: 1 }, // 펫 ID에 맞게 설정
+        });
+        setPetData(response.data);
+        setExp(response.data.exp);
+        setGrowthStage(calculateGrowthStage(response.data.exp));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    // 로그인 상태에서만 유저 정보를 가져옴
+    // if (/* 여기에 로그인 상태를 확인하는 조건 추가 */) {
+    //     fetchUserData();
+    //   }
+  }, []);
 
   const handleActivity = async (growthAmount) => {
-    const newGrowthStage = growthStage + growthAmount;
     const newExp = exp + growthAmount;
 
-    const response = await axios.post("http://143.248.196.22:8080/pet/grow", {
-      loginId: id,
-      petId: 1,
-      exp: growthAmount,
-    });
-
-    // Growth Stage 업데이트
-    if (newExp < 10) {
-      setGrowthStage(0);
-    } else if (newExp >= 10 && newExp < 20) {
-      setGrowthStage(10);
-    } else if (newExp >= 20 && newExp < 40) {
-      setGrowthStage(20);
-    } else if (newExp >= 40 && newExp < 70) {
-      setGrowthStage(40);
-    } else if (newExp >= 70 && newExp < 100) {
-      setGrowthStage(70);
-    } else {
-      setGrowthStage(newGrowthStage); // 나머지 경우에는 newGrowthStage로 업데이트
+    try {
+      const response = await axios.post("http://143.248.196.22:8080/pet/grow", {
+        loginId: id,
+        petId: 1,
+        exp: growthAmount,
+      });
+      setPetData(response.data);
+      setExp(response.data.exp);
+      setGrowthStage(calculateGrowthStage(response.data.exp));
+    } catch (error) {
+      console.error("Error updating growth activity:", error);
     }
-
-    // 최대 성장 단계는 100으로 제한
-    if (newGrowthStage >= 100) {
-      setGrowthStage(100);
-    }
-
-    setExp(newExp);
   };
 
-  const [growthImage, setGrowthImage] = useState(null);
-  useEffect(() => {
-    console.log(growthStage);
+  const calculateGrowthStage = (currentExp) => {
+    if (currentExp < 10) {
+      return 0;
+    } else if (currentExp < 20) {
+      return 10;
+    } else if (currentExp < 40) {
+      return 20;
+    } else if (currentExp < 70) {
+      return 40;
+    } else if (currentExp < 100) {
+      return 70;
+    } else {
+      return 100;
+    }
+  };
+
+  const getGrowthImage = () => {
     switch (growthStage) {
       case 0:
-        setGrowthImage("./images/egg.png");
-        break;
-      //10보다 작을떄
+        return "./images/egg.png";
       case 10:
-        setGrowthImage("./images/baby1.png");
-        break;
+        return "./images/baby1.png";
       case 20:
-        setGrowthImage("./images/teen1.png");
-        break;
+        return "./images/teen1.png";
       case 40:
-        setGrowthImage("./images/young_adult1.png");
-        break;
+        return "./images/young_adult1.png";
       case 70:
-        setGrowthImage("./images/adult1.png");
-        break;
+        return "./images/adult1.png";
       default:
-        setGrowthImage("./images/final1.png");
-        break;
+        return "./images/final1.png";
     }
-  }, [growthStage]);
-  console.log(`pet-image ${growthStage < 10 ? "egg" : "final"}`);
+  };
+
   return (
     <div className={`pet-care-container ${growthStage === 100 ? "adult" : ""}`}>
       {/* <div className={`pet-image ${growthStage < 10 ? "egg" : "final"}`}></div> */}
-      <img src={growthImage} />
+      <img src={growthImage()} alt="Pet" />
       <Card
         style={{
           width: 300,
