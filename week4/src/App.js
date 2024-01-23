@@ -6,9 +6,9 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import PetCare from "./components/PetCare";
 import Signup from "./components/Signup";
+import CalendarPage from "./components/calendarPage";
 import TodayQA from "./components/TodayQA";
 import List from "./components/list";
-import CalendarPage from "./pages/calendarPage";
 
 export const UserContext = createContext();
 
