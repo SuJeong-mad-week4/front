@@ -32,7 +32,7 @@ const Home = () => {
         }}
       >
         {/* 위로 이동한 텍스트 */}
-        <div style={{ color: "black", fontSize: "30px", fontWeight: "bold" }}>
+        <div style={{ color: "white", fontSize: "30px", fontWeight: "bold" }}>
           <p>
             {user ? `'${user.nickname}' 님 반가워요 !` : `로그인 해주세요!`}
           </p>
@@ -41,7 +41,7 @@ const Home = () => {
         {/* 나머지 텍스트들 */}
         <div
           style={{
-            color: "black",
+            color: "white",
             fontSize: "30px",
             display: "flex",
             alignItems: "center",

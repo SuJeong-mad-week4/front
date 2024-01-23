@@ -9,10 +9,10 @@
 
 .ant-picker-cell-selected .ant-picker-calendar-date-value{
   color: rgb(255, 159, 159) !important;
-  font-weight: bold;
+  font-weight: 800;
 }
 
-:where(.css-dev-only-do-not-override-1qhpsh8) .ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-content {
+.ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-content {
   height: 60px !important;
   padding: 2px !important;
 }
@@ -21,14 +21,15 @@
   background-color: rgba(255, 111, 111, 0.0) !important; 
 }
 
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-calendar.ant-picker-calendar-full .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-calendar-date, :where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-calendar.ant-picker-calendar-full .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-calendar-date-today{
+.ant-picker-calendar.ant-picker-calendar-full .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-calendar-date, .ant-picker-calendar.ant-picker-calendar-full .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-calendar-date-today{
   background-color: rgba(255, 131, 131, 0.0) !important;
 }
 
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-calendar.ant-picker-calendar-full .ant-picker-panel{
+.ant-picker-calendar.ant-picker-calendar-full .ant-picker-panel{
   background-color: rgba(255, 255, 255, 0.0) !important;
 }
 
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-today{
+.ant-picker-calendar.ant-picker-calendar-full .ant-picker-calendar-date-today{
   border-color :  rgb(255, 159, 159) !important;
+  border-width: 5px !important;
 }
