@@ -58,6 +58,7 @@ const Home = () => {
                 color: "pink",
                 fontWeight: "bold",
                 background: "rgba(255,255,255,0.8)",
+                borderRadius: "20px",
               }}
             >
               로그인
@@ -69,6 +70,7 @@ const Home = () => {
                 color: "pink",
                 fontWeight: "bold",
                 background: "rgba(255,255,255,0.8)",
+                borderRadius: "20px",
               }}
             >
               회원가입

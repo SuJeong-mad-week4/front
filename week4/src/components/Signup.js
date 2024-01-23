@@ -92,6 +92,7 @@ const Signup = () => {
             marginTop: "20px",
             background: "rgba(255,255,255,0.8)",
             fontWeight: "bold",
+            borderRadius: "20px",
             color: "pink",
           }}
         >

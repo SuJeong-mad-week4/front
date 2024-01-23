@@ -72,7 +72,7 @@ const Login = () => {
           height: "300px",
         }}
       >
-        <h2>Login</h2>
+        <h2>로그인</h2>
         <Input
           placeholder="아이디"
           style={{ width: "80%", marginBottom: "10px", marginTop: "20px" }}
@@ -93,6 +93,7 @@ const Login = () => {
               fontWeight: "bold",
               marginTop: "20px",
               color: "pink",
+              borderRadius: "20px",
             }}
           >
             로그인
@@ -105,6 +106,7 @@ const Login = () => {
               fontWeight: "bold",
               marginTop: "20px",
               marginLeft: "10px",
+              borderRadius: "20px",
               color: "pink",
             }}
           >

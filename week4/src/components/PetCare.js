@@ -104,18 +104,14 @@ const PetCare = () => {
 
   const handleCollect = async () => {
     try {
-      console.log("아~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       const response = await axios.post("http://143.248.196.72:8080/pet/save", {
         userId: user.id,
       });
-      console.log("aeqrfkfhkdwelfjlakdjakfcd;l");
 
       await setUser((prevUser) => ({
         ...prevUser,
         currentPet: null,
       }));
-
-      console.log("null햇는디", user);
 
       setShowCollectModal(false);
     } catch (error) {
@@ -230,6 +226,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
+                  borderRadius:"20px",
                 }}
               >
                 <SmileOutlined /> 노래 듣기 +2
@@ -241,6 +238,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
+                  borderRadius:"20px",
                 }}
                 onClick={() => handleActivity(5)}
               >
@@ -253,6 +251,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
+                  borderRadius:"20px",
                 }}
                 onClick={() => handleActivity(1)}
               >
@@ -265,6 +264,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
+                  borderRadius:"20px",
                 }}
                 onClick={() => handleActivity(4)}
               >
@@ -281,17 +281,33 @@ const PetCare = () => {
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={200} src="./images/questionmark.png" />
-            <input
-              type="text"
-              placeholder="펫 이름을 입력해주세요"
-              value={petName}
-              onChange={(e) => setPetName(e.target.value)}
-              style={{ marginTop: "10px", marginRight: "10px" }}
-            />
-            <Button style={{ marginTop: "20px" }} onClick={() => createPet()}>
-              이름 짓고 새로운 펫 만나기
-            </Button>
+            <img width={300} src="./images/questionmark.png" />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="펫 이름을 입력해주세요"
+                value={petName}
+                onChange={(e) => setPetName(e.target.value)}
+                style={{ marginTop: "10px", textAlign: "center" }}
+              />
+              <Button
+                style={{
+                  marginTop: "20px",
+                  color: "white",
+                  background: "#ff9f9f",
+                  borderRadius:"20px",
+                }}
+                onClick={() => createPet()}
+              >
+                이름 짓고 새로운 펫 만나기
+              </Button>
+            </div>
           </div>
         )}
       </Card>
