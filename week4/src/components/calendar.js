@@ -3,11 +3,11 @@ import {
   Calendar,
   Card,
   Flex,
-  Modal,
-  Input,
-  Typography,
   Image,
+  Input,
+  Modal,
   Space,
+  Typography,
 } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
@@ -48,7 +48,7 @@ const CustomCalendar = () => {
         console.log("에엥", user);
         try {
           const response = await axios.get(
-            `http://143.248.196.22:8080/calendar?userId=${user.id}`
+            `http://143.248.196.72:8080/calendar?userId=${user.id}`
           );
           setListData(response.data); // 데이터를 상태에 저장
         } catch (error) {
@@ -84,7 +84,7 @@ const CustomCalendar = () => {
     );
 
     return (
-      <ul className='events'>
+      <ul className="events">
         {listData.map((item) =>
           formatedDate === item.moodDate.substring(0, 10) ? (
             <Button key={item.id} onClick={() => console.log("??")}>
@@ -111,12 +111,12 @@ const CustomCalendar = () => {
           onCancel={handleCancel}
         >
           <Title level={5}>오늘의 기분은 어떤가요?</Title>
-          <Flex justify='center'>
+          <Flex justify="center">
             <Space>
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("행복")}
                 />
@@ -125,7 +125,7 @@ const CustomCalendar = () => {
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("슬픔")}
                 />
@@ -134,7 +134,7 @@ const CustomCalendar = () => {
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("짜증")}
                 />
@@ -143,7 +143,7 @@ const CustomCalendar = () => {
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("분노")}
                 />
@@ -152,7 +152,7 @@ const CustomCalendar = () => {
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("두려움")}
                 />
@@ -161,7 +161,7 @@ const CustomCalendar = () => {
               <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='./images/tmp2.png'
+                  src="./images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("우울")}
                 />
@@ -172,8 +172,9 @@ const CustomCalendar = () => {
 
           <Title level={5}>왜 그런 감정이 들었나요?</Title>
           <TextArea
-            placeholder='솔직하게 작성해주세요.'
-            autoSize={{ minRows: 6 }}/>
+            placeholder="솔직하게 작성해주세요."
+            autoSize={{ minRows: 6 }}
+          />
         </Modal>
         <Card style={{ width: "80%", height: "60%" }}>
           <Calendar cellRender={dateCellRender} />;

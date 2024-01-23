@@ -1,19 +1,20 @@
 import { SmileOutlined } from "@ant-design/icons";
 import { Button, Card, Progress } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import "./PetCare.css";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../App";
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
   const [exp, setExp] = useState(0);
   const [petData, setPetData] = useState({});
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     // 유저 정보를 서버에서 가져오는 함수
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://143.248.196.22:8080/pet", {
+        const response = await axios.get("http://143.248.196.72:8080/pet/get", {
           params: { petId: 1 }, // 펫 ID에 맞게 설정
         });
         setPetData(response.data);
@@ -24,17 +25,17 @@ const PetCare = () => {
       }
     };
     // 로그인 상태에서만 유저 정보를 가져옴
-    // if (/* 여기에 로그인 상태를 확인하는 조건 추가 */) {
-    //     fetchUserData();
-    //   }
-  }, []);
+    if (user) {
+      fetchUserData();
+    }
+  }, [exp, user]);
 
   const handleActivity = async (growthAmount) => {
     const newExp = exp + growthAmount;
 
     try {
-      const response = await axios.post("http://143.248.196.22:8080/pet/grow", {
-        loginId: id,
+      const response = await axios.post("http://143.248.196.72:8080/pet/grow", {
+        loginId: user.id,
         petId: 1,
         exp: growthAmount,
       });
@@ -80,9 +81,14 @@ const PetCare = () => {
   };
 
   return (
-    <div className={`pet-care-container ${growthStage === 100 ? "adult" : ""}`}>
-      {/* <div className={`pet-image ${growthStage < 10 ? "egg" : "final"}`}></div> */}
-      <img src={growthImage()} alt="Pet" />
+    <div
+      style={{
+        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%) ",
+        position: "relative",
+        height: "100vh",
+      }}
+    >
+      <img src={getGrowthImage()} alt="Pet" />
       <Card
         style={{
           width: 300,
@@ -90,7 +96,7 @@ const PetCare = () => {
           boxShadow: "none",
           position: "absolute",
           top: "50%",
-          left: "50%",
+          left: "40%",
           border: "none",
         }}
       >
@@ -102,9 +108,10 @@ const PetCare = () => {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
-            marginTop: "20px",
+            marginTop: "70px",
+            justifyContent: "center",
           }}
         >
           <Button type="primary" onClick={() => handleActivity(2)}>
