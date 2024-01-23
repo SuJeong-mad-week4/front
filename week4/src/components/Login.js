@@ -52,10 +52,12 @@ const Login = () => {
       wrap="wrap"
       vertical
       justify="center"
-      align="center"
+      align="flex-start"
+      marginLeft="100px"
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        backgroundImage: `url(./images/home.png)`,
+        backgroundSize: "cover",
       }}
     >
       <div
@@ -70,6 +72,7 @@ const Login = () => {
           justifyContent: "center",
           width: "300px",
           height: "300px",
+          marginLeft: "250px",
         }}
       >
         <h2>로그인</h2>

@@ -7,14 +7,7 @@ import { UserContext } from "../App";
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
   { key: 1, label: `무드 캘린더`, path: "/calendar" },
-  {
-    key: 2,
-    label: "오늘의 질문",
-    Dropdown: [
-      { key: 21, label: "오늘의 질문", path: "/todayQA" },
-      { key: 22, label: "리스트", path: "/list" },
-    ],
-  },
+  { key: 2, label: "오늘의 질문", path: "/TodayQA" },
   { key: 3, label: `로그인` },
 ];
 
@@ -76,6 +69,9 @@ const Header = () => {
       {/* 다른 프로필 메뉴 아이템들을 추가할 수 있습니다. */}
     </Menu>
   );
+  if (!user) {
+    return null;
+  }
 
   return (
     <header

@@ -17,9 +17,10 @@ const Home = () => {
       align="flex-start" // 수직 가운데 정렬
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        backgroundImage: `url(./images/home.png)`,
+        backgroundSize: "cover",
         position: "relative",
-      }} // 화면 전체 높이만큼 가운데 정렬
+      }} // 화면 전체 높이만큼 가운데 렬
     >
       <div
         style={{

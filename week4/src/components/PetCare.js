@@ -226,7 +226,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
-                  borderRadius:"20px",
+                  borderRadius: "20px",
                 }}
               >
                 <SmileOutlined /> 노래 듣기 +2
@@ -238,7 +238,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
-                  borderRadius:"20px",
+                  borderRadius: "20px",
                 }}
                 onClick={() => handleActivity(5)}
               >
@@ -251,7 +251,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
-                  borderRadius:"20px",
+                  borderRadius: "20px",
                 }}
                 onClick={() => handleActivity(1)}
               >
@@ -264,7 +264,7 @@ const PetCare = () => {
                   color: "white",
                   background: "#ff9f9f",
                   fontWeight: "bold",
-                  borderRadius:"20px",
+                  borderRadius: "20px",
                 }}
                 onClick={() => handleActivity(4)}
               >
@@ -301,7 +301,7 @@ const PetCare = () => {
                   marginTop: "20px",
                   color: "white",
                   background: "#ff9f9f",
-                  borderRadius:"20px",
+                  borderRadius: "20px",
                 }}
                 onClick={() => createPet()}
               >
@@ -334,10 +334,32 @@ const PetCare = () => {
             }}
           >
             <p>망곰을 컬렉션에 저장하시겠습니까?</p>
-            <Button type="primary" onClick={handleCollect}>
+            <img
+              src="./images/final1.png"
+              style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
+            />
+            <Button
+              type="primary"
+              onClick={handleCollect}
+              style={{
+                color: "white",
+                background: "#ff9f9f",
+                borderRadius: "20px",
+              }}
+            >
               저장하기
             </Button>
-            <Button onClick={handleCancelCollect}>취소</Button>
+            <Button
+              onClick={handleCancelCollect}
+              style={{
+                color: "white",
+                background: "#ff9f9f",
+                borderRadius: "20px",
+                marginLeft: "10px",
+              }}
+            >
+              취소
+            </Button>
           </Card>
         </div>
       )}

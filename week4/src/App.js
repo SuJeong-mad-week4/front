@@ -6,14 +6,16 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import PetCare from "./components/PetCare";
 import Signup from "./components/Signup";
-import CalendarPage from "./pages/calendarPage";
 import TodayQA from "./components/TodayQA";
+import List from "./components/list";
+import CalendarPage from "./pages/calendarPage";
 
 export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
   console.log(user);
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -40,7 +42,14 @@ function App() {
             <Route path="/petcare" element={<PetCare />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/todayQA" element={<TodayQA/>} />
+            <Route path="/todayQA" element={<TodayQA />} />
+            <Route
+              path="/"
+              element={
+                <TodayQA questions={questions} setQuestions={setQuestions} />
+              }
+            />
+            <Route path="/list" element={<List questions={questions} />} />
           </Routes>
         </UserContext.Provider>
       </div>
