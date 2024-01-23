@@ -93,12 +93,13 @@ const PetCare = () => {
     >
       <Card
         style={{
-          width: 300,
-          background: "transparent",
-          boxShadow: "none",
+          width: 700,
+          height: 600,
+          background: "rgba(255, 255, 255, 0.8)",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           position: "absolute",
-          top: "15%",
-          left: "45%",
+          //   top: "15%",
+          //   left: "45%",
           border: "none",
         }}
       >
@@ -110,39 +111,59 @@ const PetCare = () => {
         <img
           src={getGrowthImage()}
           alt="Pet"
-          style={{ marginLeft: "-60px", width: "150%" }}
+          style={{ marginLeft: "25%", width: 300, height: 300 }}
         />
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            marginTop: "40px",
           }}
         >
           <Button
             type="primary"
             onClick={() => handleActivity(2)}
-            style={{ color: "black", background: "#ffffff" }}
+            style={{
+              color: "white",
+              background: "#ff9f9f",
+              fontWeight: "bold",
+            }}
           >
             <SmileOutlined /> 노래 듣기 +2
           </Button>
           <Button
             type="primary"
-            style={{ marginLeft: "5px", color: "black", background: "#ffffff" }}
+            style={{
+              marginLeft: "5px",
+              color: "white",
+              background: "#ff9f9f",
+              fontWeight: "bold",
+            }}
             onClick={() => handleActivity(5)}
           >
             <SmileOutlined /> 웃음 +5
           </Button>
           <Button
             type="primary"
-            style={{ marginLeft: "5px", color: "black", background: "#ffffff" }}
+            style={{
+              marginLeft: "5px",
+              color: "white",
+              background: "#ff9f9f",
+              fontWeight: "bold",
+            }}
             onClick={() => handleActivity(1)}
           >
             <SmileOutlined /> 긍정적 말 듣기 +1
           </Button>
           <Button
             type="primary"
-            style={{ marginLeft: "5px", color: "black", background: "#ffffff" }}
+            style={{
+              marginLeft: "5px",
+              color: "white",
+              background: "#ff9f9f",
+              fontWeight: "bold",
+            }}
             onClick={() => handleActivity(4)}
           >
             <SmileOutlined /> 스트레칭 +4
@@ -152,7 +173,7 @@ const PetCare = () => {
           <Progress
             percent={(exp / 100) * 100}
             status="active"
-            strokeColor={{ from: "#ffffff", to: "#ff9f9f" }}
+            strokeColor={{ from: "#ffc839", to: "#ff6666" }}
           />
         </div>
       </Card>
