@@ -1,8 +1,10 @@
-import { Button, Card, Image } from "antd";
+import { Image, Modal } from "antd";
 import React, { useState } from "react";
 
 const TodayQA = () => {
   const [questions, setQuestions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState("");
 
   const getRandomQuestion = () => {
@@ -28,80 +30,79 @@ const TodayQA = () => {
     setCurrentQuestion("");
   };
 
+  const handleImageClick = (imagePath) => {
+    setShowModal(true);
+    setCurrentImage(imagePath);
+    getRandomQuestion();
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    setCurrentImage("");
+    setCurrentQuestion("");
+  };
+  const [isFolded, setIsFolded] = useState(true);
+
   return (
     <div
       style={{
         height: "100vh",
-        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)",
+        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
         position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        textAlign: "center",
       }}
     >
-      <Card
-        style={{
-          width: 700,
-          height: 600,
-          background: "rgba(255, 255, 255, 0.8)",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          position: "absolute",
-          border: "none",
-          textAlign: "center",
-        }}
+      {isFolded ? (
+        <Image
+          preview={false}
+          src="./images/쪽지.png"
+          onClick={() => setIsFolded(false)}
+          style={{
+            cursor: "pointer",
+            marginTop: "70px",
+            marginLeft:"50px",
+            width: "500px",
+            height: "600px",
+          }}
+        />
+        
+      ) : (
+        <Image
+          preview={false}
+          src="./images/펼친쪽지.png"
+          onClick={() => setIsFolded(true)}
+          style={{
+            cursor: "pointer",
+            marginTop: "70px",
+            width: "800px",
+            height: "500px",
+          }}
+        />
+      )}
+
+      <Modal
+        visible={showModal}
+        onCancel={handleModalClose}
+        onOk={handleModalClose}
       >
-        <div style={{ textAlign: "center" }}>
+        {currentImage && (
           <Image
             preview={false}
-            src="./images/쪽지.png" // 이미지 경로 설정
-            onClick={getRandomQuestion}
+            src={currentImage}
             style={{
-              cursor: "pointer", // 커서를 손가락으로 표시하여 클릭 가능함을 나타냄
-              width: "300px",
-              height: "400px",
+              cursor: "pointer",
+              width: "400px",
+              height: "500px",
             }}
           />
-          <p>쪽지를 받아보세요 !</p>
-        </div>
-
+        )}
         {currentQuestion && (
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <div style={{ marginTop: "10px" }}>
             <p>오늘의 질문: {currentQuestion}</p>
-            <input
-              type="text"
-              placeholder="답변을 입력하세요"
-              onChange={(e) => setCurrentQuestion(e.target.value)}
-              style={{ borderRadius: "20px", width: "400px", height: "40px" }}
-            />
-            <Button
-              onClick={() => handleAnswerSave(currentQuestion)}
-              style={{
-                borderRadius: "20px",
-                background: "rgba(255,255,255,0.8)",
-                color: "pink",
-                fontWeight: "bold",
-                marginLeft: "10px",
-              }}
-            >
-              저장하기
-            </Button>
+            {/* 여기에 답변 입력 폼 등을 추가할 수 있습니다. */}
           </div>
         )}
-      </Card>
-
-      {questions.length > 0 && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>답변한 질문 목록</h3>
-          <ul>
-            {questions.map((q, index) => (
-              <li key={index}>
-                <strong>질문:</strong> {q.question}, <strong>답변:</strong>{" "}
-                {q.answer}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      </Modal>
     </div>
   );
 };
