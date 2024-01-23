@@ -3,19 +3,38 @@ import { Button, Card, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
+import "./PetCare.css";
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
   const [exp, setExp] = useState(0);
   const [petData, setPetData] = useState({});
+  const [petName, setPetName] = useState("");
   const { user, setUser } = useContext(UserContext);
+  const [showCollectModal, setShowCollectModal] = useState(false);
+  const [showCollectionModal, setShowCollectionModal] = useState(false);
+  const [collectedPets, setCollectedPets] = useState([]);
+  const [isEggShaking, setIsEggShaking] = useState(false);
 
   useEffect(() => {
+    const fetchCollection = async () => {
+      try {
+        const response = await axios.get(
+          "http://143.248.196.72:8080/pet/collection",
+          {
+            params: { loginId: user.id },
+          }
+        );
+        setCollectedPets(response.data);
+      } catch (error) {
+        console.error("Error fetching user collection:", error);
+      }
+    };
     // 유저 정보를 서버에서 가져오는 함수
     const fetchUserData = async () => {
       try {
         const response = await axios.get("http://143.248.196.72:8080/pet/get", {
-          params: { petId: 1 }, // 펫 ID에 맞게 설정
+          params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
         });
         setPetData(response.data);
         setExp(response.data.exp);
@@ -27,8 +46,41 @@ const PetCare = () => {
     // 로그인 상태에서만 유저 정보를 가져옴
     if (user) {
       fetchUserData();
+      fetchCollection();
     }
+    console.log("asdf", user);
   }, [exp, user]);
+
+  const handleEggClick = () => {
+    setIsEggShaking(true);
+
+    // 애니메이션을 일정 시간 후에 멈추도록 설정
+    setTimeout(() => {
+      setIsEggShaking(false);
+    }, 500); // 밀리초 단위로 조절하세요 (예: 500ms는 0.5초)
+  };
+
+  const createPet = async () => {
+    try {
+      const response = await axios.post(
+        "http://143.248.196.72:8080/pet/create",
+        {
+          userId: user.id,
+          nickname: petName,
+        }
+      );
+      console.log(response);
+      const createdPetId = response.data.id;
+      setUser((prevUser) => ({
+        ...prevUser,
+        currentPet: createdPetId,
+      }));
+      console.log("Newly created pet ID:", createdPetId);
+      console.log(user);
+    } catch (error) {
+      console.error("Error creating pet:", error);
+    }
+  };
 
   const handleActivity = async (growthAmount) => {
     const newExp = exp + growthAmount;
@@ -36,15 +88,45 @@ const PetCare = () => {
     try {
       const response = await axios.post("http://143.248.196.72:8080/pet/grow", {
         loginId: user.id,
-        petId: 1,
+        petId: user.currentPet,
         exp: growthAmount,
       });
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
+      if (response.data.exp >= 100) {
+        setShowCollectModal(true);
+      }
     } catch (error) {
       console.error("Error updating growth activity:", error);
     }
+  };
+
+  const handleCollect = async () => {
+    try {
+      console.log("아~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      const response = await axios.post("http://143.248.196.72:8080/pet/save", {
+        userId: user.id,
+      });
+      console.log("aeqrfkfhkdwelfjlakdjakfcd;l");
+
+      await setUser((prevUser) => ({
+        ...prevUser,
+        currentPet: null,
+      }));
+
+      console.log("null햇는디", user);
+
+      setShowCollectModal(false);
+    } catch (error) {
+      console.error("Error collecting pet:", error);
+      // Handle error if needed
+    }
+  };
+
+  const handleCancelCollect = () => {
+    setShowCollectModal(false);
+    // You might want to perform additional actions when canceling the collection
   };
 
   const calculateGrowthStage = (currentExp) => {
@@ -80,6 +162,13 @@ const PetCare = () => {
     }
   };
 
+  const handleShowCollection = () => {
+    setShowCollectModal(true);
+  };
+  const handleCloseCollection = () => {
+    setShowCollectModal(false);
+  };
+
   return (
     <div
       style={{
@@ -98,85 +187,144 @@ const PetCare = () => {
           background: "rgba(255, 255, 255, 0.8)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           position: "absolute",
-          //   top: "15%",
-          //   left: "45%",
           border: "none",
+          textAlign: "center",
         }}
       >
-        <p
-          style={{ textAlign: "center", fontSize: "18px", fontWeight: "bold" }}
-        >
-          {user ? `${user.nickname}의 펫` : "펫"}
-        </p>
-        <img
-          src={getGrowthImage()}
-          alt="Pet"
-          style={{ marginLeft: "25%", width: 300, height: 300 }}
-        />
+        {user && user.currentPet ? (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                left: "5px",
+                top: "5px",
+                cursor: "pointer",
+              }}
+            ></div>
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: "18px",
+                fontWeight: "bold",
+              }}
+            >
+              {user ? `${user.nickname}의 펫` : "펫"}
+            </p>
+            <img
+              src={getGrowthImage()}
+              alt="Pet"
+              style={{ width: 300, height: 300 }}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Button
+                type="primary"
+                onClick={() => handleActivity(2)}
+                style={{
+                  color: "white",
+                  background: "#ff9f9f",
+                  fontWeight: "bold",
+                }}
+              >
+                <SmileOutlined /> 노래 듣기 +2
+              </Button>
+              <Button
+                type="primary"
+                style={{
+                  marginLeft: "5px",
+                  color: "white",
+                  background: "#ff9f9f",
+                  fontWeight: "bold",
+                }}
+                onClick={() => handleActivity(5)}
+              >
+                <SmileOutlined /> 웃음 +5
+              </Button>
+              <Button
+                type="primary"
+                style={{
+                  marginLeft: "5px",
+                  color: "white",
+                  background: "#ff9f9f",
+                  fontWeight: "bold",
+                }}
+                onClick={() => handleActivity(1)}
+              >
+                <SmileOutlined /> 긍정적 말 듣기 +1
+              </Button>
+              <Button
+                type="primary"
+                style={{
+                  marginLeft: "5px",
+                  color: "white",
+                  background: "#ff9f9f",
+                  fontWeight: "bold",
+                }}
+                onClick={() => handleActivity(4)}
+              >
+                <SmileOutlined /> 스트레칭 +4
+              </Button>
+            </div>
+            <div style={{ marginTop: "20px" }}>
+              <Progress
+                percent={(exp / 100) * 100}
+                status="active"
+                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
+              />
+            </div>
+          </>
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <img width={200} src="./images/questionmark.png" />
+            <input
+              type="text"
+              placeholder="펫 이름을 입력해주세요"
+              value={petName}
+              onChange={(e) => setPetName(e.target.value)}
+              style={{ marginTop: "10px", marginRight: "10px" }}
+            />
+            <Button style={{ marginTop: "20px" }} onClick={() => createPet()}>
+              이름 짓고 새로운 펫 만나기
+            </Button>
+          </div>
+        )}
+      </Card>
+      {showCollectModal && (
         <div
           style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.5)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "40px",
           }}
         >
-          <Button
-            type="primary"
-            onClick={() => handleActivity(2)}
+          <Card
             style={{
-              color: "white",
-              background: "#ff9f9f",
-              fontWeight: "bold",
+              width: 400,
+              padding: 20,
+              textAlign: "center",
+              background: "white",
             }}
           >
-            <SmileOutlined /> 노래 듣기 +2
-          </Button>
-          <Button
-            type="primary"
-            style={{
-              marginLeft: "5px",
-              color: "white",
-              background: "#ff9f9f",
-              fontWeight: "bold",
-            }}
-            onClick={() => handleActivity(5)}
-          >
-            <SmileOutlined /> 웃음 +5
-          </Button>
-          <Button
-            type="primary"
-            style={{
-              marginLeft: "5px",
-              color: "white",
-              background: "#ff9f9f",
-              fontWeight: "bold",
-            }}
-            onClick={() => handleActivity(1)}
-          >
-            <SmileOutlined /> 긍정적 말 듣기 +1
-          </Button>
-          <Button
-            type="primary"
-            style={{
-              marginLeft: "5px",
-              color: "white",
-              background: "#ff9f9f",
-              fontWeight: "bold",
-            }}
-            onClick={() => handleActivity(4)}
-          >
-            <SmileOutlined /> 스트레칭 +4
-          </Button>
+            <p>망곰을 컬렉션에 저장하시겠습니까?</p>
+            <Button type="primary" onClick={handleCollect}>
+              저장하기
+            </Button>
+            <Button onClick={handleCancelCollect}>취소</Button>
+          </Card>
         </div>
-        <div style={{ marginTop: "20px" }}>
-          <Progress
-            percent={(exp / 100) * 100}
-            status="active"
-            strokeColor={{ from: "#ffc839", to: "#ff6666" }}
-          />
-        </div>
-      </Card>
+      )}
     </div>
   );
 };

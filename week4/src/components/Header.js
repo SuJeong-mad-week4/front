@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
   { key: 1, label: `무드 캘린더`, path: "/calendar" },
-  { key: 2, label: "오늘의 질문", path: "" },
+  { key: 2, label: "오늘의 질문", path: "/todayQA" },
   { key: 3, label: `로그인` },
 ];
 

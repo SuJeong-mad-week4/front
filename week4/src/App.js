@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import PetCare from "./components/PetCare";
 import Signup from "./components/Signup";
 import CalendarPage from "./pages/calendarPage";
+import TodayQA from "./components/TodayQA";
 
 export const UserContext = createContext();
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/petcare" element={<PetCare />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/todayQA" element={<TodayQA/>} />
           </Routes>
         </UserContext.Provider>
       </div>
