@@ -48,10 +48,11 @@ const Signup = () => {
       wrap="wrap"
       vertical
       justify="center"
-      align="center"
+      align="flex-start"
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        backgroundImage: `url(./images/home.png)`,
+        backgroundSize: "cover",
       }}
     >
       <div
@@ -65,6 +66,7 @@ const Signup = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginLeft: "200px",
           width: "400px",
           height: "300px",
         }}
@@ -92,6 +94,7 @@ const Signup = () => {
             marginTop: "20px",
             background: "rgba(255,255,255,0.8)",
             fontWeight: "bold",
+            borderRadius: "20px",
             color: "pink",
           }}
         >

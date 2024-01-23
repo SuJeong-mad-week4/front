@@ -7,7 +7,7 @@ import { UserContext } from "../App";
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
   { key: 1, label: `무드 캘린더`, path: "/calendar" },
-  { key: 2, label: '오늘의 질문', path: ""},
+  { key: 2, label: "오늘의 질문", path: "/TodayQA" },
   { key: 3, label: `로그인` },
 ];
 
@@ -17,7 +17,7 @@ const Header = () => {
   const navigate = useNavigate(); // useNavigate 추가
 
   const handleMenuItemClick = (key) => {
-    if (key === 2) {
+    if (key === 3) {
       setShowProfile(!showProfile);
       console.log("프로필 열림", showProfile);
     } else if (items.some((item) => item.key === key && item.path)) {
@@ -69,6 +69,9 @@ const Header = () => {
       {/* 다른 프로필 메뉴 아이템들을 추가할 수 있습니다. */}
     </Menu>
   );
+  if (!user) {
+    return null;
+  }
 
   return (
     <header
@@ -97,7 +100,7 @@ const Header = () => {
       <Menu
         theme="light"
         mode="horizontal"
-        defaultSelectedKeys={["2"]}
+        defaultSelectedKeys={["3"]}
         style={{
           flex: 1,
           minWidth: 0,
@@ -110,7 +113,7 @@ const Header = () => {
             key={item.key}
             onClick={() => handleMenuItemClick(item.key)}
           >
-            {item.key === 2 && user ? (
+            {item.key === 3 && user ? (
               // 프로필 버튼인 경우, 로그인한 경우에만 닉네임 표시
               <Dropdown overlay={profileMenu} visible={showProfile}>
                 <span>{user.nickname}</span>

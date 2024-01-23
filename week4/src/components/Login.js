@@ -52,10 +52,12 @@ const Login = () => {
       wrap="wrap"
       vertical
       justify="center"
-      align="center"
+      align="flex-start"
+      marginLeft="100px"
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        backgroundImage: `url(./images/home.png)`,
+        backgroundSize: "cover",
       }}
     >
       <div
@@ -70,9 +72,10 @@ const Login = () => {
           justifyContent: "center",
           width: "300px",
           height: "300px",
+          marginLeft: "250px",
         }}
       >
-        <h2>Login</h2>
+        <h2>로그인</h2>
         <Input
           placeholder="아이디"
           style={{ width: "80%", marginBottom: "10px", marginTop: "20px" }}
@@ -93,6 +96,7 @@ const Login = () => {
               fontWeight: "bold",
               marginTop: "20px",
               color: "pink",
+              borderRadius: "20px",
             }}
           >
             로그인
@@ -105,6 +109,7 @@ const Login = () => {
               fontWeight: "bold",
               marginTop: "20px",
               marginLeft: "10px",
+              borderRadius: "20px",
               color: "pink",
             }}
           >
