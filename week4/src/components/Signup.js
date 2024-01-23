@@ -57,8 +57,8 @@ const Signup = () => {
     >
       <div
         style={{
-          background: "rgba(255, 255, 255, 0.8)",
-          padding: "20px",
+          background: "rgba(255, 255, 255, 0.6)",
+          padding: "40px",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           textAlign: "center",
@@ -67,35 +67,42 @@ const Signup = () => {
           flexDirection: "column",
           alignItems: "center",
           marginLeft: "200px",
-          width: "400px",
+          width: "300px",
           height: "300px",
         }}
       >
         <h2>회원가입</h2>
         <Input
           placeholder="아이디"
-          style={{ width: "60%", marginBottom: "10px", marginTop: "20px" }}
+          style={{
+            width: "100%",
+            marginBottom: "10px",
+            marginTop: "20px",
+            borderRadius: "10px",
+          }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
           placeholder="이름"
-          style={{ width: "60%", marginBottom: "10px" }}
+          style={{ width: "100%", marginBottom: "10px", borderRadius: "10px" }}
           onChange={(e) => setNickname(e.target.value)}
         />
         <Input
           placeholder="비밀번호"
           type="password"
-          style={{ width: "60%", marginBottom: "10px" }}
+          style={{ width: "100%", marginBottom: "10px", borderRadius: "10px" }}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
+          block={true}
           onClick={handleSignupButtonClick}
           style={{
             marginTop: "20px",
             background: "rgba(255,255,255,0.8)",
             fontWeight: "bold",
             borderRadius: "20px",
-            color: "pink",
+            color: "white",
+            background: "#ff9f9f",
           }}
         >
           회원가입

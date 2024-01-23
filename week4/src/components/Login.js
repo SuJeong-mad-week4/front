@@ -1,8 +1,10 @@
-import { Button, Flex, Input } from "antd";
+import { Button, Divider, Flex, Input, Typography } from "antd";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+
+const { Text, Title } = Typography;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -62,8 +64,8 @@ const Login = () => {
     >
       <div
         style={{
-          background: "rgba(255, 255, 255, 0.8)",
-          padding: "20px",
+          background: "rgba(255, 255, 255, 0.6)",
+          padding: "40px",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           display: "flex",
@@ -78,44 +80,45 @@ const Login = () => {
         <h2>로그인</h2>
         <Input
           placeholder="아이디"
-          style={{ width: "80%", marginBottom: "10px", marginTop: "20px" }}
+          style={{
+            width: "100%",
+            marginBottom: "10px",
+            marginTop: "20px",
+            borderRadius: "10px",
+          }}
           onChange={(e) => setId(e.target.value)}
         />
         <Input
           placeholder="비밀번호"
           type="password"
-          style={{ width: "80%", marginBottom: "20px" }}
+          style={{ width: "100%", marginBottom: "20px", borderRadius: "10px" }}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Button
-            onClick={handleLoginButtonClick}
-            style={{
-              flex: 1,
-              background: "rgba(255,255,255,0.8)",
-              fontWeight: "bold",
-              marginTop: "20px",
-              color: "pink",
-              borderRadius: "20px",
-            }}
-          >
-            로그인
-          </Button>
-          <Button
-            onClick={handleSignupButtonClick}
-            style={{
-              flex: 1,
-              background: "rgba(255,255,255,0.8)",
-              fontWeight: "bold",
-              marginTop: "20px",
-              marginLeft: "10px",
-              borderRadius: "20px",
-              color: "pink",
-            }}
-          >
-            회원가입
-          </Button>
-        </div>
+        <Button
+          block={true}
+          onClick={handleLoginButtonClick}
+          style={{
+            color: "white",
+            background: "#ff9f9f",
+            borderRadius: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          로그인
+        </Button>
+        <Divider plain>
+          <Text type="secondary">아직 회원이 아니신가요?</Text>
+        </Divider>
+        <Button
+          onClick={handleSignupButtonClick}
+          type="text"
+          style={{
+            borderRadius: "20px",
+            color: "#ff9f9f",
+          }}
+        >
+          회원가입
+        </Button>
       </div>
     </Flex>
   );

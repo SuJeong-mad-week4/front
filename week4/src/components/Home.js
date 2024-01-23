@@ -51,28 +51,30 @@ const Home = () => {
           <p style={{ marginLeft: "10px" }}>와 함께 하세요.</p>
         </div>
         {!user && (
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div style={{ display: "flex", gap: "20px" }}>
             <Button
               onClick={() => navigate("/login")}
               style={{
-                width: "150px",
-                color: "pink",
+                width:"200px",
                 fontWeight: "bold",
-                background: "rgba(255,255,255,0.8)",
+                color: "white",
+                background: "#ff9f9f",
                 borderRadius: "20px",
               }}
+              size="large"
             >
               로그인
             </Button>
             <Button
               onClick={() => navigate("/Signup")}
               style={{
-                width: "150px",
-                color: "pink",
+                width: "200px",
                 fontWeight: "bold",
-                background: "rgba(255,255,255,0.8)",
+                color: "white",
+                background: "#ff9f9f",
                 borderRadius: "20px",
               }}
+              size="large"
             >
               회원가입
             </Button>

@@ -81,6 +81,7 @@ const Header = () => {
         alignItems: "center",
         justifyContent: "space-between", // 오른쪽 정렬을 위해 추가
         paddingRight: "40px",
+        height:"7vh"
       }}
     >
       <div className="demo-logo" style={{ paddingLeft: "40px" }}>

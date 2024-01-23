@@ -180,8 +180,9 @@ const PetCare = () => {
         style={{
           width: 700,
           height: 600,
-          background: "rgba(255, 255, 255, 0.8)",
+          background: "rgba(255, 255, 255, 0.6)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          borderRadius: "20px",
           position: "absolute",
           border: "none",
           textAlign: "center",
