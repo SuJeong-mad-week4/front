@@ -32,6 +32,8 @@ const PetCare = () => {
     { name: "Album2", url: "https://youtu.be/85km0nIrCGs?feature=shared" },
     { name: "Album3", url: "https://youtu.be/MjXeOAouF3w?feature=shared" },
   ]);
+  const [stretchingVideo, setStretchingVideo] = useState(null);
+  const [showStretchingModal, setShowStretchingModal] = useState(false);
 
   const handlePositiveMessage = () => {
     const positiveMessages = [
@@ -198,6 +200,23 @@ const PetCare = () => {
   const handleCancelCollect = () => {
     setShowCollectModal(false);
     // You might want to perform additional actions when canceling the collection
+  };
+
+  const handleStretchingActivity = () => {
+    // Set the YouTube video link for stretching
+    setStretchingVideo("https://youtu.be/nExNLE57EvI?feature=shared");
+    setShowStretchingModal(true);
+  };
+
+  const handleStretchingModalComplete = () => {
+    // Check if the video has ended before allowing completion
+    if (videoEnded) {
+      handleActivity(3); // Adjust the EXP increase as needed
+      setShowStretchingModal(false);
+      setStretchingVideo(null);
+    } else {
+      alert("영상이 다 끝난 후에 완료하기 버튼을 누를 수 있습니다.");
+    }
   };
 
   const calculateGrowthStage = (currentExp) => {
@@ -390,7 +409,7 @@ const PetCare = () => {
                   style={{
                     position: "absolute",
                     right: "100px",
-                    top: "100px",
+                    top: "80px",
                     width: "120px",
                     height: "120px",
                     background: "url('./images/chat2.png')",
@@ -415,10 +434,30 @@ const PetCare = () => {
                   fontWeight: "bold",
                   borderRadius: "20px",
                 }}
-                onClick={() => handleActivity(4)}
+                onClick={handleStretchingActivity}
               >
                 <SmileOutlined /> 스트레칭 +4
               </Button>
+              {stretchingVideo && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100vh",
+                  }}
+                >
+                  {/* Render YouTube video for stretching */}
+                  <ReactPlayer
+                    url={stretchingVideo}
+                    playing={playing}
+                    controls
+                    width="640px"
+                    height="360px"
+                    // Add other props as needed
+                  />
+                </div>
+              )}
             </div>
             <div style={{ marginTop: "20px" }}></div>
           </>
