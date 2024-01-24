@@ -3,6 +3,7 @@ import { Button, Card, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
+import "./PetCare.css";
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
@@ -11,14 +12,11 @@ const PetCare = () => {
   const [petName, setPetName] = useState("");
   const { user, setUser } = useContext(UserContext);
   const [showCollectModal, setShowCollectModal] = useState(false);
-  const [showCollectionModal, setShowCollectionModal] = useState(false);
   const [collectedPets, setCollectedPets] = useState([]);
   const [showMusicModal, setShowMusicModal] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, setAudio] = useState(new Audio());
-  const [progress, setProgress] = useState(0);
   const [albumRecommendations, setAlbumRecommendations] = useState([]);
   const [randomMessage, setRandomMessage] = useState("");
+  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
 
   const handlePositiveMessage = () => {
     const positiveMessages = [
@@ -30,6 +28,12 @@ const PetCare = () => {
     ];
     const randomIndex = Math.floor(Math.random() * positiveMessages.length);
     setRandomMessage(positiveMessages[randomIndex]);
+    setShowSpeechBubble(true);
+
+    setTimeout(() => {
+      setShowSpeechBubble(false);
+      setRandomMessage("");
+    }, 2000);
   };
 
   console.log(petData);
@@ -111,8 +115,6 @@ const PetCare = () => {
       setGrowthStage(calculateGrowthStage(response.data.exp));
       if (response.data.exp >= 100) {
         setShowCollectModal(true);
-      } else if (growthAmount === 2) {
-        setShowMusicModal(true);
       }
     } catch (error) {
       console.error("Error updating growth activity:", error);
@@ -120,15 +122,10 @@ const PetCare = () => {
   };
 
   const handleMusicModalComplete = () => {
+    console.log("before", exp);
+    handleActivity(2);
+    console.log("after", exp);
     setShowMusicModal(false);
-  };
-
-  const playAudio = () => {
-    setIsPlaying(true);
-  };
-
-  const pauseAudio = () => {
-    setIsPlaying(false);
   };
 
   const handleCollect = async () => {
@@ -190,13 +187,6 @@ const PetCare = () => {
     }
   };
 
-  const handleShowCollection = () => {
-    setShowCollectModal(true);
-  };
-  const handleCloseCollection = () => {
-    setShowCollectModal(false);
-  };
-
   return (
     <div
       style={{
@@ -212,13 +202,40 @@ const PetCare = () => {
       <Card
         style={{
           width: 700,
-          height: 600,
+          height: 100,
           background: "rgba(255, 255, 255, 0.6)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           borderRadius: "20px",
           position: "absolute",
           border: "none",
           textAlign: "center",
+          marginTop: "-540px",
+        }}
+      >
+        <p>펫 컬렉션</p>
+        <div style={{ display: "flex", overflowX: "auto" }}>
+          {/* Map through your collectedPets array and display each pet */}
+          {collectedPets.map((pet) => (
+            <img
+              key={pet.id}
+              src={`./images/adult1.png`} // Replace with the actual URL
+              alt={`Pet ${pet.id}`}
+              style={{ width: "100px", height: "100px", margin: "0 10px" }}
+            />
+          ))}
+        </div>
+      </Card>
+      <Card
+        style={{
+          width: 700,
+          height: 500,
+          background: "rgba(255, 255, 255, 0.6)",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          borderRadius: "20px",
+          position: "absolute",
+          border: "none",
+          textAlign: "center",
+          marginTop: "120px",
         }}
       >
         {user && user.currentPet ? (
@@ -244,7 +261,7 @@ const PetCare = () => {
             <img
               src={getGrowthImage()}
               alt="Pet"
-              style={{ width: 300, height: 300 }}
+              style={{ width: 260, height: 260 }}
             />
             <div
               style={{
@@ -253,7 +270,7 @@ const PetCare = () => {
               }}
             >
               <Progress
-                percent={(exp / 100) * 100}
+                percent={Number(((exp / 100) * 100).toFixed())}
                 status="active"
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
@@ -264,12 +281,12 @@ const PetCare = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: "40px",
+                marginTop: "30px",
               }}
             >
               <Button
                 type="primary"
-                onClick={() => handleActivity(2)}
+                onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
                   background: "#ff9f9f",
@@ -308,16 +325,22 @@ const PetCare = () => {
               >
                 <SmileOutlined /> 긍정적 말 듣기 +1
               </Button>
-              {randomMessage && (
+              {showSpeechBubble && randomMessage && (
                 <div
                   style={{
                     position: "absolute",
-                    right: "10px",
-                    top: "10px",
-                    background: "rgba(255, 255, 255, 0.8)",
+                    right: "100px",
+                    top: "100px",
+                    width: "120px",
+                    height: "120px",
+                    background: "url('./images/chat2.png')",
+                    backgroundSize: "cover",
                     padding: "10px",
                     borderRadius: "10px",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    animation: "speechBubbleFadeIn 0.5s ease-out",
                   }}
                 >
                   {randomMessage}
@@ -341,7 +364,7 @@ const PetCare = () => {
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={300} src="./images/questionmark.png" />
+            <img width={250} src="./images/questionmark.png" />
             <div
               style={{
                 display: "flex",

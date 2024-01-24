@@ -55,7 +55,7 @@ const TodayQA = () => {
         <div>
           <Image
             preview={false}
-            src='./images/쪽지.png'
+            src="./images/쪽지.png"
             onClick={handleImageClick}
             style={{
               cursor: "pointer",
@@ -75,7 +75,7 @@ const TodayQA = () => {
         >
           <Image
             preview={false}
-            src='./images/펼친쪽지.png'
+            src="./images/펼친쪽지.png"
             onClick={() => setIsFolded(true)}
             style={{
               cursor: "pointer",
@@ -97,13 +97,13 @@ const TodayQA = () => {
               {currentQuestion}
             </p>
             <Input
-              placeholder='답변을 입력하세요'
+              placeholder="답변을 입력하세요"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               style={{ width: "350px", marginLeft: "50px", marginTop: "50px" }}
             />
             <Button
-              type='primary'
+              type="primary"
               onClick={handleAnswerSave}
               style={{
                 color: "white",
