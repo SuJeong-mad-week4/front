@@ -1,7 +1,12 @@
-import { SmileOutlined } from "@ant-design/icons";
+import {
+  PauseCircleFilled,
+  PlayCircleFilled,
+  SmileOutlined,
+} from "@ant-design/icons";
 import { Button, Card, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import ReactPlayer from "react-player";
 import { UserContext } from "../App";
 import "./PetCare.css";
 
@@ -14,9 +19,19 @@ const PetCare = () => {
   const [showCollectModal, setShowCollectModal] = useState(false);
   const [collectedPets, setCollectedPets] = useState([]);
   const [showMusicModal, setShowMusicModal] = useState(false);
-  const [albumRecommendations, setAlbumRecommendations] = useState([]);
   const [randomMessage, setRandomMessage] = useState("");
   const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [currentSong, setCurrentSong] = useState(null);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const [actionCanceled, setActionCanceled] = useState(false);
+  const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [albumStates, setAlbumStates] = useState([false, false, false]);
+  const [albumRecommendations, setAlbumRecommendations] = useState([
+    { name: "Album1", url: "https://youtu.be/zsySLgXlfx4?feature=shared" },
+    { name: "Album2", url: "https://youtu.be/85km0nIrCGs?feature=shared" },
+    { name: "Album3", url: "https://youtu.be/MjXeOAouF3w?feature=shared" },
+  ]);
 
   const handlePositiveMessage = () => {
     const positiveMessages = [
@@ -34,6 +49,33 @@ const PetCare = () => {
       setShowSpeechBubble(false);
       setRandomMessage("");
     }, 2000);
+  };
+
+  const [videoDimensions, setVideoDimensions] = useState({
+    width: "100%",
+    height: "200px",
+  });
+
+  const handleAlbumClick = (url, index) => {
+    if (currentSong === url) {
+      // If the clicked album is the same as the current song, toggle play/pause
+      setPlaying((prevPlaying) => !prevPlaying);
+    } else {
+      // If a different album is clicked, start playing the new song
+      setCurrentSong(url);
+      setPlaying(true);
+    }
+    setVideoDimensions({ width: "50%", height: "300px" });
+    const newAlbumStates = albumStates.map((state, i) =>
+      i === index ? !state : false
+    );
+    setAlbumStates(newAlbumStates);
+  };
+
+  const handleCancelAction = () => {
+    setActionCanceled(true);
+    setShowMusicModal(false);
+    setCurrentSong(null);
   };
 
   console.log(petData);
@@ -122,10 +164,18 @@ const PetCare = () => {
   };
 
   const handleMusicModalComplete = () => {
-    console.log("before", exp);
-    handleActivity(2);
-    console.log("after", exp);
-    setShowMusicModal(false);
+    // Check if the video has ended before allowing completion
+    if (!actionCanceled && videoEnded) {
+      console.log("before", exp);
+      handleActivity(2);
+      console.log("after", exp);
+      setPlaying(false);
+      setShowMusicModal(false);
+      setCurrentSong(null);
+      setAlbumStates([false, false, false]);
+    } else if (!videoEnded && !actionCanceled) {
+      alert("노래가 다 끝난 후에 완료하기 버튼을 누를 수 있습니다.");
+    }
   };
 
   const handleCollect = async () => {
@@ -462,7 +512,7 @@ const PetCare = () => {
         >
           <Card
             style={{
-              width: 1000,
+              width: 900,
               padding: 20,
               textAlign: "center",
               background: "white",
@@ -470,37 +520,65 @@ const PetCare = () => {
             }}
           >
             <p style={{ fontSize: "20px" }}>이 노래를 들어보세요 !</p>
-            {/* Add your recommended albums here */}
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <img
-                src="./images/lany.png"
-                alt="Album 1"
-                style={{ width: "300px", height: "300px", cursor: "pointer" }}
-                onClick={() => handleMusicModalComplete()}
-              />
-              <img
-                src="./images/검치.png"
-                alt="Album 2"
-                style={{
-                  width: "300px",
-                  height: "300px",
-                  cursor: "pointer",
-                  marginLeft: "10px",
-                }}
-                onClick={() => handleMusicModalComplete()}
-              />
-              <img
-                src="./images/이무진.png"
-                alt="Album 3"
-                style={{
-                  width: "300px",
-                  height: "300px",
-                  cursor: "pointer",
-                  marginLeft: "10px",
-                }}
-                onClick={() => handleMusicModalComplete()}
-              />
+              {albumRecommendations.map((album, index) => (
+                <div
+                  key={index}
+                  style={{ position: "relative" }}
+                  onClick={() => handleAlbumClick(album.url, index)}
+                >
+                  <img
+                    src={`./images/${album.name}.png`}
+                    alt={`Album${index + 1}`}
+                    style={{
+                      width: "240px",
+                      height: "240px",
+                      cursor: "pointer",
+                      borderRadius: "20px",
+                      boxShadow: "0 4px 8px",
+                      filter: albumStates[index]
+                        ? "brightness(60%)"
+                        : "brightness(100%)",
+                    }}
+                  />
+                  {albumStates[index] ? (
+                    <PauseCircleFilled
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        fontSize: "48px",
+                      }}
+                    />
+                  ) : (
+                    <PlayCircleFilled
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        fontSize: "48px",
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
+            <Button
+              type="primary"
+              onClick={handleCancelAction}
+              style={{
+                color: "white",
+                background: "#ff9f9f",
+                borderRadius: "20px",
+                marginTop: "20px",
+              }}
+            >
+              취소하기
+            </Button>
             <Button
               type="primary"
               onClick={handleMusicModalComplete}
@@ -509,12 +587,37 @@ const PetCare = () => {
                 background: "#ff9f9f",
                 borderRadius: "20px",
                 marginTop: "20px",
+                marginLeft: "10px",
               }}
             >
               완료하기
             </Button>
           </Card>
         </div>
+      )}
+      {currentSong && (
+        <ReactPlayer
+          url={currentSong}
+          playing={playing}
+          controls
+          width={videoDimensions.width}
+          height={videoDimensions.height}
+          onEnded={() => {
+            setVideoEnded(true);
+            setPlaying(false);
+          }}
+          onPause={() => {
+            setVideoEnded(false);
+          }}
+          onProgress={(state) => setPlayedSeconds(state.playedSeconds)}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: -1,
+          }}
+        />
       )}
     </div>
   );
