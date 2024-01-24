@@ -14,7 +14,6 @@ const PetCare = () => {
   const [showCollectModal, setShowCollectModal] = useState(false);
   const [showCollectionModal, setShowCollectionModal] = useState(false);
   const [collectedPets, setCollectedPets] = useState([]);
-  const [isEggShaking, setIsEggShaking] = useState(false);
 
   console.log(petData);
 
@@ -56,15 +55,6 @@ const PetCare = () => {
     console.log("asdf", user);
   }, [exp, user]);
 
-  const handleEggClick = () => {
-    setIsEggShaking(true);
-
-    // 애니메이션을 일정 시간 후에 멈추도록 설정
-    setTimeout(() => {
-      setIsEggShaking(false);
-    }, 500); // 밀리초 단위로 조절하세요 (예: 500ms는 0.5초)
-  };
-
   const createPet = async () => {
     try {
       const response = await axios.post(
@@ -99,6 +89,7 @@ const PetCare = () => {
           exp: growthAmount,
         }
       );
+
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
