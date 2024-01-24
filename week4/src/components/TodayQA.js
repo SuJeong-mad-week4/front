@@ -44,8 +44,9 @@ const TodayQA = () => {
   return (
     <div
       style={{
-        height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
         position: "relative",
         textAlign: "center",
       }}
@@ -54,7 +55,7 @@ const TodayQA = () => {
         <div>
           <Image
             preview={false}
-            src="./images/쪽지.png"
+            src='./images/쪽지.png'
             onClick={handleImageClick}
             style={{
               cursor: "pointer",
@@ -74,7 +75,7 @@ const TodayQA = () => {
         >
           <Image
             preview={false}
-            src="./images/펼친쪽지.png"
+            src='./images/펼친쪽지.png'
             onClick={() => setIsFolded(true)}
             style={{
               cursor: "pointer",
@@ -96,13 +97,13 @@ const TodayQA = () => {
               {currentQuestion}
             </p>
             <Input
-              placeholder="답변을 입력하세요"
+              placeholder='답변을 입력하세요'
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               style={{ width: "350px", marginLeft: "50px", marginTop: "50px" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleAnswerSave}
               style={{
                 color: "white",
@@ -117,7 +118,7 @@ const TodayQA = () => {
         </div>
       )}
       <Button
-        type="primary"
+        type='primary'
         onClick={gotoList}
         style={{
           color: "white",

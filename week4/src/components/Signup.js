@@ -44,11 +44,11 @@ const Signup = () => {
 
   return (
     <Flex
-      gap="large"
-      wrap="wrap"
+      gap='large'
+      wrap='wrap'
       vertical
-      justify="center"
-      align="flex-start"
+      justify='center'
+      align='flex-start'
       style={{
         height: "100vh",
         backgroundImage: `url(./images/home.png)`,
@@ -73,7 +73,7 @@ const Signup = () => {
       >
         <h2>회원가입</h2>
         <Input
-          placeholder="아이디"
+          placeholder='아이디'
           style={{
             width: "100%",
             marginBottom: "10px",
@@ -83,13 +83,13 @@ const Signup = () => {
           onChange={(e) => setId(e.target.value)}
         />
         <Input
-          placeholder="이름"
+          placeholder='이름'
           style={{ width: "100%", marginBottom: "10px", borderRadius: "10px" }}
           onChange={(e) => setNickname(e.target.value)}
         />
         <Input
-          placeholder="비밀번호"
-          type="password"
+          placeholder='비밀번호'
+          type='password'
           style={{ width: "100%", marginBottom: "10px", borderRadius: "10px" }}
           onChange={(e) => setPassword(e.target.value)}
         />

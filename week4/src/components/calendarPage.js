@@ -102,7 +102,7 @@ const CalendarPage = () => {
   const { user, setUser } = useContext(UserContext);
 
   const today = new Date(); // 현재 날짜와 시간을 생성합니다.
-  console.log("오늘 날짜는요", today);
+
   const today_year = today.getFullYear(); // 현재 연도를 얻습니다.
   const today_month = today.getMonth() + 1; // 월을 얻습니다. 주의: getMonth()는 0부터 시작하기 때문에 1을 더해야 합니다.
   const today_day = today.getDate(); // 일을 얻습니다.
@@ -144,6 +144,11 @@ const CalendarPage = () => {
   const formatedToday = formatDate(today_year, today_month, today_day);
 
   useEffect(() => {
+    console.log("??");
+  }, []);
+
+  useEffect(() => {
+    console.log("????");
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -166,6 +171,7 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
+    console.log("nn???");
     // 비동기 요청을 수행하는 함수
     const fetchData = async () => {
       if (user) {
@@ -198,6 +204,7 @@ const CalendarPage = () => {
   }, [user, change]);
 
   useEffect(() => {
+    console.log(":<");
     try {
       const { response } = axios.get(
         `http://143.248.196.134:8080/calendar/get?userId=${user.id}&moodDate=${formatedToday}`
@@ -214,8 +221,9 @@ const CalendarPage = () => {
       justify="center"
       align="center"
       style={{
-        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)",
-        height: "95vh",
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
       }}
     >
       <Flex gap="middle">
@@ -389,7 +397,7 @@ const CalendarPage = () => {
                   <Flex vertical justify="space-between" align="center">
                     <Text>{item.mood}</Text>
                     <Progress
-                      status="active"
+                      status='active'
                       percent={item.percentage}
                       strokeColor={{ "0%": "#ffc839", "100%": "#ff6666" }}
                     />
@@ -397,9 +405,9 @@ const CalendarPage = () => {
                 );
               })}
               <Card style={{ height: 150, margin: 10 }}>
-                {moodSummary[0].percentage === 100 && user
-                  ? `이 달은 늘 행복하셨군요. Simley는 ${user.nickname}님이 늘 행복하길 바라요.`
-                  : `이 달도 수고 많았어요. Simley는 ${user.nickname}님이 늘 행복하도록 노력할게요.`}
+                {user && moodSummary[0].percentage === 100
+                  ? `이 달은 늘 행복하셨군요. Simley는 ${user?.nickname}님이 늘 행복하길 바라요.`
+                  : `이 달도 수고 많았어요. Simley는 ${user?.nickname}님이 늘 행복하도록 노력할게요.`}
               </Card>
               {addShow ? (
                 <Button

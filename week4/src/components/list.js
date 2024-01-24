@@ -6,7 +6,9 @@ const List = ({ questions }) => {
     <div
       style={{
         height: "100vh",
-        background: `linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)`,
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
         position: "relative",
         textAlign: "center",
       }}

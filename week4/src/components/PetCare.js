@@ -89,7 +89,6 @@ const PetCare = () => {
           exp: growthAmount,
         }
       );
-
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -170,9 +169,10 @@ const PetCare = () => {
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)",
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
         position: "relative",
-        height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -212,7 +212,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage()}
-              alt="Pet"
+              alt='Pet'
               style={{ width: 300, height: 300 }}
             />
             <div
@@ -237,7 +237,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => handleActivity(2)}
                 style={{
                   color: "white",
@@ -249,7 +249,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -262,7 +262,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -275,7 +275,7 @@ const PetCare = () => {
                 <SmileOutlined /> 긍정적 말 듣기 +1
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -288,11 +288,18 @@ const PetCare = () => {
                 <SmileOutlined /> 스트레칭 +4
               </Button>
             </div>
+            <div style={{ marginTop: "20px" }}>
+              <Progress
+                percent={(exp / 100) * 100}
+                status='active'
+                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
+              />
+            </div>
             <div style={{ marginTop: "20px" }}></div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={300} src="./images/questionmark.png" />
+            <img width={300} src='./images/questionmark.png' />
             <div
               style={{
                 display: "flex",
@@ -301,8 +308,8 @@ const PetCare = () => {
               }}
             >
               <input
-                type="text"
-                placeholder="펫 이름을 입력해주세요"
+                type='text'
+                placeholder='펫 이름을 입력해주세요'
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{ marginTop: "10px", textAlign: "center" }}
@@ -346,11 +353,11 @@ const PetCare = () => {
           >
             <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
-              src="./images/final1.png"
+              src='./images/final1.png'
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCollect}
               style={{
                 color: "white",
