@@ -117,7 +117,7 @@ const TodayQA = () => {
           </div>
         </div>
       )}
-      <Button
+      {/* <Button
         type='primary'
         onClick={gotoList}
         style={{
@@ -129,7 +129,7 @@ const TodayQA = () => {
         }}
       >
         리스트 보기
-      </Button>
+      </Button> */}
     </div>
   );
 };

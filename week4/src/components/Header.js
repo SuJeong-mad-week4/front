@@ -1,15 +1,17 @@
 // Header.js
-import { Button, Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu, Image, Flex, Typography } from "antd";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import { UserContext } from "../App";
 import "./Header.css";
+import { CloseOutlined } from "@ant-design/icons";
+
+const { Text, Title } = Typography;
 
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
   { key: 1, label: `무드 캘린더`, path: "/calendar" },
   { key: 2, label: "오늘의 질문", path: "/TodayQA" },
-  { key: 3, label: `로그인` },
 ];
 
 const Header = () => {
@@ -45,31 +47,41 @@ const Header = () => {
   };
 
   const profileMenu = (
-    <Menu>
-      <Menu.Item>
-        {user ? (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span>{user.nickname}</span>
-            <div style={{ marginLeft: "auto" }}>
-              <Button type='link' onClick={handleCloseProfile}>
-                닫기
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <span>로그인 필요</span>
-        )}
-      </Menu.Item>
-      <Menu.Item>
-        {user && (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Button onClick={handleLogout}>로그아웃</Button>
-          </div>
-        )}
-      </Menu.Item>
-      {/* 다른 프로필 메뉴 아이템들을 추가할 수 있습니다. */}
+    <Menu
+      style={{
+        borderRadius: "10px",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
+        marginTop: 5,
+        padding: 20,
+      }}
+    >
+      <CloseOutlined
+        size={"large"}
+        style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10}}
+        onClick={handleCloseProfile}
+      />
+      <Flex vertical gap={10}>
+        <Flex gap={10} justify='center' align='center'>
+          <Text>{user?.nickname}</Text>
+          <Text type='secondary' style={{ fontSize: 12 }}>
+            @{user?.loginId}
+          </Text>
+        </Flex>
+        <Button
+          block={true}
+          style={{
+            color: "white",
+            background: "#ff9f9f",
+          }}
+          shape='round'
+          onClick={handleLogout}
+        >
+          로그아웃
+        </Button>
+      </Flex>
     </Menu>
   );
+
   if (!user) {
     return null;
   }
@@ -83,25 +95,35 @@ const Header = () => {
         justifyContent: "space-between", // 오른쪽 정렬을 위해 추가
         paddingRight: "40px",
         height: "7vh",
-        boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.2)", // Add box-shadow here
-        zIndex: 10, // Set a higher z-index value
-        
-    overflow: "visible", // or overflow: "inherit"
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.8)", // Add box-shadow here
+        overflow: "visible", // or overflow: "inherit"
       }}
     >
       <div className='demo-logo' style={{ paddingLeft: "40px" }}>
-        <Button
-          type='text'
+        <Flex
+          justifyContent='center'
+          align='center'
           onClick={handleLogoClick}
           style={{
-            color: "black",
-            fontWeight: "bold",
-            fontSize: "18px",
-            textAlign: "center",
+            width: "auto",
+            cursor: "pointer", // Change cursor to 'pointer' on hover
           }}
         >
-          Simley Smiley
-        </Button>
+          <Image src='./images/logo.png' width={40} preview={false} />
+          <Text
+            style={{
+              whiteSpace: "nowrap", // Prevent text from wrapping
+              overflow: "hidden", // Hide overflowing text
+              textOverflow: "ellipsis", // Show ellipsis for overflow
+              color: "black",
+              fontWeight: "800",
+              fontSize: "18px",
+              marginLeft: 20,
+            }}
+          >
+            {"Simley : )"}
+          </Text>
+        </Flex>
       </div>
       <Menu
         theme='light'
@@ -111,7 +133,8 @@ const Header = () => {
           height: "100%",
           display: "flex",
           width: "100%",
-          justifyContent: "flex-end", // 오른쪽 정렬을 위해 추가
+          fontSize: "16px",
+          justifyContent: "center", // 오른쪽 정렬을 위해 추가
         }}
       >
         {items.map((item) => (
@@ -123,17 +146,43 @@ const Header = () => {
             }}
             onClick={() => handleMenuItemClick(item.key)}
           >
-            {item.key === 3 && user ? (
-              // 프로필 버튼인 경우, 로그인한 경우에만 닉네임 표시
-              <Dropdown overlay={profileMenu} visible={showProfile}>
-                <span>{user.nickname}</span>
-              </Dropdown>
-            ) : (
-              <span>{item.label}</span>
-            )}
+            <span>{item.label}</span>
           </Menu.Item>
         ))}
       </Menu>
+      {user ? (
+        // 프로필 버튼인 경우, 로그인한 경우에만 닉네임 표시
+        <Dropdown
+          overlay={profileMenu}
+          visible={showProfile}
+          onClick={() => setShowProfile(!showProfile)}
+        >
+          <Flex
+            justifyContent='center'
+            align='center'
+            style={{
+              width: "auto",
+              cursor: "pointer", // Change cursor to 'pointer' on hover
+              alignContent: "center",
+            }}
+          >
+            <Image src='./images/user.png' width={40} preview={false} />
+            <Text
+              style={{
+                fontSize: 16,
+                marginLeft: 10,
+                whiteSpace: "nowrap", // Prevent text from wrapping
+                overflow: "hidden", // Hide overflowing text
+                textOverflow: "ellipsis", // Show ellipsis for overflow
+              }}
+            >
+              {user?.nickname} 님
+            </Text>
+          </Flex>
+        </Dropdown>
+      ) : (
+        "로그인 해주세요."
+      )}
     </header>
   );
 };

@@ -67,7 +67,7 @@ const Login = () => {
           background: "rgba(255, 255, 255, 0.6)",
           padding: "40px",
           borderRadius: "8px",
-          boxShadow: "0 4px 4px rgba(0, 0, 0, 0.5)",
+          boxShadow: "0 4px 4px rgba(0, 0, 0, 0.2)",
           display: "flex",
           flexDirection: "column", // 세로 정렬을 위해 추가
           alignItems: "center", // 가운데 정렬을 위해 추가
