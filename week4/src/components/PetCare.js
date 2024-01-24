@@ -14,7 +14,8 @@ const PetCare = () => {
   const [showCollectModal, setShowCollectModal] = useState(false);
   const [showCollectionModal, setShowCollectionModal] = useState(false);
   const [collectedPets, setCollectedPets] = useState([]);
-  const [isEggShaking, setIsEggShaking] = useState(false);
+
+  console.log(petData);
 
   useEffect(() => {
     const fetchCollection = async () => {
@@ -53,15 +54,6 @@ const PetCare = () => {
     }
     console.log("asdf", user);
   }, [exp, user]);
-
-  const handleEggClick = () => {
-    setIsEggShaking(true);
-
-    // 애니메이션을 일정 시간 후에 멈추도록 설정
-    setTimeout(() => {
-      setIsEggShaking(false);
-    }, 500); // 밀리초 단위로 조절하세요 (예: 500ms는 0.5초)
-  };
 
   const createPet = async () => {
     try {
@@ -217,11 +209,25 @@ const PetCare = () => {
             >
               {user ? `${user.nickname}의 펫` : "펫"}
             </p>
+
             <img
               src={getGrowthImage()}
               alt='Pet'
               style={{ width: 300, height: 300 }}
             />
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: "10px",
+              }}
+            >
+              <Progress
+                percent={(exp / 100) * 100}
+                status="active"
+                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
+                style={{ width: "400px" }}
+              />
+            </div>
             <div
               style={{
                 display: "flex",
@@ -289,6 +295,7 @@ const PetCare = () => {
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
               />
             </div>
+            <div style={{ marginTop: "20px" }}></div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
@@ -344,7 +351,7 @@ const PetCare = () => {
               background: "white",
             }}
           >
-            <p>망곰을 컬렉션에 저장하시겠습니까?</p>
+            <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
               src='./images/final1.png'
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
