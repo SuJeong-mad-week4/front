@@ -25,6 +25,7 @@ const TodayQA = () => {
   const [formatedToday, setFormatedToday] = useState(null);
   const [answer, setAnswer] = useState("");
   const seedrandom = require("seedrandom"); // 라이브러리를 불러옵니다.
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -97,6 +98,10 @@ const TodayQA = () => {
         }
       );
       console.log("", response.data);
+      setSaved(true);
+      setTimeout(() => {
+        window.location.href = "/today/answer"; // 또는 원하는 경로로 변경
+      }, 1000); // 1000 밀리초(1초)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -104,24 +109,32 @@ const TodayQA = () => {
 
   return (
     <>
-      <Alert
-        closable
-        style={{
-          display: "flex",
-          width: 500,
-          height: 100,
-          position: "absolute",
-          left: "10%",
-          background: "white",
-          borderRadius: 20,
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-          textAlign: "center",
-          fontSize: 16,
-        }}
-        type='success'
-        description='오늘의 질문이 저장되었습니다.'
-        banner
-      />
+      {saved ? (
+        <Alert
+          closable
+          style={{
+            display: "flex",
+            justifyContent: "center", // 수직 가운데 정렬
+            alignItems: "center", // 수평 가운데 정렬
+            width: 500,
+            height: 100,
+            position: "fixed",
+            top: "15%",
+            left: "50%",
+            borderRadius: 20,
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+            textAlign: "center",
+            fontSize: 16,
+            margin: "auto",
+            transform: "translate(-50%, -50%)",
+            background: "rgba(255, 237, 191, 0.8)",
+          }}
+          type='success'
+          description='오늘의 질문이 저장되었습니다.'
+          banner
+        />
+      ) : null}
+
       <Flex
         justify='center'
         align='center'
@@ -195,7 +208,7 @@ const TodayQA = () => {
                     textAlign: "center",
                     fontSize: 16,
                     display: "flex",
-
+                    justifyContent: "center",
                     alignItems: "center",
                     marginBottom: 100,
                   }}
@@ -203,8 +216,18 @@ const TodayQA = () => {
                 >
                   오늘의 질문을 이미 답변했어요.
                   <br />
-                  다음날 다시 날라오는 종이비행기를 기다려주세요.
+                  다음날 다시 날아오는 종이비행기를 기다려주세요.
                 </Card>
+                <Image
+                  src='/images/paperAirplane.png'
+                  width={500}
+                  preview={false}
+                  style={{
+                    // 금지
+                    cursor: "not-allowed",
+                    opacity: "0.4",
+                  }}
+                />
               </Flex>
             ) : (
               <Flex justify='flex-end' align='center' vertical>
@@ -236,6 +259,7 @@ const TodayQA = () => {
                   }}
                   onClick={() => {
                     setAnswerShow(true);
+                    setSaved(false);
                   }}
                 />
               </Flex>
