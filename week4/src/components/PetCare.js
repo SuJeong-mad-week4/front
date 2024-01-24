@@ -16,11 +16,13 @@ const PetCare = () => {
   const [collectedPets, setCollectedPets] = useState([]);
   const [isEggShaking, setIsEggShaking] = useState(false);
 
+  console.log(petData);
+
   useEffect(() => {
     const fetchCollection = async () => {
       try {
         const response = await axios.get(
-          "http://143.248.196.72:8080/pet/collection",
+          "http://143.248.196.134:8080/pet/collection",
           {
             params: { loginId: user.id },
           }
@@ -33,9 +35,12 @@ const PetCare = () => {
     // 유저 정보를 서버에서 가져오는 함수
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://143.248.196.72:8080/pet/get", {
-          params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
-        });
+        const response = await axios.get(
+          "http://143.248.196.134:8080/pet/get",
+          {
+            params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
+          }
+        );
         setPetData(response.data);
         setExp(response.data.exp);
         setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -63,7 +68,7 @@ const PetCare = () => {
   const createPet = async () => {
     try {
       const response = await axios.post(
-        "http://143.248.196.72:8080/pet/create",
+        "http://143.248.196.134:8080/pet/create",
         {
           userId: user.id,
           nickname: petName,
@@ -86,11 +91,14 @@ const PetCare = () => {
     const newExp = exp + growthAmount;
 
     try {
-      const response = await axios.post("http://143.248.196.72:8080/pet/grow", {
-        loginId: user.id,
-        petId: user.currentPet,
-        exp: growthAmount,
-      });
+      const response = await axios.post(
+        "http://143.248.196.134:8080/pet/grow",
+        {
+          loginId: user.id,
+          petId: user.currentPet,
+          exp: growthAmount,
+        }
+      );
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -104,9 +112,12 @@ const PetCare = () => {
 
   const handleCollect = async () => {
     try {
-      const response = await axios.post("http://143.248.196.72:8080/pet/save", {
-        userId: user.id,
-      });
+      const response = await axios.post(
+        "http://143.248.196.134:8080/pet/save",
+        {
+          userId: user.id,
+        }
+      );
 
       await setUser((prevUser) => ({
         ...prevUser,
@@ -207,11 +218,25 @@ const PetCare = () => {
             >
               {user ? `${user.nickname}의 펫` : "펫"}
             </p>
+
             <img
               src={getGrowthImage()}
               alt="Pet"
               style={{ width: 300, height: 300 }}
             />
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: "10px",
+              }}
+            >
+              <Progress
+                percent={(exp / 100) * 100}
+                status="active"
+                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
+                style={{ width: "400px" }}
+              />
+            </div>
             <div
               style={{
                 display: "flex",
@@ -272,13 +297,7 @@ const PetCare = () => {
                 <SmileOutlined /> 스트레칭 +4
               </Button>
             </div>
-            <div style={{ marginTop: "20px" }}>
-              <Progress
-                percent={(exp / 100) * 100}
-                status="active"
-                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
-              />
-            </div>
+            <div style={{ marginTop: "20px" }}></div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
@@ -334,7 +353,7 @@ const PetCare = () => {
               background: "white",
             }}
           >
-            <p>망곰을 컬렉션에 저장하시겠습니까?</p>
+            <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
               src="./images/final1.png"
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}

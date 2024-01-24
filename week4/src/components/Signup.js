@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSignupButtonClick = async () => {
     // 클라이언트에서 Axios를 사용하여 서버로 회원가입 정보 전송
     await axios
-      .post("http://143.248.196.72:8080/user/sign-up", {
+      .post("http://143.248.196.134:8080/user/sign-up", {
         loginId: id,
         nickname: nickname,
         password: password,

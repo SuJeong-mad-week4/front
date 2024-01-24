@@ -15,7 +15,7 @@ const Login = () => {
   const handleLoginButtonClick = async () => {
     try {
       const response = await axios.post(
-        "http://143.248.196.72:8080/user/login",
+        "http://143.248.196.134:8080/user/login",
         {
           loginId: id,
           password: password,
