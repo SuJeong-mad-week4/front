@@ -332,8 +332,8 @@ const CalendarPage = () => {
           {selectedMood ? (
             <Modal
               closeIcon={false}
-              okButtonProps={{ disabled: selectedMood.content ? false : true }}
-              cancelButtonProps={{ visible: false }}
+              okButtonProps={{ disabled: selectedMood.content ? false : true, shape: 'round' }}
+              cancelButtonProps={{ visible: false, shape: 'round'}}
               okText="감정 쓰레기 통으로"
               cancelText="취소"
               title={`${selectedMood.moodDate.substring(0, 10)}의 기분 기록`}

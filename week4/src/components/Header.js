@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import { UserContext } from "../App";
 import "./Header.css";
 import { CloseOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 
 const { Text, Title } = Typography;
 
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
   { key: 1, label: `무드 캘린더`, path: "/calendar" },
-  { key: 2, label: "오늘의 질문", path: "/TodayQA" },
+  { key: 2, label: "오늘의 질문", path: "/today/answer" },
 ];
 
 const Header = () => {
@@ -19,15 +20,34 @@ const Header = () => {
   const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate(); // useNavigate 추가
 
+  const dropdownRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
   const handleMenuItemClick = (key) => {
-    if (key === 3) {
-      setShowProfile(!showProfile);
-      console.log("프로필 열림", showProfile);
+    if (key === 2) {
+      setVisible(true);
     } else if (items.some((item) => item.key === key && item.path)) {
       // path가 있는 경우 해당 path로 navigate
       navigate(items.find((item) => item.key === key && item.path).path);
     }
   };
+  const handleDropdownItemClick = (menuKey) => {
+    setVisible(false); // 드롭다운 메뉴 숨기기
+    if (menuKey === "answer") {
+      navigate("today/answer");
+    } else if (menuKey === "list") {
+      navigate("today/list");
+    }
+  };
+
+  const menu = (
+    <Menu 
+    style={{borderRadius: "10px", boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)", marginTop: 5, padding: 20,}}
+    onClick={({ key }) => handleDropdownItemClick(key)}>
+      <Menu.Item key='answer'>답변하기</Menu.Item>
+      <Menu.Item key='list'>리스트보기</Menu.Item>
+    </Menu>
+  );
 
   const handleCloseProfile = () => {
     setShowProfile(false);
@@ -57,7 +77,11 @@ const Header = () => {
     >
       <CloseOutlined
         size={"large"}
-        style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10}}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: 10,
+        }}
         onClick={handleCloseProfile}
       />
       <Flex vertical gap={10}>
@@ -137,18 +161,45 @@ const Header = () => {
           justifyContent: "center", // 오른쪽 정렬을 위해 추가
         }}
       >
-        {items.map((item) => (
-          <Menu.Item
-            key={item.key}
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-            onClick={() => handleMenuItemClick(item.key)}
-          >
-            <span>{item.label}</span>
-          </Menu.Item>
-        ))}
+        {items.map((item) => {
+          if (item.key === 2) {
+            return (
+              <Menu.Item
+                key={item.key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                onClick={() => setVisible(!visible)}
+              >
+                <Dropdown
+                overlay={menu}
+                visible={visible}
+                onVisibleChange={(visible) => setVisible(visible)}
+                trigger={["click"]}
+                ref={dropdownRef}
+              >
+                <Text style={{
+                  fontSize: "16px",}}>하루 질문</Text>
+              </Dropdown>
+              </Menu.Item>
+              
+            );
+          } else {
+            return (
+              <Menu.Item
+                key={item.key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                onClick={() => handleMenuItemClick(item.key)}
+              >
+                <span>{item.label}</span>
+              </Menu.Item>
+            );
+          }
+        })}
       </Menu>
       {user ? (
         // 프로필 버튼인 경우, 로그인한 경우에만 닉네임 표시

@@ -1,0 +1,20 @@
+.ant-card{
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border-radius: 10px !important;
+  border: 0px !important;
+}
+
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slideUpFadeIn {
+  animation: slideUpFadeIn 1s ease-out forwards;
+}
