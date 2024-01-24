@@ -51,7 +51,7 @@ const Signup = () => {
       align='flex-start'
       style={{
         height: "100vh",
-        backgroundImage: `url(./images/home.png)`,
+        backgroundImage: `url(/images/home.png)`,
         backgroundSize: "cover",
       }}
     >

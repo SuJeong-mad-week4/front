@@ -9,12 +9,15 @@
     "antd": "^5.13.2",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
+    "rc-virtual-list": "^3.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-player": "^2.14.1",
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
     "react-youtube": "^10.1.0",
+    "seedrandom": "^3.0.5",
     "three": "^0.160.1",
     "web-vitals": "^2.1.4"
   },
@@ -41,5 +44,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "imagemin": "^8.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^10.0.1"
   }
 }
