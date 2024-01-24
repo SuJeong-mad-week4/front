@@ -3,6 +3,7 @@ import { Button, Dropdown, Menu } from "antd";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import { UserContext } from "../App";
+import "./Header.css";
 
 const items = [
   { key: 0, label: `펫 키우기`, path: "/petcare" },
@@ -50,7 +51,7 @@ const Header = () => {
           <div style={{ display: "flex", alignItems: "center" }}>
             <span>{user.nickname}</span>
             <div style={{ marginLeft: "auto" }}>
-              <Button type="link" onClick={handleCloseProfile}>
+              <Button type='link' onClick={handleCloseProfile}>
                 닫기
               </Button>
             </div>
@@ -81,12 +82,16 @@ const Header = () => {
         alignItems: "center",
         justifyContent: "space-between", // 오른쪽 정렬을 위해 추가
         paddingRight: "40px",
-        height:"7vh"
+        height: "7vh",
+        boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.2)", // Add box-shadow here
+        zIndex: 10, // Set a higher z-index value
+        
+    overflow: "visible", // or overflow: "inherit"
       }}
     >
-      <div className="demo-logo" style={{ paddingLeft: "40px" }}>
+      <div className='demo-logo' style={{ paddingLeft: "40px" }}>
         <Button
-          type="text"
+          type='text'
           onClick={handleLogoClick}
           style={{
             color: "black",
@@ -99,19 +104,23 @@ const Header = () => {
         </Button>
       </div>
       <Menu
-        theme="light"
-        mode="horizontal"
+        theme='light'
+        mode='horizontal'
         defaultSelectedKeys={["3"]}
         style={{
-          flex: 1,
-          minWidth: 0,
+          height: "100%",
           display: "flex",
+          width: "100%",
           justifyContent: "flex-end", // 오른쪽 정렬을 위해 추가
         }}
       >
         {items.map((item) => (
           <Menu.Item
             key={item.key}
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
             onClick={() => handleMenuItemClick(item.key)}
           >
             {item.key === 3 && user ? (

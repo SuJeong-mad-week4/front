@@ -20,7 +20,7 @@ const PetCare = () => {
     const fetchCollection = async () => {
       try {
         const response = await axios.get(
-          "http://143.248.196.72:8080/pet/collection",
+          "http://143.248.196.134:8080/pet/collection",
           {
             params: { loginId: user.id },
           }
@@ -33,9 +33,12 @@ const PetCare = () => {
     // 유저 정보를 서버에서 가져오는 함수
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://143.248.196.72:8080/pet/get", {
-          params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
-        });
+        const response = await axios.get(
+          "http://143.248.196.134:8080/pet/get",
+          {
+            params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
+          }
+        );
         setPetData(response.data);
         setExp(response.data.exp);
         setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -63,7 +66,7 @@ const PetCare = () => {
   const createPet = async () => {
     try {
       const response = await axios.post(
-        "http://143.248.196.72:8080/pet/create",
+        "http://143.248.196.134:8080/pet/create",
         {
           userId: user.id,
           nickname: petName,
@@ -86,11 +89,14 @@ const PetCare = () => {
     const newExp = exp + growthAmount;
 
     try {
-      const response = await axios.post("http://143.248.196.72:8080/pet/grow", {
-        loginId: user.id,
-        petId: user.currentPet,
-        exp: growthAmount,
-      });
+      const response = await axios.post(
+        "http://143.248.196.134:8080/pet/grow",
+        {
+          loginId: user.id,
+          petId: user.currentPet,
+          exp: growthAmount,
+        }
+      );
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -104,9 +110,12 @@ const PetCare = () => {
 
   const handleCollect = async () => {
     try {
-      const response = await axios.post("http://143.248.196.72:8080/pet/save", {
-        userId: user.id,
-      });
+      const response = await axios.post(
+        "http://143.248.196.134:8080/pet/save",
+        {
+          userId: user.id,
+        }
+      );
 
       await setUser((prevUser) => ({
         ...prevUser,
@@ -168,9 +177,10 @@ const PetCare = () => {
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)",
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
         position: "relative",
-        height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -209,7 +219,7 @@ const PetCare = () => {
             </p>
             <img
               src={getGrowthImage()}
-              alt="Pet"
+              alt='Pet'
               style={{ width: 300, height: 300 }}
             />
             <div
@@ -221,7 +231,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => handleActivity(2)}
                 style={{
                   color: "white",
@@ -233,7 +243,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -246,7 +256,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -259,7 +269,7 @@ const PetCare = () => {
                 <SmileOutlined /> 긍정적 말 듣기 +1
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -275,14 +285,14 @@ const PetCare = () => {
             <div style={{ marginTop: "20px" }}>
               <Progress
                 percent={(exp / 100) * 100}
-                status="active"
+                status='active'
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
               />
             </div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={300} src="./images/questionmark.png" />
+            <img width={300} src='./images/questionmark.png' />
             <div
               style={{
                 display: "flex",
@@ -291,8 +301,8 @@ const PetCare = () => {
               }}
             >
               <input
-                type="text"
-                placeholder="펫 이름을 입력해주세요"
+                type='text'
+                placeholder='펫 이름을 입력해주세요'
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{ marginTop: "10px", textAlign: "center" }}
@@ -336,11 +346,11 @@ const PetCare = () => {
           >
             <p>망곰을 컬렉션에 저장하시겠습니까?</p>
             <img
-              src="./images/final1.png"
+              src='./images/final1.png'
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCollect}
               style={{
                 color: "white",

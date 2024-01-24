@@ -45,7 +45,7 @@ const CalendarPage = () => {
   };
   const showMood = async (date, { source }) => {
     const response = await axios.get(
-      `http://143.248.196.72:8080/calendar/get?userId=${
+      `http://143.248.196.134:8080/calendar/get?userId=${
         user.id
       }&moodDate=${formatDate(date.year(), date.month() + 1, date.date())}`
     );
@@ -61,7 +61,7 @@ const CalendarPage = () => {
       return;
     }
     try {
-      await axios.post(`http://143.248.196.72:8080/calendar/create`, {
+      await axios.post(`http://143.248.196.134:8080/calendar/create`, {
         userId: user.id,
         moodDate: formatedToday,
         mood: mood,
@@ -78,7 +78,7 @@ const CalendarPage = () => {
     const deleteMood = async () => {
       try {
         console.log(user.id, selectedMood);
-        await axios.post(`http://143.248.196.72:8080/calendar/delete`, {
+        await axios.post(`http://143.248.196.134:8080/calendar/delete`, {
           userId: user.id,
           moodDate: selectedMood.moodDate,
         });
@@ -102,7 +102,7 @@ const CalendarPage = () => {
   const { user, setUser } = useContext(UserContext);
 
   const today = new Date(); // 현재 날짜와 시간을 생성합니다.
-  
+
   const today_year = today.getFullYear(); // 현재 연도를 얻습니다.
   const today_month = today.getMonth() + 1; // 월을 얻습니다. 주의: getMonth()는 0부터 시작하기 때문에 1을 더해야 합니다.
   const today_day = today.getDate(); // 일을 얻습니다.
@@ -144,11 +144,11 @@ const CalendarPage = () => {
   const formatedToday = formatDate(today_year, today_month, today_day);
 
   useEffect(() => {
-    console.log("??")
-  },[]);
+    console.log("??");
+  }, []);
 
   useEffect(() => {
-    console.log("????")
+    console.log("????");
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -158,7 +158,7 @@ const CalendarPage = () => {
   const showMoodSummary = async (date) => {
     if (user) {
       const moodSummary = await axios.get(
-        `http://143.248.196.72:8080/calendar/summarize?userId=${
+        `http://143.248.196.134:8080/calendar/summarize?userId=${
           user.id
         }&moodDate=${formatDate(
           date.year(),
@@ -171,13 +171,13 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
-    console.log("nn???")
+    console.log("nn???");
     // 비동기 요청을 수행하는 함수
     const fetchData = async () => {
       if (user) {
         try {
           const response = await axios.get(
-            `http://143.248.196.72:8080/calendar?userId=${user.id}`
+            `http://143.248.196.134:8080/calendar?userId=${user.id}`
           );
           setListData(response.data); // 데이터를 상태에 저장
 
@@ -188,7 +188,7 @@ const CalendarPage = () => {
           // 상태 업데이트
           setAddShow(!todayData);
           const moodSummary = await axios.get(
-            `http://143.248.196.72:8080/calendar/summarize?userId=${
+            `http://143.248.196.134:8080/calendar/summarize?userId=${
               user.id
             }&moodDate=${formatedToday.substring(0, 7)}`
           );
@@ -204,10 +204,10 @@ const CalendarPage = () => {
   }, [user, change]);
 
   useEffect(() => {
-    console.log(":<")
+    console.log(":<");
     try {
       const { response } = axios.get(
-        `http://143.248.196.72:8080/calendar/get?userId=${user.id}&moodDate=${formatedToday}`
+        `http://143.248.196.134:8080/calendar/get?userId=${user.id}&moodDate=${formatedToday}`
       );
       setAddShow(true);
     } catch (error) {
@@ -221,8 +221,9 @@ const CalendarPage = () => {
       justify='center'
       align='center'
       style={{
-        background: "linear-gradient(to bottom, #ff9f9f, #ffedbf 100%)",
-        height: "95vh",
+        background:
+          "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
+        height: "93vh",
       }}
     >
       <Flex gap='middle'>
@@ -378,7 +379,11 @@ const CalendarPage = () => {
         </Flex>
         <Flex>
           <Card
-            title={selectedDate ? `${selectedDate.month() + 1}월의 통계` : `${today_month}월의 통계`}
+            title={
+              selectedDate
+                ? `${selectedDate.month() + 1}월의 통계`
+                : `${today_month}월의 통계`
+            }
             style={{
               width: 300,
               background: "rgba(255, 255, 255, 0.6)",
@@ -392,15 +397,15 @@ const CalendarPage = () => {
                   <Flex vertical justify='space-between' align='center'>
                     <Text>{item.mood}</Text>
                     <Progress
-                    status="active"
+                      status='active'
                       percent={item.percentage}
-                      strokeColor={{"0%": "#ffc839", "100%": "#ff6666"}}
+                      strokeColor={{ "0%": "#ffc839", "100%": "#ff6666" }}
                     />
                   </Flex>
                 );
               })}
               <Card style={{ height: 150, margin: 10 }}>
-                {( user && (moodSummary[0].percentage === 100 ))
+                {user && moodSummary[0].percentage === 100
                   ? `이 달은 늘 행복하셨군요. Simley는 ${user?.nickname}님이 늘 행복하길 바라요.`
                   : `이 달도 수고 많았어요. Simley는 ${user?.nickname}님이 늘 행복하도록 노력할게요.`}
               </Card>

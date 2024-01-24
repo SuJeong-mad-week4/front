@@ -49,7 +49,11 @@ function App() {
       <Router>
         <div className='font-apply'>
           <UserContext.Provider value={{ user, setUser }}>
-            <Header />
+            <Header
+              style={{
+                overflow: "visible",
+              }}
+            />
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/calendar' element={<CalendarPage />} />
