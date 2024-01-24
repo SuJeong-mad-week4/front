@@ -17,7 +17,7 @@ const Home = () => {
       align='flex-start' // 수직 가운데 정렬
       style={{
         height: user ? "93vh" : "100vh",
-        backgroundImage: `url(./images/home.png)`,
+        backgroundImage: `url(/images/home.png)`,
         backgroundSize: "cover",
         position: "relative",
       }} // 화면 전체 높이만큼 가운데 렬

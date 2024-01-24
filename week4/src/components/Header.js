@@ -41,9 +41,15 @@ const Header = () => {
   };
 
   const menu = (
-    <Menu 
-    style={{borderRadius: "10px", boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)", marginTop: 5, padding: 20,}}
-    onClick={({ key }) => handleDropdownItemClick(key)}>
+    <Menu
+      style={{
+        borderRadius: "10px",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.2)",
+        marginTop: 5,
+        padding: 20,
+      }}
+      onClick={({ key }) => handleDropdownItemClick(key)}
+    >
       <Menu.Item key='answer'>답변하기</Menu.Item>
       <Menu.Item key='list'>리스트보기</Menu.Item>
     </Menu>
@@ -133,7 +139,7 @@ const Header = () => {
             cursor: "pointer", // Change cursor to 'pointer' on hover
           }}
         >
-          <Image src='./images/logo.png' width={40} preview={false} />
+          <Image src='/images/logo.png' width={40} preview={false} />
           <Text
             style={{
               whiteSpace: "nowrap", // Prevent text from wrapping
@@ -173,17 +179,21 @@ const Header = () => {
                 onClick={() => setVisible(!visible)}
               >
                 <Dropdown
-                overlay={menu}
-                visible={visible}
-                onVisibleChange={(visible) => setVisible(visible)}
-                trigger={["click"]}
-                ref={dropdownRef}
-              >
-                <Text style={{
-                  fontSize: "16px",}}>하루 질문</Text>
-              </Dropdown>
+                  overlay={menu}
+                  visible={visible}
+                  onVisibleChange={(visible) => setVisible(visible)}
+                  trigger={["click"]}
+                  ref={dropdownRef}
+                >
+                  <Text
+                    style={{
+                      fontSize: "16px",
+                    }}
+                  >
+                    하루 질문
+                  </Text>
+                </Dropdown>
               </Menu.Item>
-              
             );
           } else {
             return (
@@ -217,7 +227,7 @@ const Header = () => {
               alignContent: "center",
             }}
           >
-            <Image src='./images/user.png' width={40} preview={false} />
+            <Image src='/images/user.png' width={40} preview={false} />
             <Text
               style={{
                 fontSize: 16,

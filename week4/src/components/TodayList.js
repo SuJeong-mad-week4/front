@@ -62,7 +62,7 @@ const TodayList = () => {
         height: "93vh",
       }}
     >
-      <Flex >
+      <Flex>
         <Flex justify='flex-end' align='center' vertical>
           <Card
             style={{
@@ -77,20 +77,20 @@ const TodayList = () => {
               alignItems: "center",
               marginBottom: 100,
             }}
-            className={animate ? 'slideUpFadeIn' : ''}
+            className={animate ? "slideUpFadeIn" : ""}
           >
             오늘의 질문이 도착했어요!
-            <br/>
+            <br />
             종이비행기를 클릭하면 오늘의 질문에 답변할 수 있어요.
           </Card>
-          <Image src='./images/airplane.png' width={500} preview={false}/>
+          <Image src='/images/paperAirplane.png' width={500} preview={true} />
         </Flex>
       </Flex>
 
       {/*
         <Flex
           style={{
-            backgroundImage: `url(./images/paper.png)`,
+            backgroundImage: `url(/images/paper.png)`,
             display: "flex",
             alignItems: "center", // 세로 중앙 정렬
             justifyContent: "center", // 가로 중앙 정렬
@@ -105,7 +105,7 @@ const TodayList = () => {
           <div>
             <Image
               preview={false}
-              src='./images/airplane.png'
+              src='/images/paperAirplane.png'
               onClick={handleImageClick}
               style={{
                 cursor: "pointer",
@@ -121,7 +121,7 @@ const TodayList = () => {
           >
             <Image
               preview={false}
-              src='./images/펼친쪽지.png'
+              src='/images/펼친쪽지.png'
               onClick={() => setIsFolded(true)}
               style={{
                 cursor: "pointer",

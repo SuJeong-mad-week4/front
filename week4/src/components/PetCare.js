@@ -173,17 +173,17 @@ const PetCare = () => {
   const getGrowthImage = () => {
     switch (growthStage) {
       case 0:
-        return "./images/egg.png";
+        return "/images/egg.png";
       case 10:
-        return "./images/baby1.png";
+        return "/images/baby1.png";
       case 20:
-        return "./images/teen1.png";
+        return "/images/teen1.png";
       case 40:
-        return "./images/young_adult1.png";
+        return "/images/young_adult1.png";
       case 70:
-        return "./images/adult1.png";
+        return "/images/adult1.png";
       default:
-        return "./images/final1.png";
+        return "/images/final1.png";
     }
   };
 
@@ -218,7 +218,7 @@ const PetCare = () => {
           {collectedPets.map((pet) => (
             <img
               key={pet.id}
-              src={`./images/adult1.png`} // Replace with the actual URL
+              src={`/images/adult1.png`} // Replace with the actual URL
               alt={`Pet ${pet.id}`}
               style={{ width: "100px", height: "100px", margin: "0 10px" }}
             />
@@ -260,7 +260,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage()}
-              alt="Pet"
+              alt='Pet'
               style={{ width: 260, height: 260 }}
             />
             <div
@@ -271,7 +271,7 @@ const PetCare = () => {
             >
               <Progress
                 percent={Number(((exp / 100) * 100).toFixed())}
-                status="active"
+                status='active'
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
               />
@@ -285,7 +285,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
@@ -297,7 +297,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -310,7 +310,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -333,7 +333,7 @@ const PetCare = () => {
                     top: "100px",
                     width: "120px",
                     height: "120px",
-                    background: "url('./images/chat2.png')",
+                    background: "url('/images/chat2.png')",
                     backgroundSize: "cover",
                     padding: "10px",
                     borderRadius: "10px",
@@ -347,7 +347,7 @@ const PetCare = () => {
                 </div>
               )}
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -364,7 +364,7 @@ const PetCare = () => {
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={250} src="./images/questionmark.png" />
+            <img width={250} src='/images/questionmark.png' />
             <div
               style={{
                 display: "flex",
@@ -373,8 +373,8 @@ const PetCare = () => {
               }}
             >
               <input
-                type="text"
-                placeholder="펫 이름을 입력해주세요"
+                type='text'
+                placeholder='펫 이름을 입력해주세요'
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{ marginTop: "10px", textAlign: "center" }}
@@ -418,11 +418,11 @@ const PetCare = () => {
           >
             <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
-              src="./images/final1.png"
+              src='/images/final1.png'
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -473,14 +473,14 @@ const PetCare = () => {
             {/* Add your recommended albums here */}
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <img
-                src="./images/lany.png"
-                alt="Album 1"
+                src='/images/lany.png'
+                alt='Album 1'
                 style={{ width: "300px", height: "300px", cursor: "pointer" }}
                 onClick={() => handleMusicModalComplete()}
               />
               <img
-                src="./images/검치.png"
-                alt="Album 2"
+                src='/images/검치.png'
+                alt='Album 2'
                 style={{
                   width: "300px",
                   height: "300px",
@@ -490,8 +490,8 @@ const PetCare = () => {
                 onClick={() => handleMusicModalComplete()}
               />
               <img
-                src="./images/이무진.png"
-                alt="Album 3"
+                src='/images/이무진.png'
+                alt='Album 3'
                 style={{
                   width: "300px",
                   height: "300px",
@@ -502,7 +502,7 @@ const PetCare = () => {
               />
             </div>
             <Button
-              type="primary"
+              type='primary'
               onClick={handleMusicModalComplete}
               style={{
                 color: "white",
