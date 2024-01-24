@@ -3,7 +3,7 @@ import {
   PlayCircleFilled,
   SmileOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Progress } from "antd";
+import { Button, Card, Flex, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
@@ -84,24 +84,20 @@ const PetCare = () => {
     const fetchCollection = async () => {
       try {
         const response = await axios.get(
-          "http://143.248.196.134:8080/pet/collection",
-          {
-            params: { loginId: user.id },
-          }
+          `http://143.248.196.134:8080/pet/gets?userId=${user.id}`
         );
+        console.log(response.data);
         setCollectedPets(response.data);
       } catch (error) {
         console.error("Error fetching user collection:", error);
       }
     };
+
     // 유저 정보를 서버에서 가져오는 함수
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://143.248.196.134:8080/pet/get",
-          {
-            params: { petId: user.currentPet }, // 펫 ID에 맞게 설정
-          }
+          `http://143.248.196.134:8080/pet/get?petId=${user.currentPet}`
         );
         setPetData(response.data);
         setExp(response.data.exp);
@@ -220,20 +216,20 @@ const PetCare = () => {
     }
   };
 
-  const getGrowthImage = () => {
+  const getGrowthImage = (type) => {
     switch (growthStage) {
       case 0:
-        return "./images/egg.png";
+        return `./images/egg${type}.png`;
       case 10:
-        return "./images/baby1.png";
+        return `./images/baby${type}.png`;
       case 20:
-        return "./images/teen1.png";
+        return `./images/teen${type}.png`;
       case 40:
-        return "./images/young_adult1.png";
+        return `./images/young_adult${type}.png`;
       case 70:
-        return "./images/adult1.png";
+        return `./images/adult${type}.png`;
       default:
-        return "./images/final1.png";
+        return `./images/final${type}.png`;
     }
   };
 
@@ -249,10 +245,11 @@ const PetCare = () => {
         justifyContent: "center",
       }}
     >
+      <p style={{ marginTop: "-700px" }}>펫 컬렉션</p>
       <Card
         style={{
           width: 700,
-          height: 100,
+          height: 130,
           background: "rgba(255, 255, 255, 0.6)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           borderRadius: "20px",
@@ -262,17 +259,30 @@ const PetCare = () => {
           marginTop: "-540px",
         }}
       >
-        <p>펫 컬렉션</p>
-        <div style={{ display: "flex", overflowX: "auto" }}>
+        <div style={{ display: "flex", overflowX: "auto", padding: 0 }}>
           {/* Map through your collectedPets array and display each pet */}
-          {collectedPets.map((pet) => (
-            <img
-              key={pet.id}
-              src={`./images/adult1.png`} // Replace with the actual URL
-              alt={`Pet ${pet.id}`}
-              style={{ width: "100px", height: "100px", margin: "0 10px" }}
-            />
-          ))}
+          {collectedPets.map((pet) => {
+            if (pet.id === user.currentPet) {
+              return null;
+            } else {
+              return (
+                <Flex vertical>
+                  <p>{pet.nickname}</p>
+                  <img
+                    key={pet.id}
+                    src={`/images/final${pet.type}.png`} // Replace with the actual URL
+                    alt={`Pet ${pet.type}`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "contain",
+                      marginTop: "-18px",
+                    }}
+                  />
+                </Flex>
+              );
+            }
+          })}
         </div>
       </Card>
       <Card
@@ -309,7 +319,7 @@ const PetCare = () => {
             </p>
 
             <img
-              src={getGrowthImage()}
+              src={getGrowthImage(petData.type)}
               alt="Pet"
               style={{ width: 260, height: 260 }}
             />
@@ -427,7 +437,11 @@ const PetCare = () => {
                 placeholder="펫 이름을 입력해주세요"
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
-                style={{ marginTop: "10px", textAlign: "center" }}
+                style={{
+                  marginTop: "10px",
+                  textAlign: "center",
+                  borderRadius: "20px",
+                }}
               />
               <Button
                 style={{
@@ -468,7 +482,7 @@ const PetCare = () => {
           >
             <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
-              src="./images/final1.png"
+              src={`/images/final${petData.type}.png`}
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
