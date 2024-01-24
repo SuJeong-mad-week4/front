@@ -3,7 +3,6 @@ import { Button, Card, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
-import "./PetCare.css";
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
@@ -14,6 +13,24 @@ const PetCare = () => {
   const [showCollectModal, setShowCollectModal] = useState(false);
   const [showCollectionModal, setShowCollectionModal] = useState(false);
   const [collectedPets, setCollectedPets] = useState([]);
+  const [showMusicModal, setShowMusicModal] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio, setAudio] = useState(new Audio());
+  const [progress, setProgress] = useState(0);
+  const [albumRecommendations, setAlbumRecommendations] = useState([]);
+  const [randomMessage, setRandomMessage] = useState("");
+
+  const handlePositiveMessage = () => {
+    const positiveMessages = [
+      "행복하자!",
+      "멋져요!",
+      "좋아요!",
+      "힘이 나네요!",
+      "잘하고 있어요!",
+    ];
+    const randomIndex = Math.floor(Math.random() * positiveMessages.length);
+    setRandomMessage(positiveMessages[randomIndex]);
+  };
 
   console.log(petData);
 
@@ -94,10 +111,24 @@ const PetCare = () => {
       setGrowthStage(calculateGrowthStage(response.data.exp));
       if (response.data.exp >= 100) {
         setShowCollectModal(true);
+      } else if (growthAmount === 2) {
+        setShowMusicModal(true);
       }
     } catch (error) {
       console.error("Error updating growth activity:", error);
     }
+  };
+
+  const handleMusicModalComplete = () => {
+    setShowMusicModal(false);
+  };
+
+  const playAudio = () => {
+    setIsPlaying(true);
+  };
+
+  const pauseAudio = () => {
+    setIsPlaying(false);
   };
 
   const handleCollect = async () => {
@@ -212,7 +243,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage()}
-              alt='Pet'
+              alt="Pet"
               style={{ width: 300, height: 300 }}
             />
             <div
@@ -237,7 +268,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type='primary'
+                type="primary"
                 onClick={() => handleActivity(2)}
                 style={{
                   color: "white",
@@ -249,7 +280,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -262,7 +293,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -270,12 +301,30 @@ const PetCare = () => {
                   fontWeight: "bold",
                   borderRadius: "20px",
                 }}
-                onClick={() => handleActivity(1)}
+                onClick={() => {
+                  handleActivity(1);
+                  handlePositiveMessage();
+                }}
               >
                 <SmileOutlined /> 긍정적 말 듣기 +1
               </Button>
+              {randomMessage && (
+                <div
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "10px",
+                    background: "rgba(255, 255, 255, 0.8)",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  {randomMessage}
+                </div>
+              )}
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -288,18 +337,11 @@ const PetCare = () => {
                 <SmileOutlined /> 스트레칭 +4
               </Button>
             </div>
-            <div style={{ marginTop: "20px" }}>
-              <Progress
-                percent={(exp / 100) * 100}
-                status='active'
-                strokeColor={{ from: "#ffc839", to: "#ff6666" }}
-              />
-            </div>
             <div style={{ marginTop: "20px" }}></div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={300} src='./images/questionmark.png' />
+            <img width={300} src="./images/questionmark.png" />
             <div
               style={{
                 display: "flex",
@@ -308,8 +350,8 @@ const PetCare = () => {
               }}
             >
               <input
-                type='text'
-                placeholder='펫 이름을 입력해주세요'
+                type="text"
+                placeholder="펫 이름을 입력해주세요"
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{ marginTop: "10px", textAlign: "center" }}
@@ -353,11 +395,11 @@ const PetCare = () => {
           >
             <p>{`' ${petData.nickname} '펫을 컬렉션에 저장하시겠습니까?`}</p>
             <img
-              src='./images/final1.png'
+              src="./images/final1.png"
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type='primary'
+              type="primary"
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -377,6 +419,76 @@ const PetCare = () => {
               }}
             >
               취소
+            </Button>
+          </Card>
+        </div>
+      )}
+      {showMusicModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Card
+            style={{
+              width: 1000,
+              padding: 20,
+              textAlign: "center",
+              background: "white",
+              borderRadius: "20px",
+            }}
+          >
+            <p style={{ fontSize: "20px" }}>이 노래를 들어보세요 !</p>
+            {/* Add your recommended albums here */}
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <img
+                src="./images/lany.png"
+                alt="Album 1"
+                style={{ width: "300px", height: "300px", cursor: "pointer" }}
+                onClick={() => handleMusicModalComplete()}
+              />
+              <img
+                src="./images/검치.png"
+                alt="Album 2"
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  cursor: "pointer",
+                  marginLeft: "10px",
+                }}
+                onClick={() => handleMusicModalComplete()}
+              />
+              <img
+                src="./images/이무진.png"
+                alt="Album 3"
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  cursor: "pointer",
+                  marginLeft: "10px",
+                }}
+                onClick={() => handleMusicModalComplete()}
+              />
+            </div>
+            <Button
+              type="primary"
+              onClick={handleMusicModalComplete}
+              style={{
+                color: "white",
+                background: "#ff9f9f",
+                borderRadius: "20px",
+                marginTop: "20px",
+              }}
+            >
+              완료하기
             </Button>
           </Card>
         </div>
