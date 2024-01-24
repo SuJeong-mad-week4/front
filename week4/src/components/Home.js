@@ -10,13 +10,13 @@ const Home = () => {
 
   return (
     <Flex
-      gap="large"
-      wrap="wrap"
+      gap='large'
+      wrap='wrap'
       vertical
-      justify="center" // 수평 가운데 정렬
-      align="flex-start" // 수직 가운데 정렬
+      justify='center' // 수평 가운데 정렬
+      align='flex-start' // 수직 가운데 정렬
       style={{
-        height: "100vh",
+        height: user ? "93vh" : "100vh",
         backgroundImage: `url(./images/home.png)`,
         backgroundSize: "cover",
         position: "relative",
@@ -55,13 +55,13 @@ const Home = () => {
             <Button
               onClick={() => navigate("/login")}
               style={{
-                width:"200px",
+                width: "200px",
                 fontWeight: "bold",
                 color: "white",
                 background: "#ff9f9f",
                 borderRadius: "20px",
               }}
-              size="large"
+              size='large'
             >
               로그인
             </Button>
@@ -74,7 +74,7 @@ const Home = () => {
                 background: "#ff9f9f",
                 borderRadius: "20px",
               }}
-              size="large"
+              size='large'
             >
               회원가입
             </Button>
