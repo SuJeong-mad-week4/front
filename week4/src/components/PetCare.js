@@ -41,7 +41,6 @@ const PetCare = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isHappyModalVisible, setIsHappyModalVisible] = useState(false);
-
   const [isHappy, setIsHappy] = useState(false);
 
   const handlePositiveMessage = () => {
@@ -150,7 +149,6 @@ const PetCare = () => {
       });
       setPetData(response.data);
       setExp(response.data.exp);
-      setIsModalVisible(true);
       setGrowthStage(calculateGrowthStage(response.data.exp));
       if (response.data.exp >= 100) {
         setShowCollectModal(true);
@@ -420,7 +418,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage(petData.type)}
-              alt='Pet'
+              alt="Pet"
               style={{ width: 260, height: 260 }}
             />
             <div
@@ -431,7 +429,7 @@ const PetCare = () => {
             >
               <Progress
                 percent={Number(((exp / 100) * 100).toFixed())}
-                status='active'
+                status="active"
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
               />
@@ -445,7 +443,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type='primary'
+                type="primary"
                 onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
@@ -457,7 +455,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -549,7 +547,7 @@ const PetCare = () => {
                 </Flex>
               </Modal>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -586,7 +584,7 @@ const PetCare = () => {
                 </div>
               )}
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -600,7 +598,7 @@ const PetCare = () => {
               </Button>
               {stretchingVideo && (
                 <Modal
-                  visible={showStretchingModal}
+                  open={showStretchingModal}
                   onCancel={() => setShowStretchingModal(false)}
                   width={800}
                   height={800}
@@ -724,7 +722,7 @@ const PetCare = () => {
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type='primary'
+              type="primary"
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -820,7 +818,7 @@ const PetCare = () => {
               ))}
             </div>
             <Button
-              type='primary'
+              type="primary"
               onClick={handleCancelAction}
               style={{
                 color: "white",
@@ -832,7 +830,7 @@ const PetCare = () => {
               취소하기
             </Button>
             <Button
-              type='primary'
+              type="primary"
               onClick={handleMusicModalComplete}
               style={{
                 color: "white",
