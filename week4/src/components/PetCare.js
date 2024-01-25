@@ -3,12 +3,16 @@ import {
   PlayCircleFilled,
   SmileOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Flex, Input, Modal, Progress } from "antd";
+import { Button, Card, Flex, Input, Modal, Progress, Divider, Typography } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { UserContext } from "../App";
 import "./PetCare.css";
+import Webcam from "react-webcam";
+import * as faceapi from "face-api.js";
+
+const {Text} = Typography;
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
@@ -36,8 +40,9 @@ const PetCare = () => {
   const [showStretchingModal, setShowStretchingModal] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const videoRef = useRef(null);
-  const [capturedImage, setCapturedImage] = useState(null);
+  const [isHappyModalVisible, setIsHappyModalVisible] = useState(false);
+
+  const [isHappy, setIsHappy] = useState(false);
 
   const handlePositiveMessage = () => {
     const positiveMessages = [
@@ -83,26 +88,6 @@ const PetCare = () => {
     setShowMusicModal(false);
     setCurrentSong(null);
   };
-
-  useEffect(() => {
-    // The webcam will be activated only when isModalVisible is true
-    if (isModalVisible) {
-      getWebcam((stream) => {
-        videoRef.current.srcObject = stream;
-      });
-    } else {
-      // Deactivate the webcam when the modal is not visible
-      if (videoRef.current) {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => {
-          track.stop();
-        });
-        videoRef.current.srcObject = null;
-      }
-    }
-  }, [isModalVisible]);
-
   useEffect(() => {
     const fetchCollection = async () => {
       try {
@@ -134,18 +119,6 @@ const PetCare = () => {
       fetchCollection();
     }
   }, [exp, user]);
-
-  const getWebcam = (callback) => {
-    try {
-      const constraints = {
-        video: true,
-        audio: false,
-      };
-      navigator.mediaDevices.getUserMedia(constraints).then(callback);
-    } catch (err) {
-      console.log("Error accessing webcam:", err);
-    }
-  };
 
   const createPet = async () => {
     try {
@@ -187,36 +160,13 @@ const PetCare = () => {
     }
   };
 
-  const handleCapture = () => {
-    // Function to handle the capture and EXP update
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-
-    videoRef.current.addEventListener("loadeddata", () => {
-      context.drawImage(videoRef.current, 0, 0, 1024, 768);
-
-      // Stop the webcam stream
-      const stream = videoRef.current.srcObject;
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-      });
-
-      // You can now do something with the captured image, like save it or process it.
-      setIsModalVisible(true); // Close the modal after capturing
-    });
-  };
-
-  const handleComplete = () => {
-    // Function to handle the completion of the current modal
-    setExp(exp + 5); // Increase EXP by 5 (adjust as needed)
-
-    setIsModalVisible(false);
-  };
-
   const handleCancel = () => {
     // Function to handle the cancel button click
     setIsModalVisible(false);
+  };
+
+  const handleHappyCancel = () => {
+    setIsHappyModalVisible(false);
   };
 
   const handleMusicModalComplete = () => {
@@ -304,6 +254,80 @@ const PetCare = () => {
         return `./images/final${type}.png`;
     }
   };
+
+  // 웹캠 도전
+  const webcamRef = useRef(null);
+
+  const startWebcam = async () => {
+    try {
+      if (webcamRef.current) {
+        const webcam = webcamRef.current.videoStream.getVideoTracks()[0];
+        const constraints = { video: true };
+        await navigator.mediaDevices.getUserMedia(constraints);
+        webcam.srcObject = await navigator.mediaDevices.getUserMedia(
+          constraints
+        );
+      }
+    } catch (error) {
+      console.error("Error accessing webcam:", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadModels = async () => {
+      // Load face-api.js models
+      try {
+        await faceapi.nets.ssdMobilenetv1.load("/models");
+        await faceapi.loadFaceExpressionModel("/models");
+        await faceapi.loadFaceLandmarkModel("/models");
+      } catch (error) {
+        console.error("Error loading models:", error);
+        return;
+      }
+    };
+    loadModels();
+  }, []);
+
+  const detectFace = async () => {
+    console.log("detect face");
+    if (webcamRef.current) {
+      console.log("ㅋㅋ");
+      const videoEl = webcamRef.current.video;
+
+      // Perform face detection
+      const minConfidenceFace = 0.5;
+      const detectionOptions = new faceapi.SsdMobilenetv1Options({
+        minConfidenceFace,
+      });
+
+      const expressionResult = await faceapi
+        .detectSingleFace(videoEl, detectionOptions)
+        .withFaceExpressions();
+      const landmarkResult = await faceapi
+        .detectSingleFace(videoEl, detectionOptions)
+        .withFaceLandmarks();
+
+      // Process results
+      if (expressionResult && landmarkResult) {
+        const expressionFiltered = Object.fromEntries(
+          Object.entries(expressionResult.expressions)
+            .filter(([key, score]) => score > minConfidenceFace)
+            .sort((a, b) => b[1] - a[1])
+        );
+
+        if (expressionFiltered.happy) {
+          console.log(expressionFiltered);
+          setIsHappy(true);
+        }
+      }
+    }
+  };
+  
+  const doneHappy = () => {
+    setIsHappy(false);
+    handleActivity(5);
+    setIsHappyModalVisible(false);
+  }
 
   return (
     <div
@@ -441,73 +465,88 @@ const PetCare = () => {
                   fontWeight: "bold",
                   borderRadius: "20px",
                 }}
-                onClick={() => setIsModalVisible(true)}
+                onClick={() => setIsHappyModalVisible(true)}
               >
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Modal
-                title=" 스 마 일 ~ !"
-                visible={isModalVisible}
-                onCancel={handleCancel}
+                title=' SMILEY :D !'
+                visible={isHappyModalVisible}
+                onCancel={handleHappyCancel}
                 footer={null}
               >
-                <video
-                  id="videoCam"
-                  ref={videoRef}
-                  autoPlay
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    transform: "rotateY(180deg)",
-                  }}
-                />
-                {capturedImage && (
-                  <div>
-                    <img
-                      src={capturedImage}
-                      alt="Captured"
-                      style={{ width: "100%", height: "auto" }}
-                    />
+                <Divider />
+                <Flex vertical gap={10}>
+                  <Flex gap={10}>
                     <Button
-                      type="primary"
-                      onClick={handleComplete}
                       style={{
-                        marginTop: "20px",
                         color: "white",
                         background: "#ff9f9f",
-                        borderRadius: "20px",
                       }}
+                      shape='round'
+                      onClick={startWebcam}
                     >
-                      완료하기
+                      캠 켜기
                     </Button>
-                  </div>
-                )}
-                {!capturedImage && (
-                  <div>
-                    <Button
-                      type="primary"
-                      onClick={handleCapture}
-                      style={{
-                        marginTop: "20px",
-                        color: "white",
-                        background: "#ff9f9f",
-                        borderRadius: "20px",
-                      }}
-                    >
-                      촬영하기
-                    </Button>
-                    <Button
-                      onClick={handleCancel}
-                      style={{
-                        marginTop: "20px",
-                        marginLeft: "10px",
-                        borderRadius: "20px",
-                      }}
-                    >
-                      취소하기
-                    </Button>
-                  </div>
-                )}
+                    {!isHappy ? (
+                      <Button
+                        style={{
+                          color: "white",
+                          background: "#ff9f9f",
+                        }}
+                        shape='round'
+                        onClick={detectFace}
+                      >
+                        웃음 인식하기
+                      </Button>
+                    ) : (
+                      <Button
+                        disabled
+                        style={{
+                          color: "white",
+                          background: "#ff9f9f",
+                        }}
+                        shape='round'
+                        onClick={detectFace}
+                      >
+                        웃음 인식하기
+                      </Button>
+                    )}
+                  </Flex>
+                  <Webcam style={{ borderRadius: 10 }} ref={webcamRef} />
+                  <Text style={{ textAlign: "center" }}>
+                    {!isHappy
+                      ? "활짝 웃은 뒤, '웃음 인식하기' 버튼을 눌러주세요!"
+                      : "웃음이 보기 좋아요!"}
+                  </Text>
+                  {!isHappy? <Button
+                  disabled
+                    type='primary'
+                    onClick={doneHappy}
+                    style={{
+                      color: "white",
+                      background: "#ff9f9f",
+                      borderRadius: "20px",
+                      marginTop: "20px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    완료하기
+                  </Button>:
+                  <Button
+                    type='primary'
+                    onClick={doneHappy}
+                    style={{
+                      color: "white",
+                      background: "#ff9f9f",
+                      borderRadius: "20px",
+                      marginTop: "20px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    완료하기
+                  </Button>}
+                </Flex>
               </Modal>
               <Button
                 type='primary'
@@ -576,15 +615,15 @@ const PetCare = () => {
                       url={stretchingVideo}
                       playing={playing}
                       controls
-                      width="640px"
-                      height="360px"
+                      width='640px'
+                      height='360px'
                       onEnded={() => setVideoEnded(true)}
                       onPause={() => setVideoEnded(false)}
                       style={{ marginLeft: "50px" }}
                       // Add other props as needed
                     />
                     <Button
-                      type="primary"
+                      type='primary'
                       onClick={handleStretchingModalComplete}
                       style={{
                         marginTop: "20px",
@@ -620,7 +659,7 @@ const PetCare = () => {
             <p style={{ fontSize: "20px", marginTop: "-5px" }}>
               새로운 펫을 만나보세요 !
             </p>
-            <img width={235} src="./images/questionmark.png" />
+            <img width={235} src='./images/questionmark.png' />
             <div
               style={{
                 display: "flex",
@@ -630,8 +669,8 @@ const PetCare = () => {
               }}
             >
               <Input
-                type="text"
-                placeholder="펫 이름"
+                type='text'
+                placeholder='펫 이름'
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{
