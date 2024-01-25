@@ -33,10 +33,10 @@ const Home = () => {
       >
         {/* 위로 이동한 텍스트 */}
         <div style={{ color: "white", fontSize: "30px", fontWeight: "bold" }}>
+          <p> 오늘 하루 어떻게 보내셨나요?</p>
           <p>
             {user ? `'${user.nickname}' 님 반가워요 !` : `로그인 해주세요!`}
           </p>
-          <p> 오늘 하루 어떠셨나요?</p>
         </div>
         {/* 나머지 텍스트들 */}
         <div

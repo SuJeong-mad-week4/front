@@ -3,16 +3,25 @@ import {
   PlayCircleFilled,
   SmileOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Flex, Input, Modal, Progress, Divider, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Flex,
+  Input,
+  Modal,
+  Progress,
+  Typography,
+} from "antd";
 import axios from "axios";
+import * as faceapi from "face-api.js";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
+import Webcam from "react-webcam";
 import { UserContext } from "../App";
 import "./PetCare.css";
-import Webcam from "react-webcam";
-import * as faceapi from "face-api.js";
 
-const {Text} = Typography;
+const { Text } = Typography;
 
 const PetCare = () => {
   const [growthStage, setGrowthStage] = useState(0);
@@ -48,7 +57,7 @@ const PetCare = () => {
       "행복하자!",
       "멋져요!",
       "좋아요!",
-      "힘이 나네요!",
+      "너가 최고야!",
       "잘하고 있어요!",
     ];
     const randomIndex = Math.floor(Math.random() * positiveMessages.length);
@@ -158,13 +167,23 @@ const PetCare = () => {
     }
   };
 
-  const handleCancel = () => {
-    // Function to handle the cancel button click
-    setIsModalVisible(false);
+  const handleHappyCancel = () => {
+    stopWebcam();
+    setIsHappyModalVisible(false);
   };
 
-  const handleHappyCancel = () => {
-    setIsHappyModalVisible(false);
+  const stopWebcam = () => {
+    // Webcam을 정지시키는 코드
+    if (webcamRef.current) {
+      const webcam = webcamRef.current.video;
+      const stream = webcam.srcObject;
+
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
+        webcam.srcObject = null;
+      }
+    }
   };
 
   const handleMusicModalComplete = () => {
@@ -256,20 +275,20 @@ const PetCare = () => {
   // 웹캠 도전
   const webcamRef = useRef(null);
 
-  const startWebcam = async () => {
-    try {
-      if (webcamRef.current) {
-        const webcam = webcamRef.current.videoStream.getVideoTracks()[0];
-        const constraints = { video: true };
-        await navigator.mediaDevices.getUserMedia(constraints);
-        webcam.srcObject = await navigator.mediaDevices.getUserMedia(
-          constraints
-        );
-      }
-    } catch (error) {
-      console.error("Error accessing webcam:", error);
-    }
-  };
+  //   const startWebcam = async () => {
+  //     try {
+  //       if (webcamRef.current) {
+  //         const webcam = webcamRef.current.videoStream.getVideoTracks()[0];
+  //         const constraints = { video: true };
+  //         await navigator.mediaDevices.getUserMedia(constraints);
+  //         webcam.srcObject = await navigator.mediaDevices.getUserMedia(
+  //           constraints
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error accessing webcam:", error);
+  //     }
+  //   };
 
   useEffect(() => {
     const loadModels = async () => {
@@ -320,12 +339,12 @@ const PetCare = () => {
       }
     }
   };
-  
+
   const doneHappy = () => {
     setIsHappy(false);
     handleActivity(5);
     setIsHappyModalVisible(false);
-  }
+  };
 
   return (
     <div
@@ -468,7 +487,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Modal
-                title=' SMILEY :D !'
+                title=" SMILEY :D !"
                 visible={isHappyModalVisible}
                 onCancel={handleHappyCancel}
                 footer={null}
@@ -476,23 +495,13 @@ const PetCare = () => {
                 <Divider />
                 <Flex vertical gap={10}>
                   <Flex gap={10}>
-                    <Button
-                      style={{
-                        color: "white",
-                        background: "#ff9f9f",
-                      }}
-                      shape='round'
-                      onClick={startWebcam}
-                    >
-                      캠 켜기
-                    </Button>
                     {!isHappy ? (
                       <Button
                         style={{
                           color: "white",
                           background: "#ff9f9f",
                         }}
-                        shape='round'
+                        shape="round"
                         onClick={detectFace}
                       >
                         웃음 인식하기
@@ -504,46 +513,52 @@ const PetCare = () => {
                           color: "white",
                           background: "#ff9f9f",
                         }}
-                        shape='round'
+                        shape="round"
                         onClick={detectFace}
                       >
                         웃음 인식하기
                       </Button>
                     )}
                   </Flex>
-                  <Webcam style={{ borderRadius: 10 }} ref={webcamRef} />
+                  <Webcam
+                    style={{ borderRadius: 10, transform: "scaleX(-1)" }}
+                    ref={webcamRef}
+                  />
                   <Text style={{ textAlign: "center" }}>
                     {!isHappy
                       ? "활짝 웃은 뒤, '웃음 인식하기' 버튼을 눌러주세요!"
                       : "웃음이 보기 좋아요!"}
                   </Text>
-                  {!isHappy? <Button
-                  disabled
-                    type='primary'
-                    onClick={doneHappy}
-                    style={{
-                      color: "white",
-                      background: "#ff9f9f",
-                      borderRadius: "20px",
-                      marginTop: "20px",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    완료하기
-                  </Button>:
-                  <Button
-                    type='primary'
-                    onClick={doneHappy}
-                    style={{
-                      color: "white",
-                      background: "#ff9f9f",
-                      borderRadius: "20px",
-                      marginTop: "20px",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    완료하기
-                  </Button>}
+                  {!isHappy ? (
+                    <Button
+                      disabled
+                      type="primary"
+                      onClick={doneHappy}
+                      style={{
+                        color: "white",
+                        background: "#ff9f9f",
+                        borderRadius: "20px",
+                        marginTop: "20px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      완료하기
+                    </Button>
+                  ) : (
+                    <Button
+                      type="primary"
+                      onClick={doneHappy}
+                      style={{
+                        color: "white",
+                        background: "#ff9f9f",
+                        borderRadius: "20px",
+                        marginTop: "20px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      완료하기
+                    </Button>
+                  )}
                 </Flex>
               </Modal>
               <Button
@@ -613,15 +628,15 @@ const PetCare = () => {
                       url={stretchingVideo}
                       playing={playing}
                       controls
-                      width='640px'
-                      height='360px'
+                      width="640px"
+                      height="360px"
                       onEnded={() => setVideoEnded(true)}
                       onPause={() => setVideoEnded(false)}
                       style={{ marginLeft: "50px" }}
                       // Add other props as needed
                     />
                     <Button
-                      type='primary'
+                      type="primary"
                       onClick={handleStretchingModalComplete}
                       style={{
                         marginTop: "20px",
@@ -657,7 +672,7 @@ const PetCare = () => {
             <p style={{ fontSize: "20px", marginTop: "-5px" }}>
               새로운 펫을 만나보세요 !
             </p>
-            <img width={235} src='./images/questionmark.png' />
+            <img width={235} src="./images/questionmark.png" />
             <div
               style={{
                 display: "flex",
@@ -667,8 +682,8 @@ const PetCare = () => {
               }}
             >
               <Input
-                type='text'
-                placeholder='펫 이름'
+                type="text"
+                placeholder="펫 이름"
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{
