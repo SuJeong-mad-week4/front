@@ -1,19 +1,8 @@
-import {
-  Button,
-  Card,
-  Image,
-  Input,
-  Flex,
-  Typography,
-  List,
-  Divider,
-  Skeleton,
-} from "antd";
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
-import "./TodayList.css";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Flex, List, Skeleton, Typography } from "antd";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import "./TodayList.css";
 
 import { UserContext } from "../App";
 const { Text } = Typography;
@@ -30,7 +19,7 @@ const TodayList = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://143.248.196.134:8080/today/get?userId=${user.id}`
+        `http://143.248.196.70:8080/today/get?userId=${user.id}`
       );
       setData([...data, ...response.data]);
       setLoading(false);
@@ -47,13 +36,13 @@ const TodayList = () => {
       setUser(JSON.parse(storedUser));
     }
     loadMoreData();
-    console.log("명상ㅋㅋ")
+    console.log("명상ㅋㅋ");
   }, []);
 
   return (
     <Flex
-      justify='center'
-      align='center'
+      justify="center"
+      align="center"
       style={{
         background:
           "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
@@ -71,10 +60,9 @@ const TodayList = () => {
           alignItems: "center",
         }}
       >
-        
         <Flex style={{ width: 300, height: 500 }}>
           <div
-            id='scrollableDiv'
+            id="scrollableDiv"
             style={{
               width: 250,
               height: 400,
@@ -94,7 +82,7 @@ const TodayList = () => {
                   active
                 />
               }
-              scrollableTarget='scrollableDiv'
+              scrollableTarget="scrollableDiv"
             >
               <List
                 dataSource={data}

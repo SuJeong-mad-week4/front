@@ -15,7 +15,7 @@ const Login = () => {
   const handleLoginButtonClick = async () => {
     try {
       const response = await axios.post(
-        "http://143.248.196.134:8080/user/login",
+        "http://143.248.196.70:8080/user/login",
         {
           loginId: id,
           password: password,
@@ -50,12 +50,12 @@ const Login = () => {
 
   return (
     <Flex
-      gap='large'
-      wrap='wrap'
+      gap="large"
+      wrap="wrap"
       vertical
-      justify='center'
-      align='flex-start'
-      marginLeft='100px'
+      justify="center"
+      align="flex-start"
+      marginLeft="100px"
       style={{
         height: "100vh",
         backgroundImage: `url(/images/home.png)`,
@@ -79,7 +79,7 @@ const Login = () => {
       >
         <h2>로그인</h2>
         <Input
-          placeholder='아이디'
+          placeholder="아이디"
           style={{
             width: "100%",
             marginBottom: "10px",
@@ -89,8 +89,8 @@ const Login = () => {
           onChange={(e) => setId(e.target.value)}
         />
         <Input
-          placeholder='비밀번호'
-          type='password'
+          placeholder="비밀번호"
+          type="password"
           style={{ width: "100%", marginBottom: "20px", borderRadius: "10px" }}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -107,11 +107,11 @@ const Login = () => {
           로그인
         </Button>
         <Divider plain>
-          <Text type='secondary'>아직 회원이 아니신가요?</Text>
+          <Text type="secondary">아직 회원이 아니신가요?</Text>
         </Divider>
         <Button
           onClick={handleSignupButtonClick}
-          type='text'
+          type="text"
           style={{
             borderRadius: "20px",
             color: "#ff9f9f",

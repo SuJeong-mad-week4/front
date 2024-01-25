@@ -1,9 +1,9 @@
-import { Button, Card, Image, Input, Flex, Typography, Alert } from "antd";
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
-import "./TodayAnswer.css";
-import { UserContext } from "../App";
+import { Alert, Button, Card, Flex, Image, Input, Typography } from "antd";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { UserContext } from "../App";
+import "./TodayAnswer.css";
 
 const { Text } = Typography;
 
@@ -61,7 +61,7 @@ const TodayQA = () => {
       if (user) {
         try {
           const response = await axios.get(
-            `http://143.248.196.134:8080/today/get-today?userId=${user.id}&todayDate=${formatedToday}`
+            `http://143.248.196.70:8080/today/get-today?userId=${user.id}&todayDate=${formatedToday}`
           );
           if (response.data) {
             setAlreadyAnswered(response.data.success);
@@ -89,7 +89,7 @@ const TodayQA = () => {
   const onAnswerSave = async () => {
     try {
       const response = await axios.post(
-        `http://143.248.196.134:8080/today/create`,
+        `http://143.248.196.70:8080/today/create`,
         {
           userId: user.id,
           question: selectedQusetion,
@@ -129,15 +129,15 @@ const TodayQA = () => {
             transform: "translate(-50%, -50%)",
             background: "rgba(255, 237, 191, 0.8)",
           }}
-          type='success'
-          description='오늘의 질문이 저장되었습니다.'
+          type="success"
+          description="오늘의 질문이 저장되었습니다."
           banner
         />
       ) : null}
 
       <Flex
-        justify='center'
-        align='center'
+        justify="center"
+        align="center"
         style={{
           background:
             "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
@@ -180,7 +180,7 @@ const TodayQA = () => {
               }}
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              placeholder='당신의 답을 적어주세요.'
+              placeholder="당신의 답을 적어주세요."
               autoSize={{ minRows: 18 }}
             />
             <Button
@@ -189,7 +189,7 @@ const TodayQA = () => {
                 color: "white",
                 background: "#ff9f9f",
               }}
-              shape='round'
+              shape="round"
               onClick={onAnswerSave}
             >
               저장하기
@@ -198,7 +198,7 @@ const TodayQA = () => {
         ) : (
           <Flex>
             {alreadyAnswered ? (
-              <Flex justify='flex-end' align='center' vertical>
+              <Flex justify="flex-end" align="center" vertical>
                 <Card
                   style={{
                     width: 500,
@@ -219,7 +219,7 @@ const TodayQA = () => {
                   다음날 다시 날아오는 종이비행기를 기다려주세요.
                 </Card>
                 <Image
-                  src='/images/paperAirplane.png'
+                  src="/images/paperAirplane.png"
                   width={500}
                   preview={false}
                   style={{
@@ -230,7 +230,7 @@ const TodayQA = () => {
                 />
               </Flex>
             ) : (
-              <Flex justify='flex-end' align='center' vertical>
+              <Flex justify="flex-end" align="center" vertical>
                 <Card
                   style={{
                     width: 500,
@@ -251,7 +251,7 @@ const TodayQA = () => {
                   종이비행기를 클릭하면 오늘의 질문에 답변할 수 있어요.
                 </Card>
                 <Image
-                  src='/images/paperAirplane.png'
+                  src="/images/paperAirplane.png"
                   width={500}
                   preview={false}
                   style={{
