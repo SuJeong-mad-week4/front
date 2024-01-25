@@ -84,8 +84,6 @@ const PetCare = () => {
     setCurrentSong(null);
   };
 
-  console.log(petData);
-
   useEffect(() => {
     // The webcam will be activated only when isModalVisible is true
     if (isModalVisible) {
@@ -111,7 +109,6 @@ const PetCare = () => {
         const response = await axios.get(
           `http://143.248.196.70:8080/pet/gets?userId=${user.id}`
         );
-        console.log(response.data);
         setCollectedPets(response.data);
       } catch (error) {
         console.error("Error fetching user collection:", error);
@@ -136,7 +133,6 @@ const PetCare = () => {
       fetchUserData();
       fetchCollection();
     }
-    console.log("asdf", user);
   }, [exp, user]);
 
   const getWebcam = (callback) => {
@@ -160,14 +156,11 @@ const PetCare = () => {
           nickname: petName,
         }
       );
-      console.log(response);
       const createdPetId = response.data.id;
       setUser((prevUser) => ({
         ...prevUser,
         currentPet: createdPetId,
       }));
-      console.log("Newly created pet ID:", createdPetId);
-      console.log(user);
     } catch (error) {
       console.error("Error creating pet:", error);
     }
@@ -229,9 +222,7 @@ const PetCare = () => {
   const handleMusicModalComplete = () => {
     // Check if the video has ended before allowing completion
     if (!actionCanceled && videoEnded) {
-      console.log("before", exp);
       handleActivity(2);
-      console.log("after", exp);
       setPlaying(false);
       setShowMusicModal(false);
       setCurrentSong(null);
@@ -405,7 +396,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage(petData.type)}
-              alt="Pet"
+              alt='Pet'
               style={{ width: 260, height: 260 }}
             />
             <div
@@ -416,7 +407,7 @@ const PetCare = () => {
             >
               <Progress
                 percent={Number(((exp / 100) * 100).toFixed())}
-                status="active"
+                status='active'
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
               />
@@ -430,7 +421,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
@@ -442,7 +433,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -519,7 +510,7 @@ const PetCare = () => {
                 )}
               </Modal>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -556,7 +547,7 @@ const PetCare = () => {
                 </div>
               )}
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -694,7 +685,7 @@ const PetCare = () => {
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -790,7 +781,7 @@ const PetCare = () => {
               ))}
             </div>
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCancelAction}
               style={{
                 color: "white",
@@ -802,7 +793,7 @@ const PetCare = () => {
               취소하기
             </Button>
             <Button
-              type="primary"
+              type='primary'
               onClick={handleMusicModalComplete}
               style={{
                 color: "white",

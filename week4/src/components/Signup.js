@@ -19,11 +19,7 @@ const Signup = () => {
         password: password,
       })
       .then((response) => {
-        console.log("res", response);
         const data = response.data;
-        console.log(data);
-
-        console.log("Signup successful");
         alert("회원가입에 성공하였습니다 !");
         navigate("/login"); // 회원가입 성공 시 로그인 페이지로 이동
 

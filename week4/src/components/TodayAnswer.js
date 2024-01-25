@@ -97,7 +97,6 @@ const TodayQA = () => {
           todayDate: formatedToday,
         }
       );
-      console.log("", response.data);
       setSaved(true);
       setTimeout(() => {
         window.location.href = "/today/answer"; // 또는 원하는 경로로 변경
