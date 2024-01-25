@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, Flex, Input, Modal, Progress } from "antd";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { UserContext } from "../App";
 import "./PetCare.css";
@@ -34,6 +34,10 @@ const PetCare = () => {
   ]);
   const [stretchingVideo, setStretchingVideo] = useState(null);
   const [showStretchingModal, setShowStretchingModal] = useState(false);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const videoRef = useRef(null);
+  const [capturedImage, setCapturedImage] = useState(null);
 
   const handlePositiveMessage = () => {
     const positiveMessages = [
@@ -83,6 +87,25 @@ const PetCare = () => {
   console.log(petData);
 
   useEffect(() => {
+    // The webcam will be activated only when isModalVisible is true
+    if (isModalVisible) {
+      getWebcam((stream) => {
+        videoRef.current.srcObject = stream;
+      });
+    } else {
+      // Deactivate the webcam when the modal is not visible
+      if (videoRef.current) {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => {
+          track.stop();
+        });
+        videoRef.current.srcObject = null;
+      }
+    }
+  }, [isModalVisible]);
+
+  useEffect(() => {
     const fetchCollection = async () => {
       try {
         const response = await axios.get(
@@ -115,6 +138,18 @@ const PetCare = () => {
     }
     console.log("asdf", user);
   }, [exp, user]);
+
+  const getWebcam = (callback) => {
+    try {
+      const constraints = {
+        video: true,
+        audio: false,
+      };
+      navigator.mediaDevices.getUserMedia(constraints).then(callback);
+    } catch (err) {
+      console.log("Error accessing webcam:", err);
+    }
+  };
 
   const createPet = async () => {
     try {
@@ -149,6 +184,7 @@ const PetCare = () => {
       });
       setPetData(response.data);
       setExp(response.data.exp);
+      setIsModalVisible(true);
       setGrowthStage(calculateGrowthStage(response.data.exp));
       if (response.data.exp >= 100) {
         setShowCollectModal(true);
@@ -156,6 +192,38 @@ const PetCare = () => {
     } catch (error) {
       console.error("Error updating growth activity:", error);
     }
+  };
+
+  const handleCapture = () => {
+    // Function to handle the capture and EXP update
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    videoRef.current.addEventListener("loadeddata", () => {
+      context.drawImage(videoRef.current, 0, 0, 1024, 768);
+
+      // Stop the webcam stream
+      const stream = videoRef.current.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+
+      // You can now do something with the captured image, like save it or process it.
+      setIsModalVisible(true); // Close the modal after capturing
+    });
+  };
+
+  const handleComplete = () => {
+    // Function to handle the completion of the current modal
+    setExp(exp + 5); // Increase EXP by 5 (adjust as needed)
+
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Function to handle the cancel button click
+    setIsModalVisible(false);
   };
 
   const handleMusicModalComplete = () => {
@@ -382,10 +450,74 @@ const PetCare = () => {
                   fontWeight: "bold",
                   borderRadius: "20px",
                 }}
-                onClick={() => handleActivity(5)}
+                onClick={() => setIsModalVisible(true)}
               >
                 <SmileOutlined /> 웃음 +5
               </Button>
+              <Modal
+                title=" 스 마 일 ~ !"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                footer={null}
+              >
+                <video
+                  id="videoCam"
+                  ref={videoRef}
+                  autoPlay
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    transform: "rotateY(180deg)",
+                  }}
+                />
+                {capturedImage && (
+                  <div>
+                    <img
+                      src={capturedImage}
+                      alt="Captured"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <Button
+                      type="primary"
+                      onClick={handleComplete}
+                      style={{
+                        marginTop: "20px",
+                        color: "white",
+                        background: "#ff9f9f",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      완료하기
+                    </Button>
+                  </div>
+                )}
+                {!capturedImage && (
+                  <div>
+                    <Button
+                      type="primary"
+                      onClick={handleCapture}
+                      style={{
+                        marginTop: "20px",
+                        color: "white",
+                        background: "#ff9f9f",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      촬영하기
+                    </Button>
+                    <Button
+                      onClick={handleCancel}
+                      style={{
+                        marginTop: "20px",
+                        marginLeft: "10px",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      취소하기
+                    </Button>
+                  </div>
+                )}
+              </Modal>
               <Button
                 type="primary"
                 style={{
