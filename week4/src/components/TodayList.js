@@ -1,19 +1,8 @@
-import {
-  Button,
-  Card,
-  Image,
-  Input,
-  Flex,
-  Typography,
-  List,
-  Divider,
-  Skeleton,
-} from "antd";
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
-import "./TodayList.css";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Flex, List, Skeleton, Typography } from "antd";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import "./TodayList.css";
 
 import { UserContext } from "../App";
 const { Text } = Typography;
@@ -71,8 +60,8 @@ const TodayList = () => {
 
   return (
     <Flex
-      justify='center'
-      align='center'
+      justify="center"
+      align="center"
       style={{
         background:
           "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",

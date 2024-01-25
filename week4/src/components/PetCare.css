@@ -9,6 +9,7 @@
   }
 }
 
-:where(.css-dev-only-do-not-override-1vld52i).ant-card .ant-card-body {
-    padding: 0;
+:where(.css-dev-only-do-not-override-1vld52i).ant-modal .ant-modal-content {
+  border-radius: 10px;
+  margin-top: 105px;
 }

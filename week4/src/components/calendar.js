@@ -82,7 +82,7 @@ const CustomCalendar = () => {
     );
 
     return (
-      <ul className='events'>
+      <ul className="events">
         {listData.map((item) =>
           formatedDate === item.moodDate ? (
             <Button key={item.id}>
@@ -97,7 +97,7 @@ const CustomCalendar = () => {
   const formatedToday = formatDate(today_year, today_month, today_day);
   return (
     <>
-      <Flex vertical align='center'>
+      <Flex vertical align="center">
         <Button onClick={showModal} style={{ width: 100, marginLeft: "90%" }}>
           추가하기
         </Button>
@@ -109,57 +109,57 @@ const CustomCalendar = () => {
           onCancel={handleCancel}
         >
           <Title level={5}>오늘의 기분은 어떤가요?</Title>
-          <Flex justify='center'>
+          <Flex justify="center">
             <Space>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("행복")}
                 />
                 <Text>행복</Text>
               </Flex>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("슬픔")}
                 />
                 <Text>슬픔</Text>
               </Flex>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("짜증")}
                 />
                 <Text>짜증</Text>
               </Flex>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("분노")}
                 />
                 <Text>분노</Text>
               </Flex>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("두려움")}
                 />
                 <Text>두려움</Text>
               </Flex>
-              <Flex vertical align='center'>
+              <Flex vertical align="center">
                 <Image
                   width={100}
-                  src='/images/tmp2.png'
+                  src="/images/tmp2.png"
                   preview={false}
                   onClick={() => setMood("우울")}
                 />
@@ -170,7 +170,7 @@ const CustomCalendar = () => {
 
           <Title level={5}>왜 그런 감정이 들었나요?</Title>
           <TextArea
-            placeholder='솔직하게 작성해주세요.'
+            placeholder="솔직하게 작성해주세요."
             autoSize={{ minRows: 6 }}
           />
         </Modal>

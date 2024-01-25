@@ -3,7 +3,7 @@ import {
   PlayCircleFilled,
   SmileOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Flex, Progress } from "antd";
+import { Button, Card, Flex, Input, Modal, Progress } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
@@ -249,11 +249,10 @@ const PetCare = () => {
         justifyContent: "center",
       }}
     >
-      <p style={{ marginTop: "-700px" }}>펫 컬렉션</p>
       <Card
         style={{
           width: 700,
-          height: 130,
+          height: 200,
           background: "rgba(255, 255, 255, 0.6)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           borderRadius: "20px",
@@ -261,9 +260,13 @@ const PetCare = () => {
           border: "none",
           textAlign: "center",
           marginTop: "-540px",
+          padding: 10,
         }}
       >
-        <div style={{ display: "flex", overflowX: "auto", padding: 0 }}>
+        <p style={{ marginTop: "-15px", zIndex: "+1", fontSize: "15px" }}>
+          My Pet
+        </p>
+        <Flex>
           {/* Map through your collectedPets array and display each pet */}
           {collectedPets.map((pet) => {
             if (pet.id === user.currentPet) {
@@ -271,7 +274,6 @@ const PetCare = () => {
             } else {
               return (
                 <Flex vertical>
-                  <p>{pet.nickname}</p>
                   <img
                     key={pet.id}
                     src={`/images/final${pet.type}.png`} // Replace with the actual URL
@@ -280,14 +282,16 @@ const PetCare = () => {
                       width: "100px",
                       height: "100px",
                       objectFit: "contain",
-                      marginTop: "-18px",
                     }}
                   />
+                  <p style={{ marginTop: "0px", color: "#ff9f9f" }}>
+                    {pet.nickname}
+                  </p>
                 </Flex>
               );
             }
           })}
-        </div>
+        </Flex>
       </Card>
       <Card
         style={{
@@ -299,7 +303,7 @@ const PetCare = () => {
           position: "absolute",
           border: "none",
           textAlign: "center",
-          marginTop: "120px",
+          marginTop: "190px",
         }}
       >
         {user && user.currentPet ? (
@@ -424,45 +428,83 @@ const PetCare = () => {
                 <SmileOutlined /> 스트레칭 +4
               </Button>
               {stretchingVideo && (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "100vh",
-                  }}
+                <Modal
+                  visible={showStretchingModal}
+                  onCancel={() => setShowStretchingModal(false)}
+                  width={800}
+                  height={800}
+                  footer={null}
                 >
-                  {/* Render YouTube video for stretching */}
-                  <ReactPlayer
-                    url={stretchingVideo}
-                    playing={playing}
-                    controls
-                    width='640px'
-                    height='360px'
-                    // Add other props as needed
-                  />
-                </div>
+                  <div style={{ textAlign: "center" }}>
+                    <p style={{ fontSize: "20px" }}>
+                      마음이 편해지는 힐링 요가 해보세요 :)
+                    </p>
+                    {/* Render YouTube video for stretching */}
+                    <ReactPlayer
+                      url={stretchingVideo}
+                      playing={playing}
+                      controls
+                      width="640px"
+                      height="360px"
+                      onEnded={() => setVideoEnded(true)}
+                      onPause={() => setVideoEnded(false)}
+                      style={{ marginLeft: "50px" }}
+                      // Add other props as needed
+                    />
+                    <Button
+                      type="primary"
+                      onClick={handleStretchingModalComplete}
+                      style={{
+                        marginTop: "20px",
+                        color: "white",
+                        background: "#ff9f9f",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      완료하기
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setShowStretchingModal(false);
+                        setVideoEnded(false);
+                        setPlaying(false);
+                      }}
+                      style={{
+                        marginTop: "20px",
+                        marginLeft: "10px",
+                        borderRadius: "20px",
+                      }}
+                    >
+                      취소하기
+                    </Button>
+                  </div>
+                </Modal>
               )}
             </div>
             <div style={{ marginTop: "20px" }}></div>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={250} src='./images/questionmark.png' />
+            <p style={{ fontSize: "20px", marginTop: "-5px" }}>
+              새로운 펫을 만나보세요 !
+            </p>
+            <img width={235} src="./images/questionmark.png" />
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
                 alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <input
-                type='text'
-                placeholder='펫 이름을 입력해주세요'
+              <Input
+                type="text"
+                placeholder="펫 이름"
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{
-                  marginTop: "10px",
+                  width: "300px",
+                  marginTop: "20px",
                   textAlign: "center",
                   borderRadius: "20px",
                 }}
@@ -470,13 +512,14 @@ const PetCare = () => {
               <Button
                 style={{
                   marginTop: "20px",
+                  marginLeft: "10px",
                   color: "white",
                   background: "#ff9f9f",
                   borderRadius: "20px",
                 }}
                 onClick={() => createPet()}
               >
-                이름 짓고 새로운 펫 만나기
+                결정
               </Button>
             </div>
           </div>
