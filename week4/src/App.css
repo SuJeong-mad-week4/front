@@ -70,6 +70,5 @@ body {
 /* 스크롤바 핸들 (움직이는 부분) 스타일 */
 ::-webkit-scrollbar-thumb {
   background: #cfd8dc; /* 핸들의 배경 색상 */
-
   border-radius: 20px 20px 20px 20px;
 }

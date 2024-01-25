@@ -77,7 +77,6 @@ const CalendarPage = () => {
   const handleMoodOk = () => {
     const deleteMood = async () => {
       try {
-        console.log(user.id, selectedMood);
         await axios.post(`http://143.248.196.70:8080/calendar/delete`, {
           userId: user.id,
           moodDate: selectedMood.moodDate,
@@ -130,7 +129,6 @@ const CalendarPage = () => {
           formatedDate === item.moodDate.substring(0, 10) ? (
             <Image
               key={item.id}
-              onClick={() => console.log(item.mood)}
               width={55}
               src={`/images/${item.mood}.png`}
               preview={false}
@@ -144,11 +142,6 @@ const CalendarPage = () => {
   const formatedToday = formatDate(today_year, today_month, today_day);
 
   useEffect(() => {
-    console.log("??");
-  }, []);
-
-  useEffect(() => {
-    console.log("????");
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -171,7 +164,6 @@ const CalendarPage = () => {
   };
 
   useEffect(() => {
-    console.log("nn???");
     // 비동기 요청을 수행하는 함수
     const fetchData = async () => {
       if (user) {
@@ -204,7 +196,6 @@ const CalendarPage = () => {
   }, [user, change]);
 
   useEffect(() => {
-    console.log(":<");
     try {
       const { response } = axios.get(
         `http://143.248.196.70:8080/calendar/get?userId=${user.id}&moodDate=${formatedToday}`

@@ -43,9 +43,7 @@ const CustomCalendar = () => {
   useEffect(() => {
     // 비동기 요청을 수행하는 함수
     const fetchData = async () => {
-      console.log("뭔", user.id);
       if (user) {
-        console.log("에엥", user);
         try {
           const response = await axios.get(
             `http://143.248.196.70:8080/calendar?userId=${user.id}`
@@ -86,8 +84,8 @@ const CustomCalendar = () => {
     return (
       <ul className="events">
         {listData.map((item) =>
-          formatedDate === item.moodDate.substring(0, 10) ? (
-            <Button key={item.id} onClick={() => console.log("??")}>
+          formatedDate === item.moodDate ? (
+            <Button key={item.id}>
               {item.mood}
             </Button>
           ) : null
