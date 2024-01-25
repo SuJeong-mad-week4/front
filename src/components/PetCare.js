@@ -175,6 +175,7 @@ const PetCare = () => {
   const handleHappyCancel = () => {
     stopWebcam();
     setIsHappyModalVisible(false);
+    setFeeling(null);
   };
 
   const stopWebcam = () => {
@@ -281,6 +282,7 @@ const PetCare = () => {
   };
 
   // 웹캠 도전
+  const [feeling, setFeeling] = useState(null);
   const webcamRef = useRef(null);
 
   const startWebcam = async () => {
@@ -339,7 +341,7 @@ const PetCare = () => {
             .filter(([key, score]) => score > minConfidenceFace)
             .sort((a, b) => b[1] - a[1])
         );
-
+        setFeeling(expressionFiltered);
         if (expressionFiltered.happy) {
           console.log(expressionFiltered);
           setIsHappy(true);
@@ -352,6 +354,8 @@ const PetCare = () => {
     setIsHappy(false);
     handleActivity(5);
     setIsHappyModalVisible(false);
+    setFeeling(null);
+    stopWebcam();
   };
 
   return (
@@ -503,6 +507,11 @@ const PetCare = () => {
                 <Divider />
                 <Flex vertical gap={10}>
                   <Flex gap={10}>
+                    {feeling ? (
+                      <Text>현재 감정은 {Object.keys(feeling)}입니다. </Text>
+                    ) : (
+                      <Text>표정을 지어보세요!</Text>
+                    )}
                     {!isHappy ? (
                       <Button
                         style={{
@@ -515,15 +524,7 @@ const PetCare = () => {
                         웃음 인식하기
                       </Button>
                     ) : (
-                      <Button
-                        disabled
-                        style={{
-                          color: "white",
-                          background: "#ff9f9f",
-                        }}
-                        shape="round"
-                        onClick={detectFace}
-                      >
+                      <Button disabled shape="round" onClick={detectFace}>
                         웃음 인식하기
                       </Button>
                     )}
@@ -538,23 +539,13 @@ const PetCare = () => {
                       : "웃음이 보기 좋아요!"}
                   </Text>
                   {!isHappy ? (
-                    <Button
-                      disabled
-                      type="primary"
-                      onClick={doneHappy}
-                      style={{
-                        color: "white",
-                        background: "#ff9f9f",
-                        borderRadius: "20px",
-                        marginTop: "20px",
-                        marginLeft: "10px",
-                      }}
-                    >
+                    <Button disabled type="primary" shape="round">
                       완료하기
                     </Button>
                   ) : (
                     <Button
                       type="primary"
+                      shape="round"
                       onClick={doneHappy}
                       style={{
                         color: "white",
