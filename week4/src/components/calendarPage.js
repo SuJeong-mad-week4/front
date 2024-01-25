@@ -412,17 +412,17 @@ const CalendarPage = () => {
               })}
               <Card style={{ height: 150, margin: 10, display:"flex", justifyItems:"ceter", alignItems:"center" }}>
                 {user && moodSummary[0].percentage === 100 ? (
-                  <Text style={{color: "pink"}}>
+                  <Text >
                     {selectedDate
                       ? `${selectedDate.month() + 1}`
                       : `${today_month}`}월은 항상 행복하셨네요! :D
                     <br />
                     {`Simley는 ${user?.nickname}님이 늘 행복하길 바라요.`}
                     <br />
-                    {`이 행복 잃지 않도록 노력할게요.`}
+                    {`이 행복 잃지 않게 노력할게요.`}
                   </Text>
                 ) : (
-                  <Text style={{color: "#0d0d0d"}}>
+                  <Text >
                     
                     {selectedDate
                       ? `${selectedDate.month() + 1}`
@@ -430,7 +430,7 @@ const CalendarPage = () => {
                     <br />
                     {`Simley는 ${user?.nickname}님이 늘 행복할 수 있도록 노력할게요.`}
                     <br />
-                    {`같이 힘내보아요.`}
+                    {`같이 힘내보아요!!`}
                   </Text>
                 )}
               </Card>

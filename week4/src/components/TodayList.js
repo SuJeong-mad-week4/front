@@ -1,4 +1,4 @@
-import { Flex, List, Skeleton, Typography, Divider } from "antd";
+import { Flex, List, Skeleton, Typography, Divider, Image } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -42,7 +42,7 @@ const TodayList = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("")
+      console.log("");
       loadMoreData();
     }
   }, [user]);
@@ -60,8 +60,8 @@ const TodayList = () => {
 
   return (
     <Flex
-      justify="center"
-      align="center"
+      justify='center'
+      align='center'
       style={{
         background:
           "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
@@ -119,7 +119,9 @@ const TodayList = () => {
                         onSelectToday(item);
                       }}
                     >
-                      <div>{item.question}</div>
+                      <Flex style={{ textAlign: "start" }}>
+                        {item.question}
+                      </Flex>
                     </List.Item>
                   )}
                 />
@@ -153,9 +155,16 @@ const TodayList = () => {
               </Text>
             </Flex>
           ) : (
-            <Text style={{ fontSize: 20, paddingTop: 200 }}>
-              보고 싶은 질문을 클릭해주세요!
-            </Text>
+            <>
+              <Text style={{ fontSize: 20, paddingTop: 200 }}>
+                보고 싶은 질문을 클릭해주세요!
+              </Text>
+              <Image
+                width={100}
+                src='/images/행복.png'
+                preview={false}
+              />
+            </>
           )}
         </Flex>
       </Flex>
