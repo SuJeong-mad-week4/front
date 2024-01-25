@@ -1,4 +1,4 @@
-import { Flex, List, Skeleton, Typography } from "antd";
+import { Flex, List, Skeleton, Typography, Divider } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";

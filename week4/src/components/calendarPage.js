@@ -9,6 +9,7 @@ import {
   Progress,
   Space,
   Typography,
+  Divider,
 } from "antd";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
@@ -124,7 +125,7 @@ const CalendarPage = () => {
     );
 
     return (
-      <Flex justify="center" align="center">
+      <Flex justify='center' align='center'>
         {listData.map((item) =>
           formatedDate === item.moodDate.substring(0, 10) ? (
             <Image
@@ -209,37 +210,46 @@ const CalendarPage = () => {
 
   return (
     <Flex
-      justify="center"
-      align="center"
+      justify='center'
+      align='center'
       style={{
         background:
           "linear-gradient(to bottom, rgba(255, 159, 159, 0.8), rgba(255, 237, 191, 0.8) 100%)",
         height: "93vh",
       }}
     >
-      <Flex gap="middle">
+      <Flex gap='middle'>
         <Flex vertical>
           <Modal
             closeIcon={false}
-            okText="기록"
-            cancelText="취소"
+            okText='기록'
+            okButtonProps={{
+              shape: "round",
+            }}
+            cancelText='취소'
+            cancelButtonProps={{
+              shape: "round",
+            }}
             width={700}
-            title={`${formatedToday}의 기분 기록`}
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
           >
-            <Title level={5}>오늘의 기분은 어떤가요?</Title>
-            <Flex horizontal justify="center">
+            <Title level={3}>{`${formatedToday}`}</Title>
+            <Divider />
+            <Title level={5} style={{ color: "gray" }}>
+              오늘의 기분은 어떤가요?
+            </Title>
+            <Flex horizontal justify='center'>
               <Space>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "행복" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/행복.png"
+                    src='/images/행복.png'
                     preview={false}
                     onClick={() => setMood("행복")}
                   />
@@ -247,12 +257,12 @@ const CalendarPage = () => {
                 </Flex>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "짜증" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/짜증.png"
+                    src='/images/짜증.png'
                     preview={false}
                     onClick={() => setMood("짜증")}
                   />
@@ -260,12 +270,12 @@ const CalendarPage = () => {
                 </Flex>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "분노" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/분노.png"
+                    src='/images/분노.png'
                     preview={false}
                     onClick={() => setMood("분노")}
                   />
@@ -273,12 +283,12 @@ const CalendarPage = () => {
                 </Flex>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "두려움" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/두려움.png"
+                    src='/images/두려움.png'
                     preview={false}
                     onClick={() => setMood("두려움")}
                   />
@@ -286,12 +296,12 @@ const CalendarPage = () => {
                 </Flex>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "슬픔" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/슬픔.png"
+                    src='/images/슬픔.png'
                     preview={false}
                     onClick={() => setMood("슬픔")}
                   />
@@ -299,12 +309,12 @@ const CalendarPage = () => {
                 </Flex>
                 <Flex
                   vertical
-                  align="center"
+                  align='center'
                   style={{ opacity: mood === "우울" ? 1 : 0.3 }}
                 >
                   <Image
                     width={100}
-                    src="/images/우울.png"
+                    src='/images/우울.png'
                     preview={false}
                     onClick={() => setMood("우울")}
                   />
@@ -313,9 +323,11 @@ const CalendarPage = () => {
               </Space>
             </Flex>
 
-            <Title level={5}>왜 그런 감정이 들었나요?</Title>
+            <Title level={5} style={{ color: "gray" }}>
+              왜 그런 감정이 들었나요?
+            </Title>
             <TextArea
-              placeholder="솔직하게 작성해주세요."
+              placeholder='솔직하게 작성해주세요.'
               autoSize={{ minRows: 6 }}
               onChange={(e) => setContent(e.target.value)}
             />
@@ -328,9 +340,9 @@ const CalendarPage = () => {
                 shape: "round",
               }}
               cancelButtonProps={{ visible: false, shape: "round" }}
-              okText="감정 쓰레기 통으로"
-              cancelText="취소"
-              title={`${selectedMood.moodDate.substring(0, 10)}의 기분 기록`}
+              okText='감정 쓰레기 통으로'
+              cancelText='취소'
+              title={`${selectedMood.moodDate}의 기분 기록`}
               open={isMoodOpen}
               onOk={handleMoodOk}
               onCancel={handleMoodCancel}
@@ -345,7 +357,7 @@ const CalendarPage = () => {
                   {selectedMood.content ? (
                     selectedMood.content
                   ) : (
-                    <Text type="secondary">
+                    <Text type='secondary'>
                       (감정 쓰레기통에 들어간 일기입니다.)
                     </Text>
                   )}
@@ -385,23 +397,42 @@ const CalendarPage = () => {
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Flex vertical gap="small">
+            <Flex vertical gap='small'>
               {moodSummary.map((item, index) => {
                 return (
-                  <Flex vertical justify="space-between" align="center">
+                  <Flex vertical justify='space-between' align='center'>
                     <Text>{item.mood}</Text>
                     <Progress
-                      status="active"
+                      status='active'
                       percent={item.percentage}
                       strokeColor={{ "0%": "#ffc839", "100%": "#ff6666" }}
                     />
                   </Flex>
                 );
               })}
-              <Card style={{ height: 150, margin: 10 }}>
-                {user && moodSummary[0].percentage === 100
-                  ? `이 달은 늘 행복하셨군요. Simley는 ${user?.nickname}님이 늘 행복하길 바라요.`
-                  : `이 달도 수고 많았어요. Simley는 ${user?.nickname}님이 늘 행복하도록 노력할게요.`}
+              <Card style={{ height: 150, margin: 10, display:"flex", justifyItems:"ceter", alignItems:"center" }}>
+                {user && moodSummary[0].percentage === 100 ? (
+                  <Text style={{color: "pink"}}>
+                    {selectedDate
+                      ? `${selectedDate.month() + 1}`
+                      : `${today_month}`}월은 항상 행복하셨네요! :D
+                    <br />
+                    {`Simley는 ${user?.nickname}님이 늘 행복하길 바라요.`}
+                    <br />
+                    {`이 행복 잃지 않도록 노력할게요.`}
+                  </Text>
+                ) : (
+                  <Text style={{color: "#0d0d0d"}}>
+                    
+                    {selectedDate
+                      ? `${selectedDate.month() + 1}`
+                      : `${today_month}`}월도 고생 많았어요! :D
+                    <br />
+                    {`Simley는 ${user?.nickname}님이 늘 행복할 수 있도록 노력할게요.`}
+                    <br />
+                    {`같이 힘내보아요.`}
+                  </Text>
+                )}
               </Card>
               {addShow ? (
                 <Button
@@ -412,7 +443,7 @@ const CalendarPage = () => {
                     background: "#ff9f9f",
                     borderRadius: "20px",
                   }}
-                  shape="round"
+                  shape='round'
                 >
                   추가하기
                 </Button>
@@ -426,7 +457,7 @@ const CalendarPage = () => {
                     background: "#ff9f9f",
                     borderRadius: "20px",
                   }}
-                  shape="round"
+                  shape='round'
                 >
                   추가하기
                 </Button>
