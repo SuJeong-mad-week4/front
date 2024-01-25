@@ -89,6 +89,11 @@ const PetCare = () => {
       i === index ? !state : false
     );
     setAlbumStates(newAlbumStates);
+    setVideoDimensions({ width: "50%", height: "300px" });
+
+    // Reset played seconds and duration when a new album is clicked
+    setPlayedSeconds({});
+    setDuration({});
   };
 
   const handleCancelAction = () => {
@@ -197,6 +202,9 @@ const PetCare = () => {
     } else if (!videoEnded && !actionCanceled) {
       alert("노래가 다 끝난 후에 완료하기 버튼을 누를 수 있습니다.");
     }
+
+    setPlayedSeconds({});
+    setDuration({});
   };
 
   const handleCollect = async () => {
@@ -275,20 +283,20 @@ const PetCare = () => {
   // 웹캠 도전
   const webcamRef = useRef(null);
 
-  //   const startWebcam = async () => {
-  //     try {
-  //       if (webcamRef.current) {
-  //         const webcam = webcamRef.current.videoStream.getVideoTracks()[0];
-  //         const constraints = { video: true };
-  //         await navigator.mediaDevices.getUserMedia(constraints);
-  //         webcam.srcObject = await navigator.mediaDevices.getUserMedia(
-  //           constraints
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error accessing webcam:", error);
-  //     }
-  //   };
+  const startWebcam = async () => {
+    try {
+      if (webcamRef.current) {
+        const webcam = webcamRef.current.videoStream.getVideoTracks()[0];
+        const constraints = { video: true };
+        await navigator.mediaDevices.getUserMedia(constraints);
+        webcam.srcObject = await navigator.mediaDevices.getUserMedia(
+          constraints
+        );
+      }
+    } catch (error) {
+      console.error("Error accessing webcam:", error);
+    }
+  };
 
   useEffect(() => {
     const loadModels = async () => {
@@ -825,14 +833,16 @@ const PetCare = () => {
                         borderRadius: "0 0 20px 20px",
                       }}
                     >
-                      {/* <div
+                      <div
                         style={{
-                          width: `${(playedSeconds / duration) * 100}%`, // 재생 상태에 따라 조절할 부분
+                          width: `${
+                            (playedSeconds[index] / duration[index]) * 100
+                          }%`, // 재생 상태에 따라 조절할 부분
                           height: "90%",
                           backgroundColor: "#ff9f9f",
                           borderRadius: "20px",
                         }}
-                      ></div> */}
+                      ></div>
                     </div>
                   )}
 
@@ -890,7 +900,7 @@ const PetCare = () => {
           </Card>
         </div>
       )}
-      {/* {currentSong && (
+      {currentSong && (
         <ReactPlayer
           url={currentSong}
           playing={playing}
@@ -912,7 +922,6 @@ const PetCare = () => {
                 ...prev,
                 [currentIndex]: state.playedSeconds,
               }));
-              console.log("duration", state.loadedSeconds);
               setDuration((prev) => ({
                 ...prev,
                 [currentIndex]: state.loadedSeconds,
@@ -928,7 +937,10 @@ const PetCare = () => {
                 ...prev,
                 [currentIndex]: state.playedSeconds,
               }));
-              setLoadedSeconds(state.loadedSeconds);
+              setDuration((prev) => ({
+                ...prev,
+                [currentIndex]: state.loadedSeconds,
+              }));
             }
           }}
           style={{
@@ -939,7 +951,7 @@ const PetCare = () => {
             zIndex: -1,
           }}
         />
-      )} */}
+      )}
     </div>
   );
 };
