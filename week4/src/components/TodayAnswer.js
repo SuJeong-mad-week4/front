@@ -8,7 +8,6 @@ import "./TodayAnswer.css";
 const { Text } = Typography;
 
 const { TextArea } = Input;
-
 const questionList = [
   "당신의 장점 세가지는 무엇인가요?",
   "오늘의 소확행은 무엇이 있었나요?",
