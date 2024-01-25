@@ -25,20 +25,21 @@ const TodayList = () => {
   const [selectedQusetion, setSelectedQuestion] = useState(null);
 
   const loadMoreData = async () => {
+    console.log("?", user);
     if (loading) {
       return;
     }
     setLoading(true);
     try {
-      setData([]);
-      const response = await axios.get(
-        `http://143.248.196.134:8080/today/get?userId=${user.id}`
-      );
-      setData([...data, ...response.data]);
-      setLoading(false);
+      if (user) {
+        const response = await axios.get(
+          `http://143.248.196.70:8080/today/get?userId=${user.id}`
+        );
+        setData([...data, ...response.data]);
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
-
       setLoading(false);
     }
   };
@@ -48,17 +49,20 @@ const TodayList = () => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    loadMoreData();
-    console.log("명상ㅋㅋ");
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      console.log("")
+      loadMoreData();
+    }
+  }, [user]);
+
   const onSelectToday = async (item) => {
-    console.log("item임둥", item);
     try {
       const response = await axios.get(
-        `http://143.248.196.134:8080/today/find?todayId=${item.id}`
+        `http://143.248.196.70:8080/today/find?todayId=${item.id}`
       );
-      console.log("selectDate", response.data);
       setSelectedQuestion(response.data);
     } catch (error) {
       console.log(error);
@@ -105,7 +109,7 @@ const TodayList = () => {
             >
               <InfiniteScroll
                 dataLength={data.length}
-                next={loadMoreData}
+                next={{ loadMoreData }}
                 hasMore={data.length < 5}
                 loader={
                   <Skeleton
@@ -136,13 +140,33 @@ const TodayList = () => {
         </Flex>
         <Flex style={{ width: 300, height: 480, paddingLeft: 100 }}>
           {selectedQusetion ? (
-            <Flex vertical gap={10}>
-              <Text>{selectedQusetion.question}</Text>
-              <Text>{selectedQusetion.answer}</Text>
-              <Text>{selectedQusetion.todayDate}</Text>
+            <Flex vertical gap={10} style={{ width: 300, height: 480 }}>
+              <Flex style={{ height: 30, marginTop: 10, marginBottom: 10 }}>
+                <Text style={{ fontSize: 20 }}>
+                  {selectedQusetion.question}
+                </Text>
+              </Flex>
+              <Divider style={{ margin: 0 }} />
+              <Flex style={{ height: 400 }}>
+                <Text style={{ fontSize: 16 }}>{selectedQusetion.answer}</Text>
+              </Flex>
+              <Divider style={{ margin: 0 }} />
+              <Text
+                style={{
+                  fontSize: 10,
+                  display: "flex",
+                  justifyItems: "flex-end",
+                  alignSelf: "flex-end",
+                  justifySelf: "flex-end",
+                }}
+              >
+                {selectedQusetion.todayDate}
+              </Text>
             </Flex>
           ) : (
-            <Text>보고 싶은 질문을 클릭해주세요.</Text>
+            <Text style={{ fontSize: 20, paddingTop: 200 }}>
+              보고 싶은 질문을 클릭해주세요!
+            </Text>
           )}
         </Flex>
       </Flex>

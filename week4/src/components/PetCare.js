@@ -80,15 +80,12 @@ const PetCare = () => {
     setCurrentSong(null);
   };
 
-  console.log(petData);
-
   useEffect(() => {
     const fetchCollection = async () => {
       try {
         const response = await axios.get(
-          `http://143.248.196.134:8080/pet/gets?userId=${user.id}`
+          `http://143.248.196.70:8080/pet/gets?userId=${user.id}`
         );
-        console.log(response.data);
         setCollectedPets(response.data);
       } catch (error) {
         console.error("Error fetching user collection:", error);
@@ -99,7 +96,7 @@ const PetCare = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://143.248.196.134:8080/pet/get?petId=${user.currentPet}`
+          `http://143.248.196.70:8080/pet/get?petId=${user.currentPet}`
         );
         setPetData(response.data);
         setExp(response.data.exp);
@@ -113,26 +110,22 @@ const PetCare = () => {
       fetchUserData();
       fetchCollection();
     }
-    console.log("asdf", user);
   }, [exp, user]);
 
   const createPet = async () => {
     try {
       const response = await axios.post(
-        "http://143.248.196.134:8080/pet/create",
+        "http://143.248.196.70:8080/pet/create",
         {
           userId: user.id,
           nickname: petName,
         }
       );
-      console.log(response);
       const createdPetId = response.data.id;
       setUser((prevUser) => ({
         ...prevUser,
         currentPet: createdPetId,
       }));
-      console.log("Newly created pet ID:", createdPetId);
-      console.log(user);
     } catch (error) {
       console.error("Error creating pet:", error);
     }
@@ -142,14 +135,11 @@ const PetCare = () => {
     const newExp = exp + growthAmount;
 
     try {
-      const response = await axios.post(
-        "http://143.248.196.134:8080/pet/grow",
-        {
-          loginId: user.id,
-          petId: user.currentPet,
-          exp: growthAmount,
-        }
-      );
+      const response = await axios.post("http://143.248.196.70:8080/pet/grow", {
+        loginId: user.id,
+        petId: user.currentPet,
+        exp: growthAmount,
+      });
       setPetData(response.data);
       setExp(response.data.exp);
       setGrowthStage(calculateGrowthStage(response.data.exp));
@@ -164,9 +154,7 @@ const PetCare = () => {
   const handleMusicModalComplete = () => {
     // Check if the video has ended before allowing completion
     if (!actionCanceled && videoEnded) {
-      console.log("before", exp);
       handleActivity(2);
-      console.log("after", exp);
       setPlaying(false);
       setShowMusicModal(false);
       setCurrentSong(null);
@@ -178,12 +166,9 @@ const PetCare = () => {
 
   const handleCollect = async () => {
     try {
-      const response = await axios.post(
-        "http://143.248.196.134:8080/pet/save",
-        {
-          userId: user.id,
-        }
-      );
+      const response = await axios.post("http://143.248.196.70:8080/pet/save", {
+        userId: user.id,
+      });
 
       await setUser((prevUser) => ({
         ...prevUser,
@@ -339,7 +324,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage(petData.type)}
-              alt="Pet"
+              alt='Pet'
               style={{ width: 260, height: 260 }}
             />
             <div
@@ -350,7 +335,7 @@ const PetCare = () => {
             >
               <Progress
                 percent={Number(((exp / 100) * 100).toFixed())}
-                status="active"
+                status='active'
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
               />
@@ -364,7 +349,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type="primary"
+                type='primary'
                 onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
@@ -376,7 +361,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -389,7 +374,7 @@ const PetCare = () => {
                 <SmileOutlined /> 웃음 +5
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -426,7 +411,7 @@ const PetCare = () => {
                 </div>
               )}
               <Button
-                type="primary"
+                type='primary'
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -452,8 +437,8 @@ const PetCare = () => {
                     url={stretchingVideo}
                     playing={playing}
                     controls
-                    width="640px"
-                    height="360px"
+                    width='640px'
+                    height='360px'
                     // Add other props as needed
                   />
                 </div>
@@ -463,7 +448,7 @@ const PetCare = () => {
           </>
         ) : (
           <div style={{ textAlign: "center" }}>
-            <img width={250} src="./images/questionmark.png" />
+            <img width={250} src='./images/questionmark.png' />
             <div
               style={{
                 display: "flex",
@@ -472,8 +457,8 @@ const PetCare = () => {
               }}
             >
               <input
-                type="text"
-                placeholder="펫 이름을 입력해주세요"
+                type='text'
+                placeholder='펫 이름을 입력해주세요'
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
                 style={{
@@ -525,7 +510,7 @@ const PetCare = () => {
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -621,7 +606,7 @@ const PetCare = () => {
               ))}
             </div>
             <Button
-              type="primary"
+              type='primary'
               onClick={handleCancelAction}
               style={{
                 color: "white",
@@ -633,7 +618,7 @@ const PetCare = () => {
               취소하기
             </Button>
             <Button
-              type="primary"
+              type='primary'
               onClick={handleMusicModalComplete}
               style={{
                 color: "white",

@@ -13,17 +13,13 @@ const Signup = () => {
   const handleSignupButtonClick = async () => {
     // 클라이언트에서 Axios를 사용하여 서버로 회원가입 정보 전송
     await axios
-      .post("http://143.248.196.134:8080/user/sign-up", {
+      .post("http://143.248.196.70:8080/user/sign-up", {
         loginId: id,
         nickname: nickname,
         password: password,
       })
       .then((response) => {
-        console.log("res", response);
         const data = response.data;
-        console.log(data);
-
-        console.log("Signup successful");
         alert("회원가입에 성공하였습니다 !");
         navigate("/login"); // 회원가입 성공 시 로그인 페이지로 이동
 

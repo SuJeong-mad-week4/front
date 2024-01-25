@@ -57,7 +57,6 @@ const Header = () => {
 
   const handleCloseProfile = () => {
     setShowProfile(false);
-    console.log("프로필 닫힘");
   };
 
   const handleLogoClick = () => {

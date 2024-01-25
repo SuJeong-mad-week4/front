@@ -16,7 +16,6 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
-  console.log(user);
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      console.log("저장해여", user);
       localStorage.setItem("user", JSON.stringify(user));
     }
   }, [user]);

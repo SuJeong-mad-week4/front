@@ -61,7 +61,7 @@ const TodayQA = () => {
       if (user) {
         try {
           const response = await axios.get(
-            `http://143.248.196.134:8080/today/get-today?userId=${user.id}&todayDate=${formatedToday}`
+            `http://143.248.196.70:8080/today/get-today?userId=${user.id}&todayDate=${formatedToday}`
           );
           if (response.data) {
             setAlreadyAnswered(response.data.success);
@@ -89,7 +89,7 @@ const TodayQA = () => {
   const onAnswerSave = async () => {
     try {
       const response = await axios.post(
-        `http://143.248.196.134:8080/today/create`,
+        `http://143.248.196.70:8080/today/create`,
         {
           userId: user.id,
           question: selectedQusetion,
@@ -97,7 +97,6 @@ const TodayQA = () => {
           todayDate: formatedToday,
         }
       );
-      console.log("", response.data);
       setSaved(true);
       setTimeout(() => {
         window.location.href = "/today/answer"; // 또는 원하는 경로로 변경
