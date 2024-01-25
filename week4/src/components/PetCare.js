@@ -39,6 +39,7 @@ const PetCare = () => {
   const [videoEnded, setVideoEnded] = useState(false);
   const [actionCanceled, setActionCanceled] = useState(false);
   const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [albumStates, setAlbumStates] = useState([false, false, false]);
   const [albumRecommendations, setAlbumRecommendations] = useState([
     { name: "Album1", url: "https://youtu.be/zsySLgXlfx4?feature=shared" },
@@ -47,8 +48,7 @@ const PetCare = () => {
   ]);
   const [stretchingVideo, setStretchingVideo] = useState(null);
   const [showStretchingModal, setShowStretchingModal] = useState(false);
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loadedSeconds, setLoadedSeconds] = useState(0);
   const [isHappyModalVisible, setIsHappyModalVisible] = useState(false);
   const [isHappy, setIsHappy] = useState(false);
 
@@ -785,11 +785,17 @@ const PetCare = () => {
             }}
           >
             <p style={{ fontSize: "20px" }}>이 노래를 들어보세요 !</p>
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
               {albumRecommendations.map((album, index) => (
                 <div
                   key={index}
-                  style={{ position: "relative" }}
+                  style={{ position: "relative", marginBottom: "20px" }}
                   onClick={() => handleAlbumClick(album.url, index)}
                 >
                   <img
@@ -806,6 +812,30 @@ const PetCare = () => {
                         : "brightness(100%)",
                     }}
                   />
+
+                  {albumStates[index] && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "10px",
+                        backgroundColor: "#ccc",
+                        bottom: "0",
+                        left: "0",
+                        borderRadius: "0 0 20px 20px",
+                      }}
+                    >
+                      {/* <div
+                        style={{
+                          width: `${(playedSeconds / duration) * 100}%`, // 재생 상태에 따라 조절할 부분
+                          height: "90%",
+                          backgroundColor: "#ff9f9f",
+                          borderRadius: "20px",
+                        }}
+                      ></div> */}
+                    </div>
+                  )}
+
                   {albumStates[index] ? (
                     <PauseCircleFilled
                       style={{
@@ -860,21 +890,47 @@ const PetCare = () => {
           </Card>
         </div>
       )}
-      {currentSong && (
+      {/* {currentSong && (
         <ReactPlayer
           url={currentSong}
           playing={playing}
           controls
           width={videoDimensions.width}
           height={videoDimensions.height}
+          onDuration={(duration) => {
+            setDuration(duration);
+          }}
           onEnded={() => {
             setVideoEnded(true);
             setPlaying(false);
           }}
-          onPause={() => {
+          onPause={(state) => {
+            // Find the index of the currently playing album
+            const currentIndex = albumStates.findIndex((state) => state);
+            if (currentIndex !== -1) {
+              setPlayedSeconds((prev) => ({
+                ...prev,
+                [currentIndex]: state.playedSeconds,
+              }));
+              console.log("duration", state.loadedSeconds);
+              setDuration((prev) => ({
+                ...prev,
+                [currentIndex]: state.loadedSeconds,
+              }));
+            }
             setVideoEnded(false);
           }}
-          onProgress={(state) => setPlayedSeconds(state.playedSeconds)}
+          onProgress={(state) => {
+            console.log(state.playedSeconds);
+            const currentIndex = albumStates.findIndex((state) => state);
+            if (currentIndex !== -1) {
+              setPlayedSeconds((prev) => ({
+                ...prev,
+                [currentIndex]: state.playedSeconds,
+              }));
+              setLoadedSeconds(state.loadedSeconds);
+            }
+          }}
           style={{
             position: "absolute",
             top: "50%",
@@ -883,7 +939,7 @@ const PetCare = () => {
             zIndex: -1,
           }}
         />
-      )}
+      )} */}
     </div>
   );
 };
