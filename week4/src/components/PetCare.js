@@ -36,6 +36,7 @@ const PetCare = () => {
   const [showStretchingModal, setShowStretchingModal] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [webcamVisible, setWebcamVisible] = useState(false);
   const videoRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -92,7 +93,7 @@ const PetCare = () => {
       });
     } else {
       // Deactivate the webcam when the modal is not visible
-      if (videoRef.current) {
+      if (videoRef.current && videoRef.current.srcObject) {
         const stream = videoRef.current.srcObject;
         const tracks = stream.getTracks();
         tracks.forEach((track) => {
@@ -137,11 +138,18 @@ const PetCare = () => {
 
   const getWebcam = (callback) => {
     try {
-      const constraints = {
-        video: true,
-        audio: false,
-      };
-      navigator.mediaDevices.getUserMedia(constraints).then(callback);
+      if (webcamVisible) {
+        const constraints = {
+          video: true,
+          audio: false,
+        };
+        navigator.mediaDevices
+          .getUserMedia(constraints)
+          .then(callback)
+          .catch((err) => {
+            console.log("Error accessing Webcam:", err);
+          });
+      }
     } catch (err) {
       console.log("Error accessing webcam:", err);
     }
@@ -177,7 +185,6 @@ const PetCare = () => {
       });
       setPetData(response.data);
       setExp(response.data.exp);
-      setIsModalVisible(true);
       setGrowthStage(calculateGrowthStage(response.data.exp));
       if (response.data.exp >= 100) {
         setShowCollectModal(true);
@@ -201,17 +208,18 @@ const PetCare = () => {
       tracks.forEach((track) => {
         track.stop();
       });
-
-      // You can now do something with the captured image, like save it or process it.
       setIsModalVisible(true); // Close the modal after capturing
+      // 촬영 시에 이미지를 저장
+      setCapturedImage(canvas.toDataURL("image/jpeg"));
     });
   };
 
   const handleComplete = () => {
     // Function to handle the completion of the current modal
-    setExp(exp + 5); // Increase EXP by 5 (adjust as needed)
-
+    handleActivity(5); // Increase EXP by 5 (adjust as needed)
+    // 웹캠 및 모달 종료
     setIsModalVisible(false);
+    setCapturedImage(null);
   };
 
   const handleCancel = () => {
@@ -396,7 +404,7 @@ const PetCare = () => {
 
             <img
               src={getGrowthImage(petData.type)}
-              alt='Pet'
+              alt="Pet"
               style={{ width: 260, height: 260 }}
             />
             <div
@@ -407,7 +415,7 @@ const PetCare = () => {
             >
               <Progress
                 percent={Number(((exp / 100) * 100).toFixed())}
-                status='active'
+                status="active"
                 strokeColor={{ from: "#ffc839", to: "#ff6666" }}
                 style={{ width: "400px" }}
               />
@@ -421,7 +429,7 @@ const PetCare = () => {
               }}
             >
               <Button
-                type='primary'
+                type="primary"
                 onClick={() => setShowMusicModal(true)}
                 style={{
                   color: "white",
@@ -433,7 +441,7 @@ const PetCare = () => {
                 <SmileOutlined /> 노래 듣기 +2
               </Button>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -447,7 +455,7 @@ const PetCare = () => {
               </Button>
               <Modal
                 title=" 스 마 일 ~ !"
-                visible={isModalVisible}
+                open={isModalVisible}
                 onCancel={handleCancel}
                 footer={null}
               >
@@ -510,7 +518,7 @@ const PetCare = () => {
                 )}
               </Modal>
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -547,7 +555,7 @@ const PetCare = () => {
                 </div>
               )}
               <Button
-                type='primary'
+                type="primary"
                 style={{
                   marginLeft: "5px",
                   color: "white",
@@ -561,7 +569,7 @@ const PetCare = () => {
               </Button>
               {stretchingVideo && (
                 <Modal
-                  visible={showStretchingModal}
+                  open={showStretchingModal}
                   onCancel={() => setShowStretchingModal(false)}
                   width={800}
                   height={800}
@@ -685,7 +693,7 @@ const PetCare = () => {
               style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
             />
             <Button
-              type='primary'
+              type="primary"
               onClick={handleCollect}
               style={{
                 color: "white",
@@ -781,7 +789,7 @@ const PetCare = () => {
               ))}
             </div>
             <Button
-              type='primary'
+              type="primary"
               onClick={handleCancelAction}
               style={{
                 color: "white",
@@ -793,7 +801,7 @@ const PetCare = () => {
               취소하기
             </Button>
             <Button
-              type='primary'
+              type="primary"
               onClick={handleMusicModalComplete}
               style={{
                 color: "white",
