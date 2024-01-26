@@ -1,43 +1,39 @@
 # Simley(심리) Smiley
 
 시작화면
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 29 41" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/005c5f07-7a64-4e57-9f46-8846be75d4dc">
 
-![스크린샷 2024-01-26 오후 1.29.41.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/ab3e5b99-9b43-4ee5-96d5-f8c5211a8620/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.29.41.png)
 
 펫 키우기
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 30 03" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/08f3d327-5626-47dd-8661-1aa3fac618cc">
 
-![스크린샷 2024-01-26 오후 1.30.03.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/eeda572f-9af9-4930-a573-bef0f7d3c3a4/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.30.03.png)
 
 펫의 이름을 주어주면 랜덤으로 생성
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 30 03" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/20449326-108f-4149-ab5b-2ceda6c2a9bd">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 30 22" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/51dc480b-e7c1-4999-a6a2-525a8f198478">
 
-![스크린샷 2024-01-26 오후 1.30.22.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/fabf799f-0871-4cd8-a348-b90a38887037/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.30.22.png)
 
 4가지 기능을 통해 펫 키우기 가능
+1. 음악을 들으며 힐링하는 기능
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 30 31" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/3b3ddd08-dcab-455b-92fc-5cf8e80c91db">
+2. 표정인식 기능을 통해 웃는 얼굴이 나왔을 때 점수가 올라감.
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 35 10" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/66c266f7-3708-44e3-973c-c9dea70b3ce6">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 35 23" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/ea4092ae-06b4-49be-a5c9-63193b111562">
+3. 명상과 요가를 하며 마음 치료하기
+ <img width="1710" alt="스크린샷 2024-01-26 오후 1 43 06" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/bd70691b-cb8c-408a-919c-e221ef83731d">
+4. 펫에게 긍정적인 말 듣기
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 43 39" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/68f0aea2-a981-49f4-8300-326a1a5189c0">
 
-![스크린샷 2024-01-26 오후 1.43.39.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/95e11b2d-fe6c-41cd-b9a2-731167121fd1/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.43.39.png)
-
-다 키우면 저장 가능
-
-![스크린샷 2024-01-26 오후 1.30.31.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/40d781e1-dfcc-4aa2-aac6-fb3f54cfc99d/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.30.31.png)
-
-음악을 들으며 힐링하는 기능
-
-![스크린샷 2024-01-26 오후 1.35.10.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/846bf507-a454-4fcd-a2e3-8909ed20e607/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.35.10.png)
-
-표정 인식 기능을 통해 
-
-![스크린샷 2024-01-26 오후 1.35.23.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/6de72fd6-0d88-4417-a706-2a9976dc4f76/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.35.23.png)
-
-표정 인식 가능
-
-![스크린샷 2024-01-26 오후 1.43.06.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/5b6d18cf-8d82-4fe6-a6c9-731c941daaa8/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.43.06.png)
+=> 상태바가 100%가 되면 컬렉션에 저장할 수 있음
 
 무드 캘린더
-
-![스크린샷 2024-01-26 오후 1.43.50.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/d2d2fc39-8745-4845-ac98-ca62bd3facf4/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.43.50.png)
-
-![스크린샷 2024-01-26 오후 1.44.06.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/b3a0d68b-cb16-4116-924e-61e26d880045/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.44.06.png)
-
-![스크린샷 2024-01-26 오후 1.44.17.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/48c8e39c-f1e3-489a-b2d7-14f02de6eef9/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-26_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.44.17.png)
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 43 50" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/489b6b20-875d-4bf5-9e17-16c8acdf6fdd">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 44 06" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/213167fe-2a0a-408e-bea9-e67ce562c55b">
+작성을 하고 난 뒤 더 이상 일기의 내용을 보기 싫으면 감정쓰레기통에 넣을 수 있음. 감정쓰레기통에 넣었다면 다시 볼 수 없고 기분만 남음
 
 하루 질문
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 44 39" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/7ea8e92d-c6b9-40df-bbe3-6529ad928556">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 44 46" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/202f3eaf-948d-4933-803f-ba2f7f5a357f">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 44 58" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/c68322e0-a449-4db5-b57d-edbded8b6e24">
+<img width="1710" alt="스크린샷 2024-01-26 오후 1 45 17" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/bf43c93f-b78f-40b4-aded-8cc2c2f2da5f">
+하루에 하나 질문이 랜덤으로 날아오고, 답변을 하면 다시 질문을 받을 수 없음.
