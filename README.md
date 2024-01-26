@@ -1,5 +1,14 @@
 # Simley(심리) Smiley
 
+## 사용 기술
+
+**front :** Javascript
+
+**back :** Node js
+
+**database :** mysql, prisma
+
+## 구현기능
 시작화면
 <img width="1710" alt="스크린샷 2024-01-26 오후 1 29 41" src="https://github.com/SuJeong-mad-week4/front/assets/113419170/005c5f07-7a64-4e57-9f46-8846be75d4dc">
 
