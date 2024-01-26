@@ -1,5 +1,10 @@
 # Simley(심리) Smiley
 
+##구성원
+KAIST 21학번 **박정민**
+
+이화여자대학교 20학번 **조수연**
+
 ## 사용 기술
 
 **front :** Javascript
